@@ -1,10 +1,32 @@
+import { useEffect, useState } from 'react'
 import logo from '@/assets/logo.png'
 import { useNavigation } from './NavigationContext'
 
 const INDIGO = '#4F46E5'
 
+function useDarkMode() {
+  const [dark, setDark] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem('mikro-a-theme') === 'dark' ||
+      document.documentElement.classList.contains('dark')
+  })
+
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('mikro-a-theme', 'dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('mikro-a-theme', 'light')
+    }
+  }, [dark])
+
+  return { dark, toggle: () => setDark(d => !d) }
+}
+
 export function TopBar() {
   const { setSidebarOpen, setCurrentChapter } = useNavigation()
+  const { dark, toggle } = useDarkMode()
 
   return (
     <header
@@ -28,12 +50,17 @@ export function TopBar() {
         onClick={() => setCurrentChapter('')}
         className="flex items-center gap-2 font-bold tracking-tight text-foreground hover:opacity-80 transition-opacity"
       >
-        <img src={logo} alt="לוגו" className="h-10 w-10 rounded-lg object-contain" />
+        <img src={logo} alt="לוגו" className="h-10 w-10 rounded-lg object-contain bg-white" />
         <span className="text-base">מיקרו-כלכלה א'</span>
       </button>
 
-      {/* Left: spacer */}
-      <div className="w-24" />
+      {/* Left: dark/light toggle */}
+      <button
+        onClick={toggle}
+        className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+      >
+        {dark ? 'בהיר' : 'כהה'}
+      </button>
     </header>
   )
 }
