@@ -1,4 +1,5 @@
 import { BookOpen, Target, TrendingUp, MessageCircle, ChevronLeft } from 'lucide-react'
+import logo from '@/assets/logo.png'
 import { useNavigation } from '@/components/NavigationContext'
 import { CHAPTERS } from '@/data/toc'
 import { loadProgress } from '@/lib/progress'
@@ -22,9 +23,8 @@ export function HomePage() {
     <div className="mx-auto max-w-4xl px-4 pb-12 pt-6" dir="rtl">
       {/* Hero */}
       <div className="text-center space-y-3 py-8">
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl text-4xl shadow-lg"
-          style={{ background: `linear-gradient(135deg, ${INDIGO}22, ${INDIGO}44)`, border: `2px solid ${INDIGO}33` }}>
-          📊
+        <div className="mx-auto mb-2">
+          <img src={logo} alt="לוגו" className="mx-auto h-32 w-32 rounded-2xl object-contain shadow-lg" />
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
           מבוא לכלכלה א'
