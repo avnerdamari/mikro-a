@@ -28,7 +28,7 @@ export function TopBar() {
         onClick={() => setCurrentChapter('')}
         className="flex items-center gap-2 font-bold tracking-tight text-foreground hover:opacity-80 transition-opacity"
       >
-        <img src={logo} alt="לוגו" className="h-8 w-8 rounded-lg object-contain" />
+        <img src={logo} alt="לוגו" className="h-10 w-10 rounded-lg object-contain" />
         <span className="text-base">מיקרו-כלכלה א'</span>
       </button>
 
