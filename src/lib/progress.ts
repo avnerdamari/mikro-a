@@ -1,4 +1,5 @@
 const KEY = 'mikro-a-progress-v1'
+const isClient = typeof window !== 'undefined'
 
 export type ProgressData = {
   completedTopics: string[]
@@ -6,7 +7,10 @@ export type ProgressData = {
   exerciseScores: Record<string, { easy: number; medium: number; hard: number }>
 }
 
+const EMPTY: ProgressData = { completedTopics: [], mcqScores: {}, exerciseScores: {} }
+
 export function loadProgress(): ProgressData {
+  if (!isClient) return EMPTY
   try {
     const raw = localStorage.getItem(KEY)
     if (raw) return JSON.parse(raw)
@@ -15,6 +19,7 @@ export function loadProgress(): ProgressData {
 }
 
 export function saveProgress(data: ProgressData) {
+  if (!isClient) return
   try {
     localStorage.setItem(KEY, JSON.stringify(data))
   } catch { /* ignore */ }
