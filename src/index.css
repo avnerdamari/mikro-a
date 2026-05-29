@@ -52,3 +52,25 @@ body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
 
 [dir="ltr"] input[type="range"] { direction: ltr; }
 .katex { font-size: 1.05em; }
+
+/* Dark mode */
+.dark {
+  --background: oklch(0.13 0.02 265);
+  --foreground: oklch(0.95 0.01 265);
+  --card: oklch(0.18 0.02 265);
+  --card-foreground: oklch(0.95 0.01 265);
+  --muted: oklch(0.22 0.02 265);
+  --muted-foreground: oklch(0.65 0.03 265);
+  --border: oklch(0.28 0.02 265);
+  --input: oklch(0.28 0.02 265);
+  --primary: oklch(0.75 0.12 265);
+  --primary-foreground: oklch(0.13 0.02 265);
+  --secondary: oklch(0.22 0.02 265);
+  --secondary-foreground: oklch(0.95 0.01 265);
+  --accent: oklch(0.22 0.02 265);
+  --accent-foreground: oklch(0.95 0.01 265);
+  --popover: oklch(0.18 0.02 265);
+  --popover-foreground: oklch(0.95 0.01 265);
+  --ring: oklch(0.75 0.12 265);
+}
+.dark body { background: oklch(0.13 0.02 265); }
