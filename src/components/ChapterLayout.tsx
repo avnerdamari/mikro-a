@@ -10,11 +10,19 @@ interface Props {
   color: string
   examWeight: string
   children: ReactNode
+  /** מזהה הפרק ב-CHAPTERS. נדרש כשכמה פרקים חולקים אותו `number`
+      (פרק תיאוריה ופרק התרגול המקביל לו) — אחרת חיפוש לפי number מוצא את הראשון
+      וניווט הבא/הקודם קופץ לפרק הלא-נכון. */
+  navId?: string
+  /** תווית מעל הכותרת, למשל "תרגול" — כדי להבחין מפרק התיאוריה באותו מספר. */
+  badge?: string
 }
 
-export function ChapterLayout({ number, title, subtitle, color, examWeight, children }: Props) {
+export function ChapterLayout({ number, title, subtitle, color, examWeight, children, navId, badge }: Props) {
   const { setCurrentChapter } = useNavigation()
-  const idx = CHAPTERS.findIndex(c => c.number === number)
+  const idx = navId
+    ? CHAPTERS.findIndex(c => c.id === navId)
+    : CHAPTERS.findIndex(c => c.number === number)
   const prev = idx > 0 ? CHAPTERS[idx - 1] : null
   const next = idx < CHAPTERS.length - 1 ? CHAPTERS[idx + 1] : null
 
@@ -30,6 +38,11 @@ export function ChapterLayout({ number, title, subtitle, color, examWeight, chil
             {number}
           </div>
           <div className="flex-1">
+            {badge && (
+              <span className="mb-1 inline-block rounded-md px-2 py-0.5 text-xs font-bold" style={{ backgroundColor: `${color}22`, color }}>
+                {badge}
+              </span>
+            )}
             <h1 className="text-2xl font-extrabold tracking-tight text-foreground">{title}</h1>
             <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>
             <span className="mt-2 inline-block rounded-full px-3 py-1 text-xs font-bold text-white" style={{ backgroundColor: color }}>

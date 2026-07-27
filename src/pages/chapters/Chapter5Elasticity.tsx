@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
-import { ExerciseSection, type Exercise } from '@/components/ExerciseSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
 
 function ElastCalc() {
@@ -46,12 +45,6 @@ const MCQ: McqQuestion[] = [
   { id: 'el-q1', question: 'P עלה מ-100 ל-120 ו-Q ירד מ-200 ל-160. מה |E|?', options: ['1', '2', '0.5', '1.5'], correct: 0, explanation: 'ΔQ/Q=(−40/200)=−0.2. ΔP/P=(20/100)=0.2. |E|=0.2/0.2=1 (גמישות יחידתית).' },
   { id: 'el-q2', question: 'ביקוש גמיש (E>1). המחיר עולה. מה קורה לפדיון הכולל (TR)?', options: ['TR עולה', 'TR יורד', 'TR לא משתנה', 'אי אפשר לדעת'], correct: 1, explanation: 'ביקוש גמיש: ↑P → ירידה גדולה מאוד ב-Q → TR=P×Q יורד. (ירידת הכמות גדולה מעליית המחיר).' },
   { id: 'el-q3', question: 'גמישות הכנסה חיובית (E_i>0). סוג המוצר הוא:',  options: ['נחות', 'נורמלי', 'גמיש', 'משלים'], correct: 1, explanation: 'גמישות הכנסה חיובית = ↑ הכנסה → ↑ ביקוש = מוצר נורמלי. גמישות הכנסה שלילית = מוצר נחות.' },
-]
-
-const EASY: Exercise[] = [
-  { id: 'el-e1', question: 'P עלה מ-50 ל-60 (20%). Q ירד מ-100 ל-80 (20%). מה E?', answer: '|E| = 20%/20% = 1 (גמישות יחידתית). TR לא משתנה.' },
-  { id: 'el-e2', question: 'E=2 (גמיש). P עולה ב-10%. מה השינוי ב-Q?', answer: 'E=ΔQ%/ΔP% → 2=ΔQ%/10% → ΔQ%=20% ירידה.' },
-  { id: 'el-e3', question: 'ביקוש קשיח (E=0.3). P עולה ב-10%. מה קורה ל-TR?', answer: 'ΔQ%=0.3×10%=3% ירידה. TR=P×Q: P↑10%, Q↓3% → TR עולה (כי ↑P גדולה מ↓Q).' },
 ]
 
 export function Chapter5Elasticity() {
@@ -117,7 +110,6 @@ export function Chapter5Elasticity() {
         <ElastCalc />
       </section>
       <section><McqSection questions={MCQ} topicId="elasticity" /></section>
-      <section><ExerciseSection easy={EASY} medium={[]} hard={[]} topicId="elasticity" /></section>
     </ChapterLayout>
   )
 }

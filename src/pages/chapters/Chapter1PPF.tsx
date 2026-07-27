@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, ResponsiveContainer } from 'recharts'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
-import { ExerciseSection, type Exercise } from '@/components/ExerciseSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
 
 /* ── PPF DATA ─────────────────────────────── */
@@ -94,7 +93,7 @@ function PPFSimulation() {
             label={{ value: 'ריאלטי', position: 'insideBottom', offset: -10, fontSize: 12 }} tickCount={6} />
           <YAxis domain={[0, maxY * 1.1]}
             label={{ value: 'גרעינים', angle: -90, position: 'insideLeft', offset: 12, fontSize: 12 }} tickCount={6} />
-          <Tooltip formatter={(v: number) => v.toFixed(0)} />
+          <Tooltip formatter={(v) => (v as number).toFixed(0)} />
           <Line dataKey="y" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 5, fill: '#a855f7' }} type="linear" name="PPF" />
           <ReferenceDot x={curX} y={curY} r={7} fill="#7c3aed" stroke="white" strokeWidth={2} />
         </LineChart>
@@ -155,7 +154,7 @@ function ShiftsSim() {
             label={{ value: 'ריאלטי', position: 'insideBottom', offset: -10, fontSize: 11 }} />
           <YAxis domain={[0, domY]}
             label={{ value: 'גרעינים', angle: -90, position: 'insideLeft', fontSize: 11 }} />
-          <Tooltip formatter={(v: number) => v.toFixed(0)} />
+          <Tooltip formatter={(v) => (v as number).toFixed(0)} />
           <Line data={base} dataKey="y" stroke="#94a3b8" strokeWidth={1.5} strokeDasharray="5 5"
             type="linear" name="מקורית" dot={false} />
           <Line data={curr} dataKey="y" stroke="#3b82f6" strokeWidth={2.5}
@@ -255,31 +254,6 @@ const MCQ: McqQuestion[] = [
     correct: 1,
     explanation: 'ריאלטי: 0.5×5=2.5₪ לעובד. גרעינים: 2×2=4₪ לעובד. גרעינים עדיפים (4₪ > 2.5₪).',
   },
-]
-
-/* ── EXERCISES ──────────────────────────────── */
-const EASY: Exercise[] = [
-  { id: 'ppf-e1', question: '500 עובדים מייצרים 3 עוגות כל אחד לשעה. מה ייצור מרבי של עוגות?', hint: 'עובדים × תפוקה לעובד', answer: '500 × 3 = 1,500 עוגות' },
-  { id: 'ppf-e2', question: 'אותם עובדים מייצרים 6 לחמניות לשעה. מה הייצור המרבי של לחמניות?', answer: '500 × 6 = 3,000 לחמניות' },
-  { id: 'ppf-e3', question: 'עובד מייצר 3 עוגות או 6 לחמניות. מה העלות האלטרנטיבית של עוגה אחת?', hint: 'לחמניות ÷ עוגות', answer: '6 ÷ 3 = 2 לחמניות לכל עוגה' },
-  { id: 'ppf-e4', question: 'מחיר עוגה 10₪, מחיר לחמניה 4₪. עובד: 3 עוגות או 6 לחמניות. מה עדיף?', answer: 'עוגות: 3×10=30₪. לחמניות: 6×4=24₪. ← עדיף עוגות.' },
-  { id: 'ppf-e5', question: 'הסבר ב-2 משפטים: מה ההבדל בין נקודה על PPF לנקודה מתחת ל-PPF?', answer: 'על PPF: כל המשאבים מנוצלים ביעילות.\nמתחת ל-PPF: יש אבטלה/בזבוז — ניתן לייצר יותר.' },
-]
-
-const MEDIUM: Exercise[] = [
-  { id: 'ppf-m1', question: 'קבוצה א: 400 עובדים, 4 תפוחים או 2 בננות לעובד. קבוצה ב: 600 עובדים, 1 תפוח או 3 בננות. מי מחזיק יתרון יחסי בתפוחים?', hint: 'חשב עלות אלטרנטיבית (מה מוותרים על תפוח אחד)', answer: 'א: עלות תפוח = 2÷4 = 0.5 בננות.\nב: עלות תפוח = 3÷1 = 3 בננות.\nלקבוצה א עלות נמוכה יותר → יתרון יחסי בתפוחים.' },
-  { id: 'ppf-m2', question: 'מה קורה ל-PPF אם 200 עובדים מקבוצה א עוזבים את הארץ? (תאר את השינוי)', answer: 'PPF זזה פנימה (לשמאל). יש פחות עובדים → פחות ייצור אפשרי.\nמקסימום תפוחים יורד: (200×4)+(600×1)=1,400 תפוחים לעומת (400×4)+(600×1)=2,200 קודם.' },
-  { id: 'ppf-m3', question: 'שיפור טכנולוגי מכפיל ×2 את תפוקת קבוצה ב בבננות (מ-3 ל-6). תאר את השפעת ה-PPF.', answer: 'PPF זזה החוצה א-סימטרית:\n- מקסימום תפוחים: לא משתנה (שיפור לא בתפוחים)\n- מקסימום בננות: (400×2)+(600×6)=800+3,600=4,400 (לעומת 400×2+600×3=2,600 קודם)\nציר בננות זזה, ציר תפוחים נשאר.' },
-  { id: 'ppf-m4', question: 'מחיר תפוח 6₪, מחיר בננה 5₪. קבוצה א: 4 תפוחים/2 בננות. קבוצה ב: 1 תפוח/3 בננות. מה ההקצאה האופטימלית?', answer: 'א: תפוחים=4×6=24₪ | בננות=2×5=10₪ → א לתפוחים\nב: תפוחים=1×6=6₪ | בננות=3×5=15₪ → ב לבננות\n\nהקצאה אופטימלית: קבוצה א → תפוחים, קבוצה ב → בננות.' },
-  { id: 'ppf-m5', question: 'הסבר מדוע PPF קעורה כאשר יש שתי קבוצות עובדים שונות ביעילות.', answer: 'PPF קעורה בגלל עלות אלטרנטיבית גוברת:\nמתחילים לייצר X עם הקבוצה היעילה יותר ב-X (עלות נמוכה).\nכשממשיכים, צריך לגייס את הקבוצה פחות יעילה — כל יחידה X נוספת עולה יותר.\nאם שתי הקבוצות זהות → PPF ישרה (עלות אלטרנטיבית קבועה).' },
-]
-
-const HARD: Exercise[] = [
-  { id: 'ppf-h1', question: 'קבוצה א: 800 עובדים, 0.25 טלוויזיות או 3 מחשבים לעובד. קבוצה ב: 1,200 עובדים, 0.5 טלוויזיות או 1 מחשב לעובד. מה נקודות הקצה של PPF?', answer: 'מקסימום טלוויזיות: 800×0.25 + 1,200×0.5 = 200+600 = 800\nמקסימום מחשבים: 800×3 + 1,200×1 = 2,400+1,200 = 3,600\nנקודות קצה: (0,800) ו-(3,600,0)' },
-  { id: 'ppf-h2', question: 'אותו משק. מי מחזיק יתרון יחסי בטלוויזיות?', answer: 'א: עלות טלוויזיה = 3÷0.25 = 12 מחשבים\nב: עלות טלוויזיה = 1÷0.5 = 2 מחשבים\nקבוצה ב: עלות נמוכה יותר → יתרון יחסי בטלוויזיות.\nקבוצה א: יתרון יחסי במחשבים.' },
-  { id: 'ppf-h3', question: 'מחיר טלוויזיה 1,000₪, מחיר מחשב 200₪. מה ההקצאה האופטימלית והכנסה כוללת?', answer: 'א: טלוויזיות=0.25×1,000=250₪ | מחשבים=3×200=600₪ → א למחשבים\nב: טלוויזיות=0.5×1,000=500₪ | מחשבים=1×200=200₪ → ב לטלוויזיות\n\nהכנסה: 800×600 + 1,200×500 = 480,000+600,000 = 1,080,000₪' },
-  { id: 'ppf-h4', question: 'שיפור ×2 בתפוקת קבוצה א בטלוויזיות (0.25→0.5). מה קורה ליתרון היחסי?', answer: 'עלות טלוויזיה החדשה של א: 3÷0.5=6 מחשבים (היה 12).\nעלות טלוויזיה של ב: עדיין 2 מחשבים.\nב עדיין מחזיקה יתרון יחסי בטלוויזיות (2<6), אבל הפער קטן.' },
-  { id: 'ppf-h5', question: 'אחרי השיפור, מה "מחיר המתג" של טלוויזיה שמעליה כדאי להעביר חלק מקבוצה א לטלוויזיות?', hint: 'הכנסה זהה = תנאי המתג', answer: 'עובד א שווה-ערך כאשר: 0.5×P_tv = 3×200\n0.5P_tv = 600 → P_tv = 1,200₪\n\nאם מחיר טלוויזיה > 1,200₪ → כדאי להעביר גם את קבוצה א לטלוויזיות.\nאם < 1,200₪ → קבוצה א נשארת במחשבים.' },
 ]
 
 /* ── EXPORT ──────────────────────────────── */
@@ -398,10 +372,6 @@ export function Chapter1PPF() {
         <McqSection questions={MCQ} topicId="ppf" />
       </section>
 
-      {/* EXERCISES */}
-      <section>
-        <ExerciseSection easy={EASY} medium={MEDIUM} hard={HARD} topicId="ppf" />
-      </section>
     </ChapterLayout>
   )
 }

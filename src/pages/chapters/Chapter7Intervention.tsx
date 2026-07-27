@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer } from 'recharts'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
-import { ExerciseSection, type Exercise } from '@/components/ExerciseSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
 
 // D: P=250-4Q → Q=(250-P)/4
@@ -61,7 +60,7 @@ function TaxSim() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" dataKey="Q" domain={[0, 40]} label={{ value: 'כמות Q', position: 'insideBottom', offset: -8, fontSize: 11 }} />
           <YAxis label={{ value: 'מחיר P', angle: -90, position: 'insideLeft', fontSize: 11 }} />
-          <Tooltip formatter={(v: number) => v.toFixed(1)} />
+          <Tooltip formatter={(v) => (v as number).toFixed(1)} />
           <Line data={demandData} dataKey="P" stroke="#3b82f6" strokeWidth={2.5} dot={false} name="ביקוש D" />
           <Line data={supplyOrig} dataKey="P" stroke="#fca5a5" strokeWidth={1.5} strokeDasharray="5 5" dot={false} name="S מקורית" />
           <Line data={supplyNew} dataKey="P" stroke="#ef4444" strokeWidth={2.5} dot={false} name="S חדשה" />
@@ -224,30 +223,6 @@ const MCQ: McqQuestion[] = [
   },
 ]
 
-const EASY: Exercise[] = [
-  { id: 'i7-e1', question: 'D: P=250-4Q. S: P=100+Q. P*? Q*?', answer: '250-4Q=100+Q → 150=5Q → Q*=30\nP*=100+30=130₪' },
-  { id: 'i7-e2', question: 'אותו שוק. מס t=20₪. P_c=?', answer: 'S_new: P=120+Q. D=S_new: 250-4Q=120+Q → 130=5Q → Q=26. P_c=120+26=146₪' },
-  { id: 'i7-e3', question: 'P_c=146₪, t=20₪. P_p=?', answer: 'P_p = P_c - t = 146 - 20 = 126₪' },
-  { id: 'i7-e4', question: 'Q_new=26, t=20₪. הכנסות ממשלה?', answer: 'הכנסות = t × Q_new = 20 × 26 = 520₪' },
-  { id: 'i7-e5', question: 'מחיר מקסימום 100₪ כאשר P*=130₪. האם הוא כובל? מה קורה?', answer: 'כן, כובל (100 < P*=130). גורם לעודף ביקוש — Q_d > Q_s. תורים, מחסור בשוק.' },
-]
-
-const MEDIUM: Exercise[] = [
-  { id: 'i7-m1', question: 'D: P=250-4Q. S: P=100+Q. מס t=30₪ ליחיד. חשב P_c, Q_new, P_p, הכנסות ממשלה, נטל צרכן ויצרן.', answer: 'S_new: P=130+Q. D=S: 250-4Q=130+Q → 120=5Q → Q_new=24\nP_c=130+24=154₪, P_p=154-30=124₪\nP*מקורי=130₪\nהכנסות=30×24=720₪\nנטל צרכן=(154-130)×24=576₪\nנטל יצרן=(130-124)×24=144₪\nסה"כ=576+144=720₪ ✓' },
-  { id: 'i7-m2', question: 'אותו שוק. סובסידיה sub=20₪ ליצרן. חשב P_c, P_p, Q_new, עלות ממשלה.', answer: 'S_new: P=80+Q. D=S: 250-4Q=80+Q → 170=5Q → Q_new=34\nP_c=80+34=114₪\nP_p=P_c+20=134₪\nעלות ממשלה=20×34=680₪' },
-  { id: 'i7-m3', question: 'D: Q=1,000-5P. S: Q=3P-200. מחיר מינימום 160₪. מה Q_d, Q_s, ועודף ההיצע?', answer: 'Q_d=1,000-5×160=200\nQ_s=3×160-200=280\nעודף היצע=280-200=80 יחידות' },
-  { id: 'i7-m4', question: 'מחיר ברוקולי עולה ב-15₪ (מס). ברוקולי וכרובית הם תחליפים. תאר שרשרת ההשפעה על שוק הכרובית.', answer: '↑ מחיר ברוקולי → ↓ כמות ברוקולי מבוקשת\n→ צרכנים עוברים לכרובית (תחליף)\n→ ↑ ביקוש לכרובית (D זזה ימינה)\n→ P*_כרובית עולה, Q*_כרובית עולה' },
-  { id: 'i7-m5', question: 'מחיר קפה עולה בגלל מס. חלב וקפה הם משלימים. מה קורה לשוק החלב?', answer: '↑ מחיר קפה → ↓ כמות קפה → פחות שותים קפה עם חלב\n→ ↓ ביקוש לחלב (D זזה שמאלה)\n→ P*_חלב יורד, Q*_חלב יורד' },
-]
-
-const HARD: Exercise[] = [
-  { id: 'i7-h1', question: 'D: P=500-2Q. S: P=100+3Q. מס t=50₪. חשב: P*,Q* לפני ואחרי מס, הכנסות ממשלה, נטל ביניהם.', answer: 'לפני: 500-2Q=100+3Q → 400=5Q → Q*=80, P*=340₪\n\nS_new: P=150+3Q. D=S_new: 500-2Q=150+3Q → 350=5Q → Q_new=70\nP_c=500-2×70=360₪. P_p=360-50=310₪\n\nהכנסות=50×70=3,500₪\nנטל צרכן=(360-340)×70=1,400₪\nנטל יצרן=(340-310)×70=2,100₪' },
-  { id: 'i7-h2', question: 'אותו שוק. סובסידיה sub=30₪. חשב P_c, P_p, Q_new, עלות ממשלה.', answer: 'S_new: P=70+3Q. D=S_new: 500-2Q=70+3Q → 430=5Q → Q_new=86\nP_c=500-2×86=328₪. P_p=328+30=358₪\nעלות ממשלה=30×86=2,580₪' },
-  { id: 'i7-h3', question: 'D: Q=600-2P. S: Q=4P-400. מחיר מקסימום 130₪ (כאשר P*=?). חשב Q_d,Q_s ועודף ביקוש.', answer: 'D=S: 600-2P=4P-400 → 1,000=6P → P*=166.7₪\n\nP_max=130 < P*=166.7 → כובל\nQ_d=600-2×130=340\nQ_s=4×130-400=120\nעודף ביקוש=340-120=220 יחידות' },
-  { id: 'i7-h4', question: 'ממשלה רוצה לייצב מחיר ב-P*. היא קונה כל עודף היצע. מחיר מינימום=200₪, P*=150₪, Q_d=300, Q_s=500. כמה תוציא?', answer: 'עודף היצע = Q_s-Q_d = 500-300 = 200 יחידות\nהממשלה קונה 200 יחידות במחיר 200₪\nהוצאה = 200 × 200 = 40,000₪' },
-  { id: 'i7-h5', question: 'בשוק עם D גמיש (E>1) ובשוק עם D קשיח (E<1) — היכן נטל המס על הצרכן גדול יותר? הסבר.', answer: 'D קשיח (E<1) → נטל מס גדול יותר על הצרכן.\n\nסיבה: כשהביקוש קשיח, עלייה במחיר לא מורידה הרבה את הכמות → יצרן יכול להגלגל את רוב המס לצרכן.\n\nכשD גמיש — צרכנים "ברחים" → יצרן לא יכול להגלגל → נושא יותר.\n\nמס על אינסולין (קשיח) → כמעט כל הנטל על חולי הסוכרת.' },
-]
-
 export function Chapter7Intervention() {
   return (
     <ChapterLayout number={7} title="התערבות ממשלתית במשק סגור" subtitle="מס, סובסידיה, גלגול מס, מחיר מינ/מקס" color="#ef4444" examWeight="2-3 שאלות במבחן">
@@ -316,7 +291,6 @@ export function Chapter7Intervention() {
         <CrossMarketSim />
       </section>
       <section><McqSection questions={MCQ} topicId="intervention" /></section>
-      <section><ExerciseSection easy={EASY} medium={MEDIUM} hard={HARD} topicId="intervention" /></section>
     </ChapterLayout>
   )
 }

@@ -13,6 +13,19 @@ import { Chapter8OpenEconomy } from '@/pages/chapters/Chapter8OpenEconomy'
 import { Chapter9Tariff } from '@/pages/chapters/Chapter9Tariff'
 import { Chapter10Monopoly } from '@/pages/chapters/Chapter10Monopoly'
 import { Chapter11Solutions } from '@/pages/chapters/Chapter11Solutions'
+import { Chapter1Practice } from '@/pages/chapters/Chapter1Practice'
+import { Chapter2Practice } from '@/pages/chapters/Chapter2Practice'
+import { Chapter3Practice } from '@/pages/chapters/Chapter3Practice'
+import { Chapter4Practice } from '@/pages/chapters/Chapter4Practice'
+import { Chapter5Practice } from '@/pages/chapters/Chapter5Practice'
+import { Chapter6Practice } from '@/pages/chapters/Chapter6Practice'
+import { Chapter7Practice } from '@/pages/chapters/Chapter7Practice'
+import { Chapter8Practice } from '@/pages/chapters/Chapter8Practice'
+import { Chapter9Practice } from '@/pages/chapters/Chapter9Practice'
+import { Chapter10Practice } from '@/pages/chapters/Chapter10Practice'
+import { AppendixExams } from '@/pages/chapters/AppendixExams'
+import { AppendixFormulas } from '@/pages/chapters/AppendixFormulas'
+import { AppendixGlossary } from '@/pages/chapters/AppendixGlossary'
 
 function AppContent() {
   const { currentChapter } = useNavigation()
@@ -30,6 +43,19 @@ function AppContent() {
       case 'tariff':       return <Chapter9Tariff />
       case 'monopoly':     return <Chapter10Monopoly />
       case 'solutions':    return <Chapter11Solutions />
+      case 'ppf-practice': return <Chapter1Practice />
+      case 'production-practice': return <Chapter2Practice />
+      case 'costs-practice': return <Chapter3Practice />
+      case 'demand-practice': return <Chapter4Practice />
+      case 'elasticity-practice': return <Chapter5Practice />
+      case 'equilibrium-practice': return <Chapter6Practice />
+      case 'intervention-practice': return <Chapter7Practice />
+      case 'open-economy-practice': return <Chapter8Practice />
+      case 'tariff-practice': return <Chapter9Practice />
+      case 'monopoly-practice': return <Chapter10Practice />
+      case 'exams':        return <AppendixExams />
+      case 'formulas':     return <AppendixFormulas />
+      case 'glossary':     return <AppendixGlossary />
       default:             return <HomePage />
     }
   }

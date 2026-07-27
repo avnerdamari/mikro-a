@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer } from 'recharts'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
-import { ExerciseSection, type Exercise } from '@/components/ExerciseSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
 
 /* ── DATA (real exam example) ──────────────── */
@@ -214,31 +213,6 @@ const MCQ: McqQuestion[] = [
   },
 ]
 
-/* ── EXERCISES ─────────────────────────────── */
-const EASY: Exercise[] = [
-  { id: 'p2-e1', question: 'L=3 → TP=1,800, L=4 → TP=2,200. מה MP של העובד ה-4?', hint: 'ΔTP = TP(4) - TP(3)', answer: 'MP = 2,200 - 1,800 = 400 יחידות' },
-  { id: 'p2-e2', question: 'L=4, TP=2,200. מה AP_L?', answer: 'AP = TP/L = 2,200/4 = 550 יחידות לעובד' },
-  { id: 'p2-e3', question: 'MP=300 יחידות, P=20₪. מה VMP_L?', answer: 'VMP = P × MP = 20 × 300 = 6,000₪' },
-  { id: 'p2-e4', question: 'VMP=6,000₪, W=5,000₪. האם כדאי להעסיק עובד זה?', answer: 'VMP(6,000) ≥ W(5,000) → כן, כדאי להעסיק!' },
-  { id: 'p2-e5', question: 'L=5, TP=2,500, P=20₪, W=5,000₪. מה הרווח?', answer: 'TR = P×TP = 20×2,500 = 50,000₪\nTC = L×W = 5×5,000 = 25,000₪\nרווח = TR-TC = 25,000₪' },
-]
-
-const MEDIUM: Exercise[] = [
-  { id: 'p2-m1', question: 'P=15₪, W=4,500₪. נתונים: L=1→TP=500, L=2→TP=900, L=3→TP=1,200, L=4→TP=1,400. כמה עובדים להעסיק?', hint: 'חשב MP וVMP לכל עובד', answer: 'L=1: MP=500, VMP=7,500≥4,500 ✅\nL=2: MP=400, VMP=6,000≥4,500 ✅\nL=3: MP=300, VMP=4,500≥4,500 ✅\nL=4: MP=200, VMP=3,000<4,500 ❌\n\nהעסק 3 עובדים.' },
-  { id: 'p2-m2', question: 'אותו משק. W עולה ל-6,000₪. כמה עובדים כעת?', answer: 'L=1: VMP=7,500≥6,000 ✅\nL=2: VMP=6,000≥6,000 ✅\nL=3: VMP=4,500<6,000 ❌\n\nהעסק 2 עובדים בלבד (ירידה מ-3). שכר גבוה יותר → פחות עובדים.' },
-  { id: 'p2-m3', question: 'אותו משק (P=15₪, W=4,500₪, 3 עובדים). חשב TP, TR, TC ורווח.', answer: 'TP = 1,200 יחידות\nTR = 15 × 1,200 = 18,000₪\nTC = 3 × 4,500 = 13,500₪\nרווח = 18,000 - 13,500 = 4,500₪' },
-  { id: 'p2-m4', question: 'מה קורה לרווח אם מעסיקים עובד 4 (לא כדאי)? (P=15₪, W=4,500₪, TP בעובד 4 = 1,400)', answer: 'TR = 15×1,400 = 21,000₪\nTC = 4×4,500 = 18,000₪\nרווח = 3,000₪ (ירד מ-4,500 ל-3,000)\n\nמוסיפים עובד לא כדאי → רווח קטן. זה מוכיח כלל VMP≥W.' },
-  { id: 'p2-m5', question: 'הסבר ב-3 שורות: מדוע VMP_L יורד ככל שמוסיפים עובדים?', answer: 'כי MP_L יורד (חוק התפוקה הפוחתת).\nכל עובד נוסף עובד עם אותם כלים/מכונות → פחות יעיל.\nVMP = P × MP — P קבוע אבל MP יורד → VMP יורד.' },
-]
-
-const HARD: Exercise[] = [
-  { id: 'p2-h1', question: 'P=25₪, W=7,000₪. L=1→TP=600, L=2→TP=1,100, L=3→TP=1,500, L=4→TP=1,800, L=5→TP=2,000. מה רמת הייצור האופטימלית ורווח מקסימלי?', answer: 'L=1: MP=600, VMP=15,000≥7,000 ✅\nL=2: MP=500, VMP=12,500≥7,000 ✅\nL=3: MP=400, VMP=10,000≥7,000 ✅\nL=4: MP=300, VMP=7,500≥7,000 ✅\nL=5: MP=200, VMP=5,000<7,000 ❌\n\nL*=4, TP*=1,800\nTR=25×1,800=45,000₪\nTC=4×7,000=28,000₪\nרווח=17,000₪' },
-  { id: 'p2-h2', question: 'P עולה מ-25₪ ל-35₪ (אותו W=7,000₪). כמה עובדים עכשיו? כמה תוספת רווח?', answer: 'L=5: MP=200, VMP=35×200=7,000≥7,000 ✅\n\nL*=5, TP*=2,000\nTR=35×2,000=70,000₪\nTC=5×7,000=35,000₪\nרווח=35,000₪\n\nתוספת רווח: 35,000-17,000=18,000₪' },
-  { id: 'p2-h3', question: 'ממשלה מטילה שכר מינימום 9,000₪ (לעומת W=7,000₪ בשוק). מה מספר העובדים ואת מידת האבטלה?', answer: 'בW=9,000₪:\nL=1: VMP=15,000≥9,000 ✅\nL=2: VMP=12,500≥9,000 ✅\nL=3: VMP=10,000≥9,000 ✅\nL=4: VMP=7,500<9,000 ❌\n\nL*=3 (לעומת 4 בשוק חופשי)\nאבטלה: 1 עובד (העובד ה-4 לא נשכר).' },
-  { id: 'p2-h4', question: 'ממשלה מעניקה סובסידיה לשכר: מממנת 2,000₪ מתוך כל משכורת (מעסיק משלם רק 5,000₪ מ-7,000₪). כמה עובדים?', answer: 'עלות למעסיק אחרי סובסידיה: 7,000-2,000=5,000₪\nL=5: VMP=5,000≥5,000 ✅\n\nL*=5 (לעומת 4 ללא סובסידיה).\nסובסידיה לשכר → עוד העסקה.' },
-  { id: 'p2-h5', question: 'כיצד תשפיע עלייה במחיר תפוקה P מ-25₪ ל-35₪ על עקומת הביקוש לעבודה? הסבר כלכלית.', answer: 'עקומת הביקוש לעבודה = VMP(L) = P × MP(L).\nכשP עולה → VMP עולה בכל רמת L.\nהגרף של VMP(L) זזה למעלה (כלפי חוץ).\n\nכלכלית: תפוקת עובד שווה יותר כשמחיר התוצר גבוה → מעסיק מוכן להעסיק יותר עובדים בכל שכר נתון.' },
-]
-
 export function Chapter2Production() {
   return (
     <ChapterLayout number={2} title="פונקציית הייצור והקצאת גורמי ייצור"
@@ -323,7 +297,6 @@ export function Chapter2Production() {
       </section>
 
       <section><McqSection questions={MCQ} topicId="production" /></section>
-      <section><ExerciseSection easy={EASY} medium={MEDIUM} hard={HARD} topicId="production" /></section>
     </ChapterLayout>
   )
 }
