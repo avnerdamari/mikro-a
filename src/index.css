@@ -46,31 +46,71 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ── פלטת המותג (סקיל build-book, סעיף 2א) — זהה לכל ספרי המשפחה ──
+   ב-Tailwind v4 אין tailwind.config, ולכן הפלטה מוגדרת כמשתני CSS.
+   הערכים זהים לאלה שב-Advisors-App; רק דרך ההגדרה שונה. */
+:root {
+  --brand: #1F3864;         /* נייבי — כותרת עליונה, כותרות פרקים */
+  --brand-light: #2E5496;   /* כחול — תוויות משנה */
+  --brand-accent: #1F6F3F;  /* ירוק — דירוג קושי, הדגשות חיוביות */
+  --action: #4F46E5;        /* כפתורי פעולה */
+  --action-hover: #4338ca;
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-light: var(--brand-light);
+  --color-brand-accent: var(--brand-accent);
+  --color-action: var(--action);
+}
+
 * { box-sizing: border-box; }
-body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: white; }
+body {
+  margin: 0;
+  font-family: 'Heebo', 'Assistant', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #f5f7fa;
+  color: #1f2430;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
 #root { min-height: 100vh; }
 
 [dir="ltr"] input[type="range"] { direction: ltr; }
 .katex { font-size: 1.05em; }
 
-/* Dark mode */
+/* ── מצב כהה — סגול-אינדיגו, לא אפור (סקיל build-book, סעיף 2א) ── */
 .dark {
-  --background: oklch(0.13 0.02 265);
-  --foreground: oklch(0.95 0.01 265);
-  --card: oklch(0.18 0.02 265);
-  --card-foreground: oklch(0.95 0.01 265);
-  --muted: oklch(0.22 0.02 265);
-  --muted-foreground: oklch(0.65 0.03 265);
-  --border: oklch(0.28 0.02 265);
-  --input: oklch(0.28 0.02 265);
-  --primary: oklch(0.75 0.12 265);
-  --primary-foreground: oklch(0.13 0.02 265);
-  --secondary: oklch(0.22 0.02 265);
-  --secondary-foreground: oklch(0.95 0.01 265);
-  --accent: oklch(0.22 0.02 265);
-  --accent-foreground: oklch(0.95 0.01 265);
-  --popover: oklch(0.18 0.02 265);
-  --popover-foreground: oklch(0.95 0.01 265);
-  --ring: oklch(0.75 0.12 265);
+  --background: oklch(0.30 0.05 285);
+  --foreground: oklch(0.95 0.01 285);
+  --card: oklch(0.36 0.10 290);
+  --card-foreground: oklch(0.95 0.01 285);
+  --muted: oklch(0.34 0.07 288);
+  --muted-foreground: oklch(0.78 0.03 285);
+  --border: oklch(1 0 0 / 18%);
+  --input: oklch(1 0 0 / 25%);
+  --primary: oklch(0.78 0.12 288);
+  --primary-foreground: oklch(0.26 0.05 285);
+  --secondary: oklch(0.34 0.07 288);
+  --secondary-foreground: oklch(0.95 0.01 285);
+  --accent: oklch(0.34 0.07 288);
+  --accent-foreground: oklch(0.95 0.01 285);
+  --popover: oklch(0.36 0.10 290);
+  --popover-foreground: oklch(0.95 0.01 285);
+  --ring: oklch(0.78 0.12 288);
 }
-.dark body { background: oklch(0.13 0.02 265); }
+.dark body { background: oklch(0.30 0.05 285); color: #e2e8f0; }
+
+/* טקסט של recharts — חייב להיות לבן על הרקע הסגול, אחרת נעלם */
+.dark .recharts-text,
+.dark .recharts-label,
+.dark .recharts-cartesian-axis-tick-value { fill: white !important; }
+.dark .recharts-cartesian-grid line { stroke: oklch(1 0 0 / 15%) !important; }
+
+/* כרטיסים בהירים קשיחים (bg-white / bg-*-50) שנשארו מהעיצוב הישן —
+   מרוככים במצב כהה כדי שלא יבהיקו על הרקע הסגול */
+.dark .bg-white { background-color: oklch(0.36 0.10 290) !important; }
+.dark [class*="bg-yellow-50"],
+.dark [class*="bg-amber-50"] { background-color: oklch(0.38 0.07 85 / 35%) !important; }
+.dark [class*="bg-green-50"] { background-color: oklch(0.38 0.07 150 / 30%) !important; }
+.dark [class*="bg-red-50"]   { background-color: oklch(0.38 0.09 25 / 30%) !important; }
+.dark [class*="bg-blue-50"],
+.dark [class*="bg-indigo-50"]{ background-color: oklch(0.38 0.08 275 / 35%) !important; }

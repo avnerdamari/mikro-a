@@ -29,15 +29,17 @@ export function TopBar() {
   const { dark, toggle } = useDarkMode()
 
   return (
+    /* כותרת המותג — רקע נייבי אחיד (סקיל build-book, סעיף 2א) */
     <header
-      className="fixed top-0 left-0 right-0 z-30 flex h-14 items-center justify-between border-b border-border bg-background/95 backdrop-blur px-4"
+      className="no-print fixed top-0 left-0 right-0 z-30 flex h-14 items-center justify-between px-4 shadow-md"
+      style={{ backgroundColor: 'var(--brand)' }}
       dir="rtl"
     >
-      {/* Right: menu */}
+      {/* ימין: תפריט */}
       <button
         onClick={() => setSidebarOpen(true)}
-        className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors hover:bg-muted/60"
-        style={{ color: INDIGO }}
+        className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95 active:translate-y-0.5"
+        style={{ backgroundColor: INDIGO }}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -45,19 +47,22 @@ export function TopBar() {
         <span className="hidden sm:inline">תוכן עניינים</span>
       </button>
 
-      {/* Center: logo + title */}
+      {/* מרכז: לוגו + שם הספר + תת-כותרת */}
       <button
         onClick={() => setCurrentChapter('')}
-        className="flex items-center gap-2 font-bold tracking-tight text-foreground hover:opacity-80 transition-opacity"
+        className="flex items-center gap-2 transition hover:opacity-80"
       >
-        <img src={logo} alt="לוגו" className="h-10 w-10 rounded-lg object-contain bg-white" />
-        <span className="text-base">מיקרו-כלכלה א'</span>
+        <div className="flex flex-col items-end">
+          <span className="text-base font-extrabold tracking-tight text-white md:text-lg">מבוא לכלכלה א'</span>
+          <span className="text-[10px] text-sky-200 md:text-xs">מיקרו-כלכלה · אינטראקטיבי</span>
+        </div>
+        <img src={logo} alt="לוגו" className="h-10 w-10 rounded-lg bg-white object-contain" />
       </button>
 
-      {/* Left: dark/light toggle */}
+      {/* שמאל: מצב כהה/בהיר */}
       <button
         onClick={toggle}
-        className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+        className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-white/40 transition hover:bg-white/15 active:scale-95"
       >
         {dark ? 'בהיר' : 'כהה'}
       </button>

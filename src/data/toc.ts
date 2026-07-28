@@ -13,13 +13,23 @@ export type ChapterMeta = {
 
 export const CHAPTERS: ChapterMeta[] = [
   {
+    id: 'intro',
+    number: 0,
+    title: 'הקדמה — לפני שמתחילים',
+    subtitle: 'איך בנוי הספר ואיך כדאי ללמוד ממנו',
+    priority: 'high',
+    examWeight: 'קריאה קצרה',
+    color: '#1F3864',
+    kind: 'theory',
+  },
+  {
     id: 'ppf',
     number: 1,
     title: 'בעיית המחסור ועקומת התמורה',
     subtitle: 'PPF — Production Possibility Frontier',
     priority: 'high',
     examWeight: 'גבוה — ~4 שאלות',
-    color: '#a855f7',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -29,7 +39,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'high',
     examWeight: 'גבוה — ~4 שאלות',
-    color: '#a855f7',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -39,7 +49,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'MP, VMP, כלל העסקה אופטימלי',
     priority: 'high',
     examWeight: 'גבוה — 2-3 שאלות',
-    color: '#6366f1',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -49,7 +59,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'high',
     examWeight: 'גבוה — 2-3 שאלות',
-    color: '#6366f1',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -59,7 +69,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'TC, MC, AC, AVC — החלטת ייצור',
     priority: 'high',
     examWeight: 'גבוה — 2-3 שאלות',
-    color: '#f97316',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -69,7 +79,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'high',
     examWeight: 'גבוה — 2-3 שאלות',
-    color: '#f97316',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -79,7 +89,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'פונקציית ביקוש, גורמים מסיטים, חוק הביקוש',
     priority: 'medium',
     examWeight: 'בינוני — 1-2 שאלות',
-    color: '#3b82f6',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -89,7 +99,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'medium',
     examWeight: 'בינוני — 1-2 שאלות',
-    color: '#3b82f6',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -99,7 +109,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'גמישות מחיר, הכנסה, צולבת',
     priority: 'low',
     examWeight: 'נמוך מאוד — לא נבחן בפועל',
-    color: '#94a3b8',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -109,7 +119,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'low',
     examWeight: 'נמוך מאוד — לא נבחן בפועל',
-    color: '#94a3b8',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -119,7 +129,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'D = S, P* ו-Q*, עודפים, רווחה',
     priority: 'high',
     examWeight: 'גבוה מאוד — 3-4 שאלות',
-    color: '#22c55e',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -129,7 +139,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'high',
     examWeight: 'גבוה מאוד — 3-4 שאלות',
-    color: '#22c55e',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -139,7 +149,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'מס, סובסידיה, גלגול מס, מחיר מינ/מקס',
     priority: 'high',
     examWeight: 'גבוה — 2-3 שאלות',
-    color: '#ef4444',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -149,7 +159,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'high',
     examWeight: 'גבוה — 2-3 שאלות',
-    color: '#ef4444',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -159,7 +169,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'ייבוא/ייצוא, מחיר עולמי, שער חליפין',
     priority: 'high',
     examWeight: 'גבוה — 2 שאלות',
-    color: '#0ea5e9',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -169,7 +179,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'high',
     examWeight: 'גבוה — 2 שאלות',
-    color: '#0ea5e9',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -179,7 +189,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'מכס, פרמיית ייצוא, דאמפינג',
     priority: 'medium',
     examWeight: 'בינוני — 1 שאלה',
-    color: '#f59e0b',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -189,7 +199,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'medium',
     examWeight: 'בינוני — 1 שאלה',
-    color: '#f59e0b',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -199,7 +209,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'MR, MR=MC, נטל עודף, מונופול טבעי',
     priority: 'low',
     examWeight: 'נמוך — לא נבחן בפועל',
-    color: '#64748b',
+    color: '#1F3864',
     kind: 'theory',
   },
   {
@@ -209,7 +219,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'תרגילים מדורגים — קל · בינוני · מתקדם',
     priority: 'low',
     examWeight: 'נמוך — לא נבחן בפועל',
-    color: '#64748b',
+    color: '#1F6F3F',
     kind: 'practice',
   },
   {
@@ -219,7 +229,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'פתרון מפורט לכל שאלות החוברת + הסבר לרב-ברירה',
     priority: 'high',
     examWeight: 'חיוני לחזרה',
-    color: '#10b981',
+    color: '#2E5496',
     kind: 'appendix',
   },
   {
@@ -229,7 +239,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'מבחנים מלאים לתרגול עצמי',
     priority: 'high',
     examWeight: 'חזרה מסכמת',
-    color: '#8b5cf6',
+    color: '#2E5496',
     kind: 'appendix',
   },
   {
@@ -239,7 +249,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'כל הנוסחאות לפי נושא',
     priority: 'high',
     examWeight: 'עזר לבחינה',
-    color: '#0891b2',
+    color: '#2E5496',
     kind: 'appendix',
   },
   {
@@ -249,7 +259,7 @@ export const CHAPTERS: ChapterMeta[] = [
     subtitle: 'מילון מונחי מיקרו-כלכלה',
     priority: 'medium',
     examWeight: 'עזר לבחינה',
-    color: '#d97706',
+    color: '#2E5496',
     kind: 'appendix',
   },
 ]

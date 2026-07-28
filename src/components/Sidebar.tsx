@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { X, Search, ChevronLeft, BookOpen } from 'lucide-react'
 import { useNavigation } from './NavigationContext'
 import { CHAPTERS } from '@/data/toc'
+import { CONTENT_BODIES } from '@/data/contentIndex'
 import { cn } from '@/lib/utils'
 
 const PRIORITY_BADGE: Record<string, { label: string; cls: string }> = {
@@ -16,11 +17,14 @@ export function Sidebar() {
   const [resultsOpen, setResultsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  /* החיפוש סורק גם את **גוף** הפרקים (CONTENT_BODIES), לא רק כותרות —
+     אחרת ביטוי כמו "עלות אלטרנטיבית" לא נמצא באף מקום. */
   const filtered = q.trim()
     ? CHAPTERS.filter(c =>
         c.title.includes(q) ||
         c.subtitle.includes(q) ||
-        String(c.number).includes(q)
+        String(c.number).includes(q) ||
+        (CONTENT_BODIES[c.id] ?? '').includes(q)
       )
     : []
 
@@ -111,36 +115,53 @@ export function Sidebar() {
             <p className="px-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">פרקי הקורס</p>
           </div>
 
-          {CHAPTERS.map(c => {
+          {CHAPTERS.map((c, i) => {
             const isActive = currentChapter === c.id
             const badge = PRIORITY_BADGE[c.priority]
+            const isPractice = c.kind === 'practice'
+            // כותרת-קבוצה לפני הנספח הראשון — מפרידה את גוף הספר מהנספחים
+            const firstAppendix = c.kind === 'appendix' && CHAPTERS[i - 1]?.kind !== 'appendix'
             return (
-              <button
-                key={c.id}
-                onClick={() => go(c.id)}
-                className={cn(
-                  'flex w-full items-start gap-2 rounded-lg px-3 py-2.5 text-right transition-colors',
-                  isActive ? 'bg-indigo-50 text-indigo-700' : 'hover:bg-muted/60 hover:text-foreground text-foreground'
-                )}
-              >
-                <span
-                  className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white text-xs font-bold"
-                  style={{ backgroundColor: c.color }}
-                >
-                  {c.number}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className={cn('text-sm font-semibold leading-snug', isActive ? 'text-indigo-700' : 'text-foreground')}>
-                    {c.title}
-                  </p>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-bold', badge.cls)}>
-                      {badge.label}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground truncate">{c.examWeight}</span>
+              <div key={c.id}>
+                {firstAppendix && (
+                  <div className="mt-3 pt-3 border-t border-border">
+                    <p className="px-3 pb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">נספחים</p>
                   </div>
-                </div>
-              </button>
+                )}
+                <button
+                  onClick={() => go(c.id)}
+                  className={cn(
+                    'flex w-full items-start gap-2 rounded-lg px-3 py-2.5 text-right transition-colors',
+                    // פרק תרגול מוזח פנימה — כדי שייקרא כשייך לפרק שמעליו
+                    isPractice && 'pr-7',
+                    isActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200' : 'hover:bg-muted/60 hover:text-foreground text-foreground'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'mt-0.5 flex shrink-0 items-center justify-center text-white text-xs font-bold',
+                      // תיאוריה/נספח = עיגול מלא · תרגול = תג מוקטן ומרובע
+                      isPractice ? 'h-5 w-5 rounded-md text-[10px]' : 'h-6 w-6 rounded-full'
+                    )}
+                    style={{ backgroundColor: c.color }}
+                  >
+                    {isPractice ? '✎' : c.number}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className={cn('text-sm leading-snug', isPractice ? 'font-medium' : 'font-semibold', isActive && 'text-indigo-700 dark:text-indigo-200')}>
+                      {c.title}
+                    </p>
+                    {!isPractice && (
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-bold', badge.cls)}>
+                          {badge.label}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground truncate">{c.examWeight}</span>
+                      </div>
+                    )}
+                  </div>
+                </button>
+              </div>
             )
           })}
         </nav>
