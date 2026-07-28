@@ -43,6 +43,10 @@ const FILE_TO_ID = {
   "Chapter9Practice.tsx": "tariff-practice",
   "Chapter10Practice.tsx": "monopoly-practice",
   "AppendixExams.tsx": "exams",
+  /* קבצי המבחנים עצמם — התוכן שלהם מצטבר תחת אותו מזהה "exams".
+     ⚠️ מבחן חדש חייב להירשם כאן, אחרת שאלותיו לא ייכנסו לחיפוש. */
+  "Exam1.tsx": "exams",
+  "Exam2.tsx": "exams",
   "AppendixFormulas.tsx": "formulas",
   "AppendixGlossary.tsx": "glossary",
 };

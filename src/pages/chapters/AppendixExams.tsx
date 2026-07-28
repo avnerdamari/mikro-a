@@ -1,6 +1,7 @@
 import { ChapterLayout } from '@/components/ChapterLayout'
 import { ExamSheet } from '@/components/ExamSolution'
 import { EXAM1 } from './Exam1'
+import { EXAM2 } from './Exam2'
 
 /* נספח: מבחני הדוגמה הרשמיים של הקורס.
    ⚠️ השאלות מועתקות מהמקור מילה במילה. הפתרונות נכתבו על ידינו —
@@ -43,9 +44,15 @@ export function AppendixExams() {
         questions={EXAM1}
       />
 
+      <ExamSheet
+        title="מבחן לדוגמה 2"
+        subtitle="20 שאלות · עקומת התמורה · עלויות · פונקציית ייצור · תחליפים ומשלימים · משק פתוח ומכס · עודפים ורווחה"
+        questions={EXAM2}
+      />
+
       <div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted-foreground">
-        <p className="font-semibold text-foreground">מבחנים 2-4 — בהכנה</p>
-        <p className="mt-1">שלושת המבחנים הרשמיים הנוספים, עם אותו פורמט פתרון.</p>
+        <p className="font-semibold text-foreground">מבחנים 3-4 — בהכנה</p>
+        <p className="mt-1">שני המבחנים הרשמיים הנוספים, עם אותו פורמט פתרון.</p>
       </div>
     </ChapterLayout>
   )
