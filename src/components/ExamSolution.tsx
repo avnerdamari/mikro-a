@@ -107,12 +107,17 @@ function GuidedStepCard({ step, idx, state, onSolve }: {
 
 export function ExamQuestionCard({ q }: { q: ExamQuestion }) {
   const [picked, setPicked] = useState<number | null>(null)
+  const [typed, setTyped] = useState('')
   const [checked, setChecked] = useState(false)
   const [showSol, setShowSol] = useState(false)
   const [guiding, setGuiding] = useState(false)
   const [solved, setSolved] = useState(0)
 
-  const isRight = checked && picked !== null && picked === q.correct
+  /* התשובה נקבעת מהאות שהוקלדה, ואם לא הוקלדה — מהאופציה שנלחצה */
+  const typedIdx = HEB.indexOf(typed.trim().replace(/['׳]/g, '').charAt(0))
+  const chosen = typedIdx >= 0 ? typedIdx : picked
+  const canCheck = chosen !== null
+  const isRight = checked && chosen !== null && chosen === q.correct
   const allDone = solved >= q.guided.length
 
   return (
@@ -132,7 +137,7 @@ export function ExamQuestionCard({ q }: { q: ExamQuestion }) {
           {q.options.map((o, i) => (
             <li key={i}>
               <button
-                onClick={() => { setPicked(i); setChecked(false) }}
+                onClick={() => { setPicked(i); setTyped(''); setChecked(false) }}
                 className={cn(
                   'flex w-full items-start gap-2 rounded-lg border px-3 py-2 text-right text-sm transition',
                   picked === i ? 'border-transparent ring-2' : 'border-border hover:bg-muted/60'
@@ -147,9 +152,20 @@ export function ExamQuestionCard({ q }: { q: ExamQuestion }) {
         </ul>
 
         <div className="mt-3 flex flex-wrap items-center gap-2">
+          <label className="text-sm font-bold text-muted-foreground">תשובתך:</label>
+          <input
+            dir="rtl"
+            value={typed}
+            onChange={e => { setTyped(e.target.value); setPicked(null); setChecked(false) }}
+            onKeyDown={e => { if (e.key === 'Enter' && canCheck) setChecked(true) }}
+            placeholder="א-ד"
+            maxLength={2}
+            className="w-16 rounded-lg border border-border bg-card px-2 py-1.5 text-center text-sm font-bold outline-none focus:border-transparent focus:ring-2"
+            style={{ ['--tw-ring-color' as string]: 'var(--brand-light)' }}
+          />
           <button
             onClick={() => setChecked(true)}
-            disabled={picked === null}
+            disabled={!canCheck}
             className="rounded-lg px-3 py-1.5 text-sm font-bold text-white shadow-sm transition hover:brightness-110 active:scale-95 disabled:opacity-50"
             style={{ backgroundColor: 'var(--brand-accent)' }}
           >
