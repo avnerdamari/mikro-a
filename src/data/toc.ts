@@ -235,8 +235,8 @@ export const CHAPTERS: ChapterMeta[] = [
   {
     id: 'exams',
     number: 12,
-    title: 'נספח: מבחני תרגול',
-    subtitle: 'מבחנים מלאים לתרגול עצמי',
+    title: 'נספח: מבחנים לדוגמה',
+    subtitle: 'מבחני הדוגמה של הקורס — עם פתרון מלא',
     priority: 'high',
     examWeight: 'חזרה מסכמת',
     color: '#2E5496',
