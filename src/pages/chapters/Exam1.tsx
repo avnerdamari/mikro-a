@@ -56,6 +56,31 @@ const TAHINI_INTRO = (
 export const EXAM1: ExamQuestion[] = [
   {
     n: 1, intro: PPF_INTRO,
+    guided: [
+      { ask: 'מה צריך להשוות כדי להחליט לאיזה מוצר להקצות כל קבוצת עובדים?',
+        choices: [<>את התפוקה לעובד — מי מייצר יותר יחידות</>, <>את ההכנסה לעובד — תפוקה × מחיר</>, <>את מחירי המוצרים בלבד</>],
+        correct: 1,
+        hint: <>תפוקה גבוהה במוצר זול יכולה להכניס פחות מתפוקה נמוכה במוצר יקר. מה שקובע הוא הכסף.</>,
+        reveal: <>משווים <b>הכנסה לעובד</b>: <span dir="ltr">תפוקה לעובד × מחיר המוצר</span>. כל קבוצה מוקצית למוצר שבו הכנסתה גבוהה יותר.</> },
+      { ask: 'נחשב לעובד חרוץ: ריאלטי 0.5×5 = 2.5 ₪, גרעינים 2×2 = 4 ₪. לאן הוא הולך?',
+        choices: [<>לריאלטי</>, <>לגרעינים</>, <>לא משנה, זהה</>],
+        correct: 1,
+        hint: <>4 ₪ גדול מ-2.5 ₪.</>,
+        reveal: <>החרוץ לגרעינים (4 &gt; 2.5). ולעצלן: ריאלטי <span dir="ltr">2×5 = 10</span> מול גרעינים <span dir="ltr">4×2 = 8</span> ← <b>ריאלטי</b>.</> },
+    ],
+    summary: <>השוונו הכנסה לעובד בכל חלופה. החרוץ מרוויח יותר בגרעינים (4 מול 2.5), העצלן בריאלטי (10 מול 8) — ולכן ההקצאה היא עצלנים לריאלטי וחרוצים לגרעינים, תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>שתי קבוצות, שתי חלופות — טבלת הכנסה לעובד מבהירה מיד לאן כל אחת הולכת:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">עובד</th><th className="border border-border p-1.5">ריאלטי (×5₪)</th><th className="border border-border p-1.5">גרעינים (×2₪)</th><th className="border border-border p-1.5">הקצאה</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 text-center">חרוץ</td><td className="border border-border p-1.5 text-center">2.5 ₪</td><td className="border border-border p-1.5 text-center font-bold">4 ₪</td><td className="border border-border p-1.5 text-center">גרעינים</td></tr>
+            <tr><td className="border border-border p-1.5 text-center">עצלן</td><td className="border border-border p-1.5 text-center font-bold">10 ₪</td><td className="border border-border p-1.5 text-center">8 ₪</td><td className="border border-border p-1.5 text-center">ריאלטי</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
     question: <>נתון שמחיר השוק של ריאלטי הוא 5 ש"ח ומחיר השוק של גרעינים הוא 2 ₪. על סמך הנתונים ניתן לקבוע כי</>,
     options: [
       <>למשק כדאי להקצות את העובדים העצלנים לייצור ריאלטי ואת העובדים החרוצים לייצור גרעינים</>,
@@ -85,6 +110,33 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 2,
+    guided: [
+      { ask: 'מחיר הגרעינים עלה מ-2 ל-6. מה השלב הראשון?',
+        choices: [<>להניח שההקצאה מהשאלה הקודמת נשארת</>, <>לחשב מחדש את ההכנסה לעובד בכל חלופה</>, <>לבדוק אם עקומת התמורה זזה</>],
+        correct: 1,
+        hint: <>שינוי מחיר יכול להפוך את ההקצאה — ולכן מחשבים מחדש, לא מניחים.</>,
+        reveal: <>חרוץ: ריאלטי 2.5 מול גרעינים <span dir="ltr">2×6 = 12</span>. עצלן: ריאלטי 10 מול גרעינים <span dir="ltr">4×6 = 24</span>. <b>שתי הקבוצות</b> מעדיפות גרעינים.</> },
+      { ask: 'כל המשק לגרעינים — מה ההכנסה הכוללת?',
+        choices: [<><span dir="ltr">12,500 ₪</span></>, <><span dir="ltr">36,000 ₪</span></>, <><span dir="ltr">14,000 ₪</span></>],
+        correct: 1,
+        hint: <>סכמו את התפוקה של שתי הקבוצות בגרעינים, והכפילו במחיר החדש.</>,
+        reveal: <><span dir="ltr">(1000×2 + 1000×4) × 6 = 6,000 × 6 = 36,000 ₪</span></> },
+    ],
+    summary: <>עליית מחיר הגרעינים ל-6 ₪ הפכה אותם למשתלמים יותר <b>לשתי</b> הקבוצות, ולכן כל המשק עובר לגרעינים בהכנסה של 36,000 ₪ — תשובה <b>א</b>. שימו לב ש-12,500 (אופציה ג) הוא חישוב נכון לחלופה נחותה.</>,
+    visual: (
+      <>
+        <p>אותה טבלה, מחיר גרעינים חדש — וההקצאה מתהפכת:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">עובד</th><th className="border border-border p-1.5">ריאלטי (×5₪)</th><th className="border border-border p-1.5">גרעינים (×6₪)</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 text-center">חרוץ</td><td className="border border-border p-1.5 text-center">2.5 ₪</td><td className="border border-border p-1.5 text-center font-bold">12 ₪</td></tr>
+            <tr><td className="border border-border p-1.5 text-center">עצלן</td><td className="border border-border p-1.5 text-center">10 ₪</td><td className="border border-border p-1.5 text-center font-bold">24 ₪</td></tr>
+          </tbody>
+        </table>
+        <p className="mt-1">שתי השורות מצביעות לאותו כיוון → פינה של עקומת התמורה, לא נקודה פנימית.</p>
+      </>
+    ),
+    formula: <>אותו כלל כמו קודם: <span dir="ltr">הכנסה לעובד = תפוקה × מחיר</span>. הכנסת המשק <span dir="ltr">= Σ (עובדים × תפוקה × מחיר)</span>.</>,
     question: <>נתון שבעקבות מחקר חדש שבוצע ודיווח על היתרונות הבריאותיים החשובים של אכילת גרעינים, עלה מחירם ל-6. מחיר הריאלטי נשאר 5 ₪. על סמך הנתונים ניתן לקבוע כי</>,
     options: [
       <>למשק כדאי לעבור לייצר ולמכור רק גרעינים וההכנסות שלו יהיו 36,000 ש"ח</>,
@@ -115,6 +167,35 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 3,
+    guided: [
+      { ask: 'שיפור טכנולוגי בייצור X — מה קורה לעקומת התמורה?',
+        choices: [<>זזה פנימה</>, <>זזה החוצה על ציר X</>, <>לא משתנה</>],
+        correct: 1,
+        hint: <>שיפור טכנולוגי מרחיב את מה שהמשק <i>יכול</i> לייצר.</>,
+        reveal: <>העקומה זזה <b>החוצה</b> — אך רק על ציר X, כי השיפור הוא ב-X בלבד (הזזה א-סימטרית).</> },
+      { ask: 'המשק ממשיך לייצר בדיוק אותן כמויות. איפה הוא נמצא ביחס לעקומה החדשה?',
+        choices: [<>עליה</>, <>מתחתיה</>, <>מעליה</>],
+        correct: 1,
+        hint: <>העקומה זזה החוצה, הנקודה לא זזה. מי נשאר מאחור?</>,
+        reveal: <>הנקודה נשארה במקומה בעוד העקומה התרחקה → היא כעת <b>מתחת</b> לעקומה = ייצור לא יעיל.</> },
+    ],
+    summary: <>השיפור הזיז את העקומה החוצה, אך המשק לא ניצל אותו והמשיך באותן כמויות. לכן הוא נמצא כעת <b>מתחת</b> לעקומה החדשה — ייצור לא יעיל, תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>שתי עקומות, נקודה אחת שלא זזה:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`Y
+│╲  ╲
+│ ╲  ╲   ← עקומה חדשה (אחרי השיפור ב-X)
+│  ╲  ╲
+│  ●╲  ╲   ● = נקודת הייצור, לא זזה
+│    ╲  ╲
+│  עקומה ╲
+│  מקורית ╲
+└──────────── X`}</pre>
+        <p className="mt-1">הנקודה הייתה <b>על</b> העקומה המקורית, וכעת היא <b>מתחת</b> לחדשה.</p>
+      </>
+    ),
+    formula: <>אין נוסחה — זו שאלה מושגית. הכלל: נקודה <b>על</b> העקומה = יעיל · <b>מתחת</b> = בזבוז/אבטלה · <b>מעל</b> = בלתי-אפשרי.</>,
     question: <>משק מייצר ביעילות שני מוצרים X ו-Y. לאחרונה חל שיפור טכנולוגי בייצור מוצר X בלבד. ידוע שהמשק המשיך לייצר כמויות זהות לכמויות שייצר לפני השיפור הטכנולוגי. מכאן ניתן להסיק כי:</>,
     options: [
       <>המשק מייצר בנקודה לא יעילה</>,
@@ -124,7 +205,6 @@ export const EXAM1: ExamQuestion[] = [
     ],
     correct: 0,
     understand: <>שיפור טכנולוגי ב-X מרחיב את אפשרויות הייצור, אבל המשק ממשיך לייצר <b>בדיוק אותן כמויות</b>. השאלה מה זה אומר על מיקומו.</>,
-    visual: <>העקומה זזה החוצה על ציר X. נקודת הייצור נשארה במקומה — ולכן היא כעת <b>מתחת</b> לעקומה החדשה.</>,
     steps: (
       <>
         <p><b>למה זו שאלת מיקום ולא שאלת עקומה:</b> השיפור מזיז את העקומה החוצה — זו עובדה. מה שהשאלה בודקת הוא איפה נמצאת נקודת הייצור <i>ביחס</i> לעקומה החדשה.</p>
@@ -144,6 +224,33 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 4,
+    guided: [
+      { ask: 'מה ההבדל בין דבר שמזיז את העקומה לדבר שמזיז רק את הנקודה עליה?',
+        choices: [<>העקומה זזה כשמשתנה כמות גורמי הייצור או הטכנולוגיה</>, <>העקומה זזה בכל שינוי במשק</>, <>העקומה זזה כשמשתנה תמהיל הייצור</>],
+        correct: 0,
+        hint: <>שאלו: האם המשאב <i>נעלם</i>, או רק <i>לא מנוצל</i>?</>,
+        reveal: <>העקומה זזה רק כשמשתנים <b>גורמי הייצור או הטכנולוגיה</b>. אבטלה, חוסר יעילות ותמהיל — מזיזים את הנקודה, לא את העקומה.</> },
+      { ask: 'איזו מהאופציות מקטינה בפועל את כמות גורמי הייצור?',
+        choices: [<>הורדת גיל הפרישה</>, <>העברת עובדים בין מוצרים</>, <>עלייה באבטלה</>],
+        correct: 0,
+        hint: <>מי מהן מוציאה עובדים <b>מכוח העבודה</b> ולא רק מהתעסוקה?</>,
+        reveal: <>הורדת גיל הפרישה מוציאה עובדים מכוח העבודה → פחות גורמי ייצור → העקומה זזה <b>פנימה</b>.</> },
+    ],
+    summary: <>רק שינוי בגורמי הייצור או בטכנולוגיה מזיז את העקומה. הורדת גיל הפרישה מקטינה את כוח העבודה ולכן מזיזה אותה פנימה — תשובה <b>א</b>. אבטלה וחוסר יעילות (ג, ד) מציבים את המשק מתחת לעקומה, אך אינם מזיזים אותה.</>,
+    visual: (
+      <>
+        <p>ההבחנה המרכזית בשאלה — שני דברים שונים לגמרי:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">מה קרה</th><th className="border border-border p-1.5">התוצאה</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5">פחות עובדים / טכנולוגיה גרועה</td><td className="border border-border p-1.5"><b>העקומה</b> זזה פנימה</td></tr>
+            <tr><td className="border border-border p-1.5">אבטלה / חוסר יעילות</td><td className="border border-border p-1.5"><b>הנקודה</b> יורדת מתחת לעקומה</td></tr>
+            <tr><td className="border border-border p-1.5">העברת עובדים בין מוצרים</td><td className="border border-border p-1.5"><b>תנועה לאורך</b> העקומה</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
+    formula: <>אין נוסחה. הכלל: <b>העקומה</b> = מה שהמשק <i>יכול</i> לייצר · <b>הנקודה</b> = מה שהוא <i>בוחר</i> לייצר בפועל.</>,
     question: <>עקומת התמורה של המשק תנוע כלפי פנים (מעקומה A לעקומה B) אם:</>,
     options: [
       <>יורידו את גיל הפרישה לגימלאות</>,
@@ -171,6 +278,35 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 5,
+    guided: [
+      { ask: 'נתונה טבלת MC ומחיר 7 ₪. עד איזו כמות כדאי לייצר?',
+        choices: [<>עד שה-MC הכי נמוך</>, <>כל עוד <span dir="ltr">MC ≤ P</span></>, <>עד המקסימום שבטבלה</>],
+        correct: 1,
+        hint: <>כל יחידה נוספת שווה לייצר אם מה שהיא מכניסה (המחיר) מכסה מה שהיא עולה (ה-MC).</>,
+        reveal: <><span dir="ltr">MC(1)=3 ≤ 7</span> ✓ · <span dir="ltr">MC(2)=5 ≤ 7</span> ✓ · <span dir="ltr">MC(3)=8 &gt; 7</span> ✗ → <b>Q = 2</b>.</> },
+      { ask: 'מצאנו Q=2. עכשיו — האם בכלל כדאי לייצר, ובאיזה טווח?',
+        choices: [<>משווים P ל-AVC לטווח הקצר, ול-AC לטווח הארוך</>, <>משווים P ל-MC בלבד</>, <>אם יש הפסד — תמיד סוגרים</>],
+        correct: 0,
+        hint: <>בטווח הקצר העלות הקבועה כבר שולמה; בטווח הארוך צריך לכסות גם אותה.</>,
+        reveal: <><span dir="ltr">AVC = 8÷2 = 4</span> → <span dir="ltr">7 ≥ 4</span> ✓ מייצרים בקצר. <span dir="ltr">AC = 28÷2 = 14</span> → <span dir="ltr">7 &lt; 14</span> ✗ לא בארוך.</> },
+    ],
+    summary: <>הכמות נקבעה לפי <span dir="ltr">MC ≤ P</span> ויצאה 2. הכדאיות נבדקה בשתי רמות: המחיר מכסה את ה-AVC (4) ולכן מייצרים בטווח הקצר, אך לא את ה-AC (14) ולכן לא בטווח הארוך — תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>המחיר כקו אופקי, וה-MC חוצה אותו בין 2 ל-3:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`₪
+30 │                    ●
+15 │                ●
+10 │            ●
+ 8 │        ●           ← MC עוקף כאן
+ 7 ├──────────────────── P = 7
+ 5 │    ●
+ 3 │●
+   └─┴──┴──┴──┴──┴──┴─ Q
+     1  2  3  4  5  6
+        ↑ עוצרים`}</pre>
+      </>
+    ),
     question: (
       <>
         <p>להלן נתונים על העלות השולית בייצור חודשי של פירמה המייצרת סבון ידיים ופועלת בתנאי תחרות:</p>
@@ -213,6 +349,32 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 6,
+    guided: [
+      { ask: 'כאן נתונה טבלת TC ולא MC. מה עושים קודם?',
+        choices: [<>מחלקים TC בכמות</>, <>גוזרים MC — ההפרש בין שתי עלויות עוקבות</>, <>מחסרים את העלות הקבועה</>],
+        correct: 1,
+        hint: <>העלות השולית היא <i>התוספת</i> לעלות מיחידה נוספת.</>,
+        reveal: <><span dir="ltr">MC = ΔTC</span>: <span dir="ltr">35−30=5</span>, <span dir="ltr">43−35=8</span>, <span dir="ltr">53−43=10</span>, <span dir="ltr">67−53=14</span>, <span dir="ltr">87−67=20</span>.</> },
+      { ask: 'המחיר 15 ₪. כמה מארזים ייצר, והאם בטווח הארוך?',
+        choices: [<>4 מארזים, גם בטווח הארוך</>, <>4 מארזים, בטווח הקצר בלבד</>, <>5 מארזים — פדיון מקסימלי</>],
+        correct: 1,
+        hint: <>אחרי שקבעתם כמות — השוו את המחיר ל-AC כדי להכריע על הטווח הארוך.</>,
+        reveal: <>עד <span dir="ltr">MC=14 ≤ 15</span> → <b>Q=4</b>. <span dir="ltr">AVC = 37÷4 = 9.25</span> ✓ קצר · <span dir="ltr">AC = 67÷4 = 16.75 &gt; 15</span> ✗ ארוך.</> },
+    ],
+    summary: <>גזרנו MC מטבלת TC, קבענו <span dir="ltr">Q=4</span> לפי <span dir="ltr">MC ≤ 15</span>, ואז בדקנו כדאיות: המחיר מכסה AVC אך לא AC → ייצור בטווח הקצר בלבד, תשובה <b>א</b>. אופציה ד היא המלכודת — מקסימום פדיון אינו מקסימום רווח.</>,
+    visual: (
+      <>
+        <p>גזירת MC מ-TC, והשוואה למחיר:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">Q</th>{[1,2,3,4,5].map(q=><th key={q} className="border border-border p-1.5">{q}</th>)}</tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 font-bold">TC</td>{[35,43,53,67,87].map((v,i)=><td key={i} className="border border-border p-1.5 text-center">{v}</td>)}</tr>
+            <tr><td className="border border-border p-1.5 font-bold">MC</td>{[5,8,10,14,20].map((v,i)=><td key={i} className={`border border-border p-1.5 text-center ${v<=15?'font-bold':'text-red-500'}`}>{v}</td>)}</tr>
+            <tr><td className="border border-border p-1.5 font-bold">≤ 15?</td>{[5,8,10,14,20].map((v,i)=><td key={i} className="border border-border p-1.5 text-center">{v<=15?'✓':'✗'}</td>)}</tr>
+          </tbody>
+        </table>
+      </>
+    ),
     question: (
       <>
         <p>ענף המסכות הסטריליות פועל בתנאי תחרות משוכללת. להלן נתונים על פונקציית העלויות של יצרן בודד הפועל בענף. ידוע כי מחיר מארז של מסיכות בשוק הינו 15 ש"ח לחבילה.</p>
@@ -256,6 +418,35 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 7, intro: PEARS_INTRO,
+    guided: [
+      { ask: 'נתונה תפוקה כוללת לפי מספר עובדים. מה מחשבים כדי להחליט כמה להעסיק?',
+        choices: [<>את התפוקה הכוללת המקסימלית</>, <>את התפוקה השולית, ואז את ערכה בכסף (VMP)</>, <>את התפוקה הממוצעת</>],
+        correct: 1,
+        hint: <>התפוקה תמיד עולה עם עוד עובד. השאלה אם התוספת <i>שווה</i> את שכרו.</>,
+        reveal: <><span dir="ltr">MP = ΔTP</span>: 700, 600, 500, 400, 300, 200. <span dir="ltr">VMP = MP × 20</span>: 14,000 · 12,000 · 10,000 · 8,000 · 6,000 · 4,000.</> },
+      { ask: 'השכר 5,000 ₪. איפה עוצרים?',
+        choices: [<>אחרי העובד הרביעי</>, <>אחרי העובד החמישי</>, <>אחרי העובד השישי</>],
+        correct: 1,
+        hint: <>מעסיקים כל עוד <span dir="ltr">VMP ≥ W</span>. בדקו את החמישי והשישי.</>,
+        reveal: <>החמישי: <span dir="ltr">6,000 ≥ 5,000</span> ✓ · השישי: <span dir="ltr">4,000 &lt; 5,000</span> ✗ → <b>5 עובדים, תפוקה 2,500</b>.</> },
+    ],
+    summary: <>גזרנו MP מהתפוקה הכוללת, הכפלנו במחיר לקבלת VMP, והשווינו לשכר. העובד החמישי עדיין מכסה את עצמו (6,000 מול 5,000) והשישי לא — ולכן 5 עובדים ותפוקה 2,500, תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>ה-VMP יורד ופוגש את קו השכר בין העובד החמישי לשישי:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`₪
+14,000 │●
+12,000 │   ●
+10,000 │      ●
+ 8,000 │         ●
+ 6,000 │            ●      ← עדיין משתלם
+ 5,000 ├───────────────── W = 5,000
+ 4,000 │               ●   ← כבר לא
+       └─┴──┴──┴──┴──┴──┴ L
+         1  2  3  4  5  6
+                    ↑ עוצרים`}</pre>
+      </>
+    ),
     question: <>ידוע כי המחיר של אגס בשוק הינו 20 ₪ ליחידה ושכר העבודה של פועל הינו 5,000 ₪ בחודש. מנתונים אלו ניתן להסיק כי:</>,
     options: [
       <>היצרן ייצר 2,500 ק"ג אגסים ויעסיק 5 פועלים</>,
@@ -292,6 +483,32 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 8,
+    guided: [
+      { ask: 'מה נכנס לחישוב הרווח כאן?',
+        choices: [<>פדיון פחות שכר — העבודה היא גורם הייצור היחיד</>, <>פדיון פחות עלות קבועה</>, <>רק הפדיון</>],
+        correct: 0,
+        hint: <>בשאלה נאמר שהיצרן מייצר "באמצעות עובדים בלבד".</>,
+        reveal: <><span dir="ltr">π = TR − TC = (P × Q) − (W × L)</span> — אין עלויות אחרות.</> },
+      { ask: 'נציב: 5 עובדים, תפוקה 2,500, מחיר 20, שכר 5,000.',
+        choices: [<><span dir="ltr">22,000 ₪</span></>, <><span dir="ltr">25,000 ₪</span></>, <><span dir="ltr">50,000 ₪</span></>],
+        correct: 1,
+        hint: <>חשבו פדיון, חשבו עלות שכר, והחסירו.</>,
+        reveal: <><span dir="ltr">TR = 20 × 2,500 = 50,000</span> · <span dir="ltr">TC = 5 × 5,000 = 25,000</span> · <span dir="ltr">π = 25,000 ₪</span>.</> },
+    ],
+    summary: <>הרווח הוא פדיון פחות עלות השכר: <span dir="ltr">50,000 − 25,000 = 25,000 ₪</span> — תשובה <b>א</b>. אופציה ג (50,000) היא הפדיון בלבד, בלי להחסיר עלויות.</>,
+    visual: (
+      <>
+        <p>בדיקה שההעסקה ב-5 עובדים אכן ממקסמת רווח:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">L</th><th className="border border-border p-1.5">TR</th><th className="border border-border p-1.5">עלות שכר</th><th className="border border-border p-1.5">רווח</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 text-center">4</td><td className="border border-border p-1.5 text-center">44,000</td><td className="border border-border p-1.5 text-center">20,000</td><td className="border border-border p-1.5 text-center">24,000</td></tr>
+            <tr className="font-bold"><td className="border border-border p-1.5 text-center">5</td><td className="border border-border p-1.5 text-center">50,000</td><td className="border border-border p-1.5 text-center">25,000</td><td className="border border-border p-1.5 text-center">25,000 ←</td></tr>
+            <tr><td className="border border-border p-1.5 text-center">6</td><td className="border border-border p-1.5 text-center">54,000</td><td className="border border-border p-1.5 text-center">30,000</td><td className="border border-border p-1.5 text-center">24,000</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
     question: <>מנתונים אלו ניתן להסיק כי הרווח של היצרן הינו:</>,
     options: [<>25,000 ₪.</>, <>28,000 ₪.</>, <>22,000 ₪.</>, <>19,000 ₪.</>],
     correct: 0,
@@ -315,6 +532,36 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 9,
+    guided: [
+      { ask: 'שיפור טכנולוגי בייצור הגבינה — מה קורה בשוק הגבינה עצמו?',
+        choices: [<>הביקוש גדל, המחיר עולה</>, <>ההיצע גדל, המחיר יורד והכמות גדלה</>, <>ההיצע קטן, המחיר עולה</>],
+        correct: 1,
+        hint: <>שיפור טכנולוגי מוזיל את הייצור — זה משפיע על ההיצע, לא על הביקוש.</>,
+        reveal: <>ההיצע גדל → המחיר <b>יורד</b> והכמות <b>גדלה</b>.</> },
+      { ask: 'אבטיחים וגבינה הם משלימים. הגבינה הוזלה — מה קורה לביקוש לאבטיחים?',
+        choices: [<>גדל</>, <>קטן</>, <>לא משתנה</>],
+        correct: 0,
+        hint: <>משלימים נצרכים <i>יחד</i>. יותר גבינה → יותר ממה?</>,
+        reveal: <>צורכים יותר גבינה → צורכים יותר אבטיחים → הביקוש לאבטיחים <b>גדל</b> → מחיר וכמות עולים → ההוצאות עולות.</> },
+    ],
+    summary: <>שני שלבים: שיפור טכנולוגי הגדיל את היצע הגבינה והוזיל אותה; ומכיוון שהמוצרים משלימים, הביקוש לאבטיחים גדל. בעליית ביקוש גם המחיר וגם הכמות עולים, ולכן ההוצאות על אבטיחים עולות — תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>שרשרת ההשפעה בין שני השווקים:</p>
+        <pre dir="ltr" className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight">{`שוק הגבינה                    שוק האבטיחים
+─────────────                 ──────────────
+שיפור טכנולוגי
+      ↓
+   היצע ↑
+      ↓
+  מחיר ↓ כמות ↑   ──משלימים──►   ביקוש ↑
+                                     ↓
+                                מחיר ↑ כמות ↑
+                                     ↓
+                                 הוצאות ↑`}</pre>
+      </>
+    ),
+    formula: <>אין נוסחה. הכללים: שיפור טכנולוגי → היצע ↑ · משלימים: הוזלת האחד → ביקוש לשני ↑ · עליית ביקוש → <span dir="ltr">P↑ ו-Q↑</span> ולכן <span dir="ltr">P×Q</span> עולה בוודאות.</>,
     question: <>שוק האבטיחים ושוק הגבינה הבולגרית נמצאים בשווי משקל בתחרות משוכללת. ידוע שאבטיחים וגבינה בולגרית הם מוצרים משלימים. בעקבות שיפור טכנולוגי בייצור הגבינה הבולגרית:</>,
     options: [
       <>הוצאות הצרכנים לרכישת אבטיחים יעלו</>,
@@ -343,6 +590,34 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 10,
+    guided: [
+      { ask: 'הוטל מס. איזו עקומה זזה?',
+        choices: [<>הביקוש — הצרכנים ירצו פחות</>, <>ההיצע — הייצור מתייקר</>, <>שתיהן</>],
+        correct: 1,
+        hint: <>המס מוטל על העסקה ומייקר את הייצור. הרצון של הצרכנים לא השתנה.</>,
+        reveal: <>ההיצע זז שמאלה/מעלה. הביקוש נשאר במקומו — יש <b>תנועה לאורכו</b>, לא הזזה שלו.</> },
+      { ask: 'מה קורה למחיר לצרכן ולמחיר ליצרן?',
+        choices: [<>שניהם עולים</>, <>לצרכן עולה, ליצרן יורד</>, <>שניהם יורדים</>],
+        correct: 1,
+        hint: <>הפער בין שני המחירים הוא בדיוק גובה המס.</>,
+        reveal: <>הצרכן משלם <b>יותר</b>, היצרן מקבל (אחרי המס) <b>פחות</b>, והכמות קטנה. הפער ביניהם = המס.</> },
+    ],
+    summary: <>מס מזיז את ההיצע שמאלה: המחיר לצרכן עולה, הכמות קטנה, והמחיר ליצרן דווקא יורד — תשובה <b>א</b>. אופציה ג היא המלכודת: היא מבלבלת בין שני המחירים, שהפער ביניהם הוא המס עצמו.</>,
+    visual: (
+      <>
+        <p>המס מזיז את ההיצע, ונוצרים שני מחירים:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`P
+│ D╲      ╱S'  ← היצע אחרי המס
+│   ╲   ╱╱S
+│Pc··╲·╳    ← מחיר לצרכן (עלה)
+│     ╳╲
+│Pp··╱··╲   ← מחיר ליצרן (ירד)
+│   ╱    ╲
+└────┴────── Q
+     Q'  Q   (הכמות קטנה)`}</pre>
+        <p className="mt-1"><span dir="ltr">Pc − Pp = המס</span></p>
+      </>
+    ),
     question: <>בשוק מוצר X קיים שיווי משקל בתחרות משוכללת. עקומות הביקוש וההיצע רגילות. בעקבות השפעה שלילית של מוצר זה על הסביבה החליטה הממשלה על הטלת מס בשוק מוצר X. כתוצאה מכך בשוק מוצר X:</>,
     options: [
       <>המחיר לצרכן עלה וכמותו הנמכרת תקטן</>,
@@ -352,7 +627,7 @@ export const EXAM1: ExamQuestion[] = [
     ],
     correct: 0,
     understand: <>הטלת מס בשוק תחרותי — מה קורה למחיר לצרכן, למחיר ליצרן ולכמות. שאלה איכותית, בלי מספרים.</>,
-    visual: <>המס מזיז את עקומת ההיצע <b>שמאלה/מעלה</b>. נקודת שיווי המשקל החדשה: מחיר גבוה יותר לצרכן, כמות קטנה יותר.</>,
+    formula: <>אין צורך בנוסחה — הכיוון נגזר מצורת העקומות. הקשר: <span dir="ltr">P_צרכן = P_יצרן + t</span>, ולכן שני המחירים נעים בכיוונים <b>מנוגדים</b>.</>,
     steps: (
       <>
         <p><b>למה אין צורך במספרים:</b> הכיוון נקבע מצורת העקומות בלבד — ביקוש יורד והיצע עולה.</p>
@@ -372,6 +647,33 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 11,
+    guided: [
+      { ask: 'מס על ברוקולי — מה קורה בשוק הברוקולי?',
+        choices: [<>מחיר לצרכן עולה, כמות קטנה</>, <>מחיר לצרכן יורד, כמות גדלה</>, <>שום דבר לא משתנה</>],
+        correct: 0,
+        hint: <>מס מייקר ייצור ומקטין היצע — כמו בשאלה הקודמת.</>,
+        reveal: <>ההיצע קטן → מחיר לצרכן <b>עולה</b>, כמות <b>קטנה</b>, ומחיר ליצרן יורד.</> },
+      { ask: 'ברוקולי וכרובית תחליפיים. הברוקולי התייקר — מה בשוק הכרובית?',
+        choices: [<>הביקוש לכרובית קטן</>, <>הביקוש לכרובית גדל</>, <>לא מושפע</>],
+        correct: 1,
+        hint: <>תחליפיים = ממלאים צורך דומה. אם האחד התייקר, לאן עוברים?</>,
+        reveal: <>עוברים לכרובית → הביקוש אליה <b>גדל</b> → מחיר וכמות עולים → ההוצאות עליה עולות.</> },
+    ],
+    summary: <>המס ייקר את הברוקולי, והצרכנים עברו לתחליף. הביקוש לכרובית גדל, ולכן גם המחיר וגם הכמות שלה עולים — וההוצאות עליה עולות בוודאות, תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>שימו לב להבדל מול שאלה 9 — שם משלימים, כאן תחליפיים:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">סוג הקשר</th><th className="border border-border p-1.5">מה קרה למוצר א'</th><th className="border border-border p-1.5">הביקוש למוצר ב'</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5">משלימים (ש.9)</td><td className="border border-border p-1.5">הוזל</td><td className="border border-border p-1.5 font-bold">גדל</td></tr>
+            <tr><td className="border border-border p-1.5">תחליפיים (כאן)</td><td className="border border-border p-1.5">התייקר</td><td className="border border-border p-1.5 font-bold">גדל</td></tr>
+          </tbody>
+        </table>
+        <p className="mt-1">בשני המקרים הביקוש לשני גדל — אבל <b>מסיבות הפוכות</b>.</p>
+      </>
+    ),
+    formula: <>אין נוסחה. הכללים: מס → היצע ↓ · תחליפיים: התייקרות האחד → ביקוש לשני ↑ · עליית ביקוש → <span dir="ltr">P↑ ו-Q↑</span> ולכן ההוצאות עולות בוודאות.</>,
     question: <>ברוקולי וכרובית הינם מוצרים תחליפיים. בשני הענפים מתקיימת תחרות משוכללת. הממשלה הטילה מס על כל יחידה נמכרת של ברוקולי. כתוצאה מכך:</>,
     options: [
       <>הוצאות הצרכנים על כרובית יעלו</>,
@@ -400,6 +702,32 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 12,
+    guided: [
+      { ask: 'ירידה בהכנסה, ומוצר X הוא **נחות**. מה קורה לביקוש?',
+        choices: [<>קטן — פחות כסף, פחות קניות</>, <>גדל — במוצר נחות היחס הפוך</>, <>לא משתנה</>],
+        correct: 1,
+        hint: <>מוצר נחות = כשההכנסה עולה קונים ממנו פחות. מה קורה כשההכנסה יורדת?</>,
+        reveal: <>במוצר נחות ירידת הכנסה <b>מגדילה</b> את הביקוש. העקומה זזה <b>ימינה</b>. זו המלכודת המרכזית בשאלה.</> },
+      { ask: 'גם ההיצע גדל (חומרי גלם הוזלו). שתי העקומות זזו ימינה — מה ודאי ומה לא?',
+        choices: [<>הכמות ודאית (גדלה), המחיר לא ידוע</>, <>המחיר ודאי (יורד), הכמות לא ידועה</>, <>שניהם לא ידועים</>],
+        correct: 0,
+        hint: <>כששתי העקומות זזות לאותו כיוון — הכמות מתחזקת פעמיים, אבל המחיר נדחף לשני הכיוונים.</>,
+        reveal: <>הכמות <b>גדלה בוודאות</b>. המחיר — הביקוש דוחף מעלה וההיצע מטה, ולכן הכיוון תלוי בגודל היחסי ואינו ידוע.</> },
+    ],
+    summary: <>מוצר נחות + ירידת הכנסה = הביקוש <b>גדל</b>; והוזלת חומרי גלם מגדילה את ההיצע. שתי העקומות ימינה → הכמות גדלה בוודאות, המחיר בלתי ידוע — תשובה <b>א</b>. מי שפספס את המילה "נחות" הגיע למסקנה הפוכה.</>,
+    visual: (
+      <>
+        <p>הכלל הכללי לשני שינויים בו-זמנית:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">כיווני ההזזה</th><th className="border border-border p-1.5">כמות</th><th className="border border-border p-1.5">מחיר</th></tr></thead>
+          <tbody>
+            <tr className="font-bold"><td className="border border-border p-1.5">שתיהן לאותו כיוון (כאן)</td><td className="border border-border p-1.5 text-center">ודאי ✓</td><td className="border border-border p-1.5 text-center">לא ידוע ✗</td></tr>
+            <tr><td className="border border-border p-1.5">כיוונים מנוגדים</td><td className="border border-border p-1.5 text-center">לא ידוע ✗</td><td className="border border-border p-1.5 text-center">ודאי ✓</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
+    formula: <>אין נוסחה. שני הכללים: <b>מוצר נחות</b> — הכנסה ↓ גורמת לביקוש ↑ · <b>שני שינויים</b> — מה שזז לאותו כיוון ודאי, מה שנדחף לשני כיוונים אינו ידוע.</>,
     question: (
       <>
         <p>שוק מוצר X פועל בתנאים של תחרות משוכללת. לאחרונה התרחשו בשוק X שני השינויים הבאים במקביל:</p>
@@ -439,6 +767,36 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 13, intro: OPEN_INTRO,
+    guided: [
+      { ask: 'המחיר העולמי 20$ ושער החליפין 5. מה הצעד הראשון?',
+        choices: [<>להציב 20 בעקומות</>, <>להמיר לשקלים: <span dir="ltr">20 × 5 = 100 ₪</span></>, <>לחשב קודם שיווי משקל סגור</>],
+        correct: 1,
+        hint: <>העקומות נתונות בשקלים. אי אפשר להציב בהן מחיר דולרי.</>,
+        reveal: <><span dir="ltr">20$ × 5 = 100 ₪</span>. מי שמציב 20 מקבל <span dir="ltr">Qs = −30</span> — תוצאה חסרת משמעות, וזה הסימן שמשהו שגוי.</> },
+      { ask: 'במחיר 100: <span dir="ltr">Qd = 25</span>, <span dir="ltr">Qs = 50</span>. ייבוא או ייצוא, ובכמה?',
+        choices: [<>ייבוא של 25</>, <>ייצוא של 25</>, <>ייצוא של 75</>],
+        correct: 1,
+        hint: <>אם מייצרים יותר ממה שצורכים — לאן הולך העודף?</>,
+        reveal: <>ההיצע (50) גדול מהביקוש (25) → העודף מיוצא: <span dir="ltr">50 − 25 = 25</span> יחידות.</> },
+    ],
+    summary: <>המרנו את המחיר העולמי לשקלים (100 ₪), הצבנו בשתי העקומות וקיבלנו ביקוש 25 מול היצע 50. העודף מיוצא — 25 יחידות, תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>המחיר העולמי מעל שיווי המשקל הסגור → נוצר עודף היצע שמיוצא:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`P
+│ D╲          ╱S
+│   ╲      ╱
+100├────╳────────  ← מחיר עולמי
+│     ╱ ╲
+│ 80├─╳───╲──      ← ש"מ סגור
+│   ╱     ╲
+└───┴──┴──┴─── Q
+   25  30  50
+   ↑       ↑
+  ביקוש  היצע
+   └─ייצוא 25─┘`}</pre>
+      </>
+    ),
     question: <>מהנתונים ניתן להסיק כי:</>,
     options: [
       <>היקף היצוא יהיה 25 יחידות.</>,
@@ -470,6 +828,35 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 14,
+    guided: [
+      { ask: 'שער החליפין עלה ל-7. מה המחיר החדש בשקלים, ומה הכמויות?',
+        choices: [<><span dir="ltr">140 ₪</span> · <span dir="ltr">Qd=15, Qs=90</span></>, <><span dir="ltr">140 ₪</span> · <span dir="ltr">Qd=25, Qs=50</span></>, <><span dir="ltr">100 ₪</span> — לא השתנה</>],
+        correct: 0,
+        hint: <>המירו מחדש, והציבו בשתי העקומות.</>,
+        reveal: <><span dir="ltr">20×7 = 140</span> · <span dir="ltr">Qd = (200−140)÷4 = 15</span> · <span dir="ltr">Qs = 140−50 = 90</span>.</> },
+      { ask: 'האופציות מדברות על שינויים. מה קרה להוצאות הצרכנים?',
+        choices: [<>עלו ב-400</>, <>ירדו ב-400</>, <>לא השתנו</>],
+        correct: 1,
+        hint: <>הוצאות = <span dir="ltr">מחיר × כמות נצרכת</span>. השוו לפני ואחרי.</>,
+        reveal: <>לפני <span dir="ltr">100×25 = 2,500</span> · אחרי <span dir="ltr">140×15 = 2,100</span> → ירידה של <b>400 ₪</b>.</> },
+    ],
+    summary: <>הפיחות ייקר את המוצר בשוק המקומי: הצרכנים קונים פחות (15 במקום 25) ומוציאים פחות — ירידה של 400 ₪, תשובה <b>א</b>. הייצוא אמנם גדל, אך ב-50 ולא ב-30 כפי שאופציה ב טוענת.</>,
+    visual: (
+      <>
+        <p>השוואת לפני ואחרי הפיחות:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5"></th><th className="border border-border p-1.5">שער 5</th><th className="border border-border p-1.5">שער 7</th><th className="border border-border p-1.5">שינוי</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 font-bold">מחיר ₪</td><td className="border border-border p-1.5 text-center">100</td><td className="border border-border p-1.5 text-center">140</td><td className="border border-border p-1.5 text-center">+40</td></tr>
+            <tr><td className="border border-border p-1.5 font-bold">Qd</td><td className="border border-border p-1.5 text-center">25</td><td className="border border-border p-1.5 text-center">15</td><td className="border border-border p-1.5 text-center">−10</td></tr>
+            <tr><td className="border border-border p-1.5 font-bold">Qs</td><td className="border border-border p-1.5 text-center">50</td><td className="border border-border p-1.5 text-center">90</td><td className="border border-border p-1.5 text-center">+40</td></tr>
+            <tr><td className="border border-border p-1.5 font-bold">ייצוא</td><td className="border border-border p-1.5 text-center">25</td><td className="border border-border p-1.5 text-center">75</td><td className="border border-border p-1.5 text-center">+50</td></tr>
+            <tr className="font-bold"><td className="border border-border p-1.5">הוצאות צרכנים</td><td className="border border-border p-1.5 text-center">2,500</td><td className="border border-border p-1.5 text-center">2,100</td><td className="border border-border p-1.5 text-center">−400 ←</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
+    formula: <><span dir="ltr">מחיר מקומי = מחיר עולמי × שער חליפין</span> · <span dir="ltr">ייצוא = Qs − Qd</span> · <span dir="ltr">הוצאות צרכנים = P × Qd</span></>,
     question: <>בעקבות המשבר העולמי עלה שער החליפין. שער החליפין החדש הוא 1$ = 7 ₪:</>,
     options: [
       <>סך הוצאות הצרכנים ירדו ב-400 ₪</>,
@@ -501,6 +888,35 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 15,
+    guided: [
+      { ask: 'סובסידיה של 20 ₪ — איך מציבים אותה במשוואות?',
+        choices: [<>מוסיפים 20 לביקוש</>, <>יוצרים פער: <span dir="ltr">P_יצרן = P_צרכן + 20</span></>, <>מחסירים 20 מהמחיר הסופי</>],
+        correct: 1,
+        hint: <>הסובסידיה גורמת ליצרן לקבל יותר ממה שהצרכן משלם. הפער הוא בדיוק גובהה.</>,
+        reveal: <>מציבים <span dir="ltr">180 − 4Q = (80 + Q) − 20</span> → <span dir="ltr">180 − 4Q = 60 + Q</span> → <span dir="ltr">Q = 24</span>.</> },
+      { ask: 'הכמות 24. מה המחיר לצרכן?',
+        choices: [<><span dir="ltr">104 ₪</span></>, <><span dir="ltr">84 ₪</span></>, <><span dir="ltr">100 ₪</span></>],
+        correct: 1,
+        hint: <>הציבו את הכמות בעקומת <b>הביקוש</b> — היא נותנת את מה שהצרכן משלם.</>,
+        reveal: <><span dir="ltr">P_צרכן = 180 − 4(24) = 84 ₪</span> · <span dir="ltr">P_יצרן = 84 + 20 = 104 ₪</span>.</> },
+    ],
+    summary: <>הסובסידיה יצרה פער של 20 ₪ בין מה שהיצרן מקבל למה שהצרכן משלם. פתרנו וקיבלנו <span dir="ltr">Q=24</span>, מחיר לצרכן 84 ומחיר ליצרן 104 — תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>הסובסידיה מפצלת את המחיר לשניים:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`P
+│D╲        ╱S
+│  ╲    ╱
+104├──╳────── ← יצרן מקבל  ┐
+│   ╱ ╲               │ 20₪ סובסידיה
+100├╳───╲──── ← לפני   │
+│  ╱     ╲            │
+84├───────╳── ← צרכן משלם ┘
+└──┴──────┴─── Q
+   20     24`}</pre>
+        <p className="mt-1">הצרכן חוסך 16 ₪, היצרן מרוויח 4 ₪ — יחד 20 ₪.</p>
+      </>
+    ),
     question: (
       <>
         <p>בענף הטיפולים הפסיכולוגיים לילדים נתונות פונקציות הביקוש וההיצע הבאות:</p>
@@ -538,6 +954,32 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 16,
+    guided: [
+      { ask: 'מס של 30 ₪ — מה הפער בין המחירים, ולאיזה כיוון?',
+        choices: [<><span dir="ltr">P_צרכן = P_יצרן + 30</span></>, <><span dir="ltr">P_יצרן = P_צרכן + 30</span></>, <>אין פער, רק המחיר עולה</>],
+        correct: 0,
+        hint: <>במס הצרכן משלם יותר מכפי שהיצרן מקבל — הפוך מסובסידיה.</>,
+        reveal: <><span dir="ltr">250 − 4Q = (100 + Q) + 30</span> → <span dir="ltr">120 = 5Q</span> → <span dir="ltr">Q = 24</span>.</> },
+      { ask: 'איך מחשבים את תקבולי הממשלה?',
+        choices: [<>מס × הכמות המקורית (30)</>, <>מס × הכמות <b>החדשה</b> (24)</>, <>מס × מחיר</>],
+        correct: 1,
+        hint: <>המס נגבה רק על מה שנמכר <i>בפועל</i> אחרי ההטלה.</>,
+        reveal: <><span dir="ltr">30 × 24 = 720 ₪</span>. מי שהשתמש בכמות המקורית קיבל 900 — מלכודת נפוצה.</> },
+    ],
+    summary: <>המס יצר פער של 30 ₪ בכיוון ההפוך לסובסידיה. הכמות ירדה מ-30 ל-24, המחיר לצרכן 154, ותקבולי הממשלה <span dir="ltr">30×24 = 720 ₪</span> — תשובה <b>א</b>.</>,
+    visual: (
+      <>
+        <p>מס מול סובסידיה — אותו מנגנון, כיוון הפוך:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5"></th><th className="border border-border p-1.5">סובסידיה (ש.15)</th><th className="border border-border p-1.5">מס (כאן)</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 font-bold">הפער</td><td className="border border-border p-1.5 text-center" dir="ltr">P_יצרן = P_צרכן + s</td><td className="border border-border p-1.5 text-center" dir="ltr">P_צרכן = P_יצרן + t</td></tr>
+            <tr><td className="border border-border p-1.5 font-bold">הכמות</td><td className="border border-border p-1.5 text-center">גדלה (20→24)</td><td className="border border-border p-1.5 text-center">קטנה (30→24)</td></tr>
+            <tr><td className="border border-border p-1.5 font-bold">תזרים</td><td className="border border-border p-1.5 text-center">הממשלה משלמת 480</td><td className="border border-border p-1.5 text-center">הממשלה גובה 720</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
     question: (
       <>
         <p>בענף X נתונות עקומות הביקוש וההיצע הבאות:</p>
@@ -576,6 +1018,35 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 17,
+    guided: [
+      { ask: 'נתון שהכמות ירדה והמחיר עלה. איזו עקומה זזה?',
+        choices: [<>הביקוש</>, <>ההיצע</>, <>אי אפשר לדעת</>],
+        correct: 1,
+        hint: <>בשינוי ביקוש מחיר וכמות זזים <i>יחד</i>. כאן הם זזו הפוך.</>,
+        reveal: <>מחיר ↑ וכמות ↓ = כיוונים <b>מנוגדים</b> → זו ירידת <b>היצע</b>. אילו הביקוש היה זז, שניהם היו נעים יחד.</> },
+      { ask: 'איזו מהאופציות מקטינה את ההיצע?',
+        choices: [<>פחות יצרנים בענף</>, <>עליית הכנסת הצרכנים</>, <>סובסידיה לכל יחידה</>],
+        correct: 0,
+        hint: <>שתי האחרות משפיעות על הביקוש או מגדילות היצע.</>,
+        reveal: <>פחות יצרנים = פחות היצע → מחיר ↑ וכמות ↓, בדיוק כנתון.</> },
+    ],
+    summary: <>זו שאלה הפוכה: נתונה התוצאה ומחפשים את הסיבה. מחיר ↑ עם כמות ↓ מעיד על ירידת <b>היצע</b>, ורק ירידה במספר היצרנים עושה זאת — תשובה <b>א</b>. את שאר האופציות פסלנו בכך שבדקנו <b>שני</b> משתנים בכל אחת.</>,
+    visual: (
+      <>
+        <p>כלל הזיהוי — לפי כיווני שני המשתנים:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">מה זז</th><th className="border border-border p-1.5">מחיר</th><th className="border border-border p-1.5">כמות</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5">ביקוש ↑</td><td className="border border-border p-1.5 text-center">↑</td><td className="border border-border p-1.5 text-center">↑</td></tr>
+            <tr><td className="border border-border p-1.5">ביקוש ↓</td><td className="border border-border p-1.5 text-center">↓</td><td className="border border-border p-1.5 text-center">↓</td></tr>
+            <tr className="font-bold"><td className="border border-border p-1.5">היצע ↓ ←</td><td className="border border-border p-1.5 text-center">↑</td><td className="border border-border p-1.5 text-center">↓</td></tr>
+            <tr><td className="border border-border p-1.5">היצע ↑</td><td className="border border-border p-1.5 text-center">↓</td><td className="border border-border p-1.5 text-center">↑</td></tr>
+          </tbody>
+        </table>
+        <p className="mt-1">השורה המודגשת היא הנתון בשאלה.</p>
+      </>
+    ),
+    formula: <>אין נוסחה — כלל זיהוי: <b>אותו כיוון</b> = שינוי בביקוש · <b>כיוונים מנוגדים</b> = שינוי בהיצע.</>,
     question: <>מוצר X הוא מוצר נורמלי הנמכר בתנאי תחרות משוכללת. ידוע שלאחרונה ירדה הכמות הנמכרת מהמוצר ועלה מחירו. איזה מן האירועים הבאים יכול להסביר את השינוי:</>,
     options: [
       <>מספר יצרנים המועסקים בייצור מוצר X קטן.</>,
@@ -585,7 +1056,6 @@ export const EXAM1: ExamQuestion[] = [
     ],
     correct: 0,
     understand: <>נתון <b>מה קרה</b> (מחיר ↑, כמות ↓) ומבקשים <b>מה גרם</b>. שאלה הפוכה מהרגיל.</>,
-    visual: <>מחיר עולה + כמות יורדת = תנועה על עקומת <b>הביקוש</b> כלפי מעלה-שמאלה, כלומר <b>ההיצע קטן</b>. אילו הביקוש היה גדל, גם המחיר וגם הכמות היו עולים.</>,
     steps: (
       <>
         <p><b>הכלל המבחין:</b></p>
@@ -606,6 +1076,33 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 18, intro: TAHINI_INTRO,
+    guided: [
+      { ask: 'יש שני ביקושים נפרדים. איך מחברים אותם?',
+        choices: [<>אנכית — סוכמים מחירים</>, <>אופקית — סוכמים כמויות באותו מחיר</>, <>לוקחים את הגדול מביניהם</>],
+        correct: 1,
+        hint: <>בכל מחיר נתון, כמה סה"כ מבקשים כל הקונים יחד?</>,
+        reveal: <><span dir="ltr">Q = Q₁ + Q₂ = (200 − P) + (400 − 2P) = 600 − 3P</span>. חיבור ביקושים תמיד <b>אופקי</b>.</> },
+      { ask: 'משווים לביקוש להיצע <span dir="ltr">Q = 2P − 200</span>. מה מתקבל?',
+        choices: [<><span dir="ltr">P = 120, Q = 160</span></>, <><span dir="ltr">P = 160, Q = 120</span></>, <><span dir="ltr">P = 700, Q = 100</span></>],
+        correct: 1,
+        hint: <>פתרו <span dir="ltr">600 − 3P = 2P − 200</span>, ואז הציבו בחזרה.</>,
+        reveal: <><span dir="ltr">800 = 5P → P = 160</span> · <span dir="ltr">Q = 600 − 480 = 120</span>.</> },
+    ],
+    summary: <>חיברנו את שני הביקושים <b>אופקית</b> לביקוש מצרפי <span dir="ltr">Q = 600 − 3P</span>, השווינו להיצע וקיבלנו <span dir="ltr">P = 160, Q = 120</span> — תשובה <b>א</b>. אופציה ב היא החלפה בין המחיר לכמות.</>,
+    visual: (
+      <>
+        <p>חיבור אופקי — בכל מחיר סוכמים את הכמויות:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">מחיר</th><th className="border border-border p-1.5">פרטיים <span dir="ltr">200−P</span></th><th className="border border-border p-1.5">דוכנים <span dir="ltr">400−2P</span></th><th className="border border-border p-1.5">סה"כ</th><th className="border border-border p-1.5">היצע <span dir="ltr">2P−200</span></th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5 text-center">140</td><td className="border border-border p-1.5 text-center">60</td><td className="border border-border p-1.5 text-center">120</td><td className="border border-border p-1.5 text-center">180</td><td className="border border-border p-1.5 text-center">80</td></tr>
+            <tr className="font-bold"><td className="border border-border p-1.5 text-center">160 ←</td><td className="border border-border p-1.5 text-center">40</td><td className="border border-border p-1.5 text-center">80</td><td className="border border-border p-1.5 text-center">120</td><td className="border border-border p-1.5 text-center">120 ✓</td></tr>
+            <tr><td className="border border-border p-1.5 text-center">180</td><td className="border border-border p-1.5 text-center">20</td><td className="border border-border p-1.5 text-center">40</td><td className="border border-border p-1.5 text-center">60</td><td className="border border-border p-1.5 text-center">160</td></tr>
+          </tbody>
+        </table>
+        <p className="mt-1">בשורה המודגשת ההיצע והביקוש נפגשים — זהו שיווי המשקל.</p>
+      </>
+    ),
     question: <>—</>,
     options: [
       <>מחיר שיווי המשקל: 160 ש"ח, כמות שיווי משקל: 120.</>,
@@ -635,6 +1132,34 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 19,
+    guided: [
+      { ask: 'מה הפדיון הכולל של כל היצרנים יחד?',
+        choices: [<><span dir="ltr">19,200 ₪</span></>, <><span dir="ltr">238,627 ₪</span></>, <><span dir="ltr">200,000 ₪</span></>],
+        correct: 0,
+        hint: <>פדיון = מחיר שיווי משקל × הכמות הכוללת.</>,
+        reveal: <><span dir="ltr">160 × 120 = 19,200 ₪</span> — אכן נמוך מ-200,000.</> },
+      { ask: 'ומה חלקו של יצרן בודד מתוך 10 זהים?',
+        choices: [<>10 יחידות</>, <>12 יחידות</>, <>20 יחידות</>],
+        correct: 1,
+        hint: <>חלקו את הכמות הכוללת ב-10.</>,
+        reveal: <><span dir="ltr">120 ÷ 10 = 12</span> יחידות ליצרן. אופציה ב (10) קרובה אך שגויה.</> },
+    ],
+    summary: <>הפדיון הכולל הוא <span dir="ltr">160 × 120 = 19,200 ₪</span>, שאכן נמוך מ-200,000 — תשובה <b>א</b>. פילחנו גם את הביקוש: פרטיים 40 יחידות מול דוכנים 80, ולכן הוצאות הדוכנים דווקא גבוהות יותר (אופציה ג הפוכה).</>,
+    visual: (
+      <>
+        <p>פילוח השוק בשיווי משקל <span dir="ltr">(P=160, Q=120)</span>:</p>
+        <table className="mt-2 w-full text-sm border-collapse">
+          <thead><tr><th className="border border-border p-1.5">קבוצה</th><th className="border border-border p-1.5">כמות</th><th className="border border-border p-1.5">הוצאה</th></tr></thead>
+          <tbody>
+            <tr><td className="border border-border p-1.5">צרכנים פרטיים</td><td className="border border-border p-1.5 text-center">40</td><td className="border border-border p-1.5 text-center">6,400 ₪</td></tr>
+            <tr><td className="border border-border p-1.5">דוכני פלאפל</td><td className="border border-border p-1.5 text-center">80</td><td className="border border-border p-1.5 text-center">12,800 ₪</td></tr>
+            <tr className="font-bold"><td className="border border-border p-1.5">סה"כ</td><td className="border border-border p-1.5 text-center">120</td><td className="border border-border p-1.5 text-center">19,200 ₪</td></tr>
+          </tbody>
+        </table>
+        <p className="mt-1">10 יצרנים זהים → <span dir="ltr">12</span> יחידות לכל אחד.</p>
+      </>
+    ),
+    formula: <><span dir="ltr">פדיון = P × Q</span> · <span dir="ltr">ליצרן בודד = Q ÷ מספר היצרנים</span> · הוצאת כל קבוצה <span dir="ltr">= P × הכמות שלה</span>.</>,
     question: <>ידוע שקיימים במשק 10 יצרנים זהים</>,
     options: [
       <>פדיון כלל היצרנים יהיה נמוך מ-200,000 ש"ח.</>,
@@ -663,6 +1188,37 @@ export const EXAM1: ExamQuestion[] = [
   },
   {
     n: 20,
+    guided: [
+      { ask: 'לחישוב עודף הצרכן צריך את נקודת החיתוך של הביקוש עם ציר המחיר. מהי?',
+        choices: [<><span dir="ltr">P = 160</span></>, <><span dir="ltr">P = 200</span></>, <><span dir="ltr">P = 600</span></>],
+        correct: 1,
+        hint: <>הציבו <span dir="ltr">Q = 0</span> בביקוש המצרפי <span dir="ltr">Q = 600 − 3P</span>.</>,
+        reveal: <><span dir="ltr">0 = 600 − 3P → P = 200</span>. זהו המחיר המרבי שמישהו מוכן לשלם.</> },
+      { ask: 'נחשב את שני העודפים ואת הרווחה.',
+        choices: [<><span dir="ltr">CS=2,400 · PS=3,600 · רווחה=6,000</span></>, <><span dir="ltr">CS=3,600 · PS=2,400 · רווחה=6,000</span></>, <><span dir="ltr">רווחה=12,000</span></>],
+        correct: 0,
+        hint: <>שני משולשים: <span dir="ltr">½ × גובה × בסיס</span>, כשהבסיס הוא <span dir="ltr">Q=120</span>.</>,
+        reveal: <><span dir="ltr">CS = ½(200−160)(120) = 2,400</span> · <span dir="ltr">PS = ½(160−100)(120) = 3,600</span> · סה"כ <b>6,000</b> — ולא 12,000 כפי שטוענת אופציה א.</> },
+    ],
+    summary: <>חישבנו את שני העודפים: <span dir="ltr">CS = 2,400</span> ו-<span dir="ltr">PS = 3,600</span>, ובסך הכול רווחה של <b>6,000</b>. ⚠️ אף אחת מארבע האופציות אינה תואמת — אופציה א נוקבת ב-12,000, בדיוק כפול. מאחר שלמבחן לא צורף מפתח תשובות, אנו מציגים את החישוב ואיננו בוחרים אופציה.</>,
+    visual: (
+      <>
+        <p>שני משולשי העודף סביב מחיר שיווי המשקל:</p>
+        <pre className="mt-1 overflow-x-auto rounded-lg bg-card p-3 text-xs leading-tight" dir="ltr">{`P
+200├╲
+│   ╲     CS = 2,400
+│    ╲
+160├───╳──────────  ← P*
+│    ╱ │
+│   ╱  │  PS = 3,600
+100├─╱───┘
+│  ╱
+└──┴──────── Q
+      120`}</pre>
+        <p className="mt-1">רווחה כוללת = סכום שני המשולשים = <b>6,000</b>.</p>
+      </>
+    ),
+    formula: <><span dir="ltr">CS = ½ × (P_max − P*) × Q*</span> · <span dir="ltr">PS = ½ × (P* − P_min) × Q*</span> · <span dir="ltr">רווחה = CS + PS</span></>,
     question: <>מהנתונים ניתן לקבוע כי:</>,
     options: [
       <>סך הרווחה יהיה 12,000.</>,
@@ -672,7 +1228,6 @@ export const EXAM1: ExamQuestion[] = [
     ],
     correct: null,
     understand: <>המשך לאותם נתונים. מבקשים לקבוע איזו טענה נכונה לגבי הרווחה והעודפים.</>,
-    formula: <><span dir="ltr">CS = ½ × (P_max − P*) × Q*</span> · <span dir="ltr">PS = ½ × (P* − P_min) × Q*</span> · <span dir="ltr">רווחה = CS + PS</span></>,
     steps: (
       <>
         <p><b>נקודות החיתוך עם הצירים:</b></p>

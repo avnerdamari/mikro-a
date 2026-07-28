@@ -1,6 +1,7 @@
 import { NavigationProvider, useNavigation } from '@/components/NavigationContext'
 import { TopBar } from '@/components/TopBar'
 import { Sidebar } from '@/components/Sidebar'
+import { TutorButton } from '@/components/TutorButton'
 import { HomePage } from '@/pages/HomePage'
 import { ChapterIntro } from '@/pages/chapters/ChapterIntro'
 import { Chapter1PPF } from '@/pages/chapters/Chapter1PPF'
@@ -71,6 +72,7 @@ function AppContent() {
       </main>
       {/* כפתורים צפים — שמאל-תחתון, טור אנכי (סקיל build-book, סעיף 2א) */}
       <div className="no-print fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
+      <TutorButton chapterId={currentChapter} />
       <a
         href="https://api.whatsapp.com/send?phone=972544242706"
         target="_blank"

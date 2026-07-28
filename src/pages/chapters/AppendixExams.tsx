@@ -39,13 +39,13 @@ export function AppendixExams() {
 
       <ExamSheet
         title="מבחן לדוגמה 1"
-        subtitle="18 שאלות · עקומת התמורה · ייצור · עלויות · שיווי משקל · מס וסובסידיה · משק פתוח"
+        subtitle="20 שאלות · עקומת התמורה · ייצור · עלויות · שיווי משקל · מס וסובסידיה · משק פתוח"
         questions={EXAM1}
       />
 
       <div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted-foreground">
         <p className="font-semibold text-foreground">מבחנים 2-4 — בהכנה</p>
-        <p className="mt-1">עוד 53 שאלות מהמבחנים הרשמיים, עם אותו פורמט פתרון.</p>
+        <p className="mt-1">שלושת המבחנים הרשמיים הנוספים, עם אותו פורמט פתרון.</p>
       </div>
     </ChapterLayout>
   )
