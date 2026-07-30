@@ -1,5 +1,5 @@
 import { BookOpen, Target, TrendingUp, MessageCircle, ChevronLeft } from 'lucide-react'
-import logo from '@/assets/logo.png'
+import { BookCover } from '@/components/BookCover'
 import { useNavigation } from '@/components/NavigationContext'
 import { CHAPTERS } from '@/data/toc'
 import { loadProgress } from '@/lib/progress'
@@ -15,20 +15,9 @@ export function HomePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-12 pt-6" dir="rtl">
-      {/* Hero */}
+      {/* Hero — כריכת ספר (מחקה את הכריכה של Advisors-App, ראה BookCover.tsx) */}
       <div className="text-center space-y-3 py-8">
-        <div className="mx-auto mb-2">
-          <img src={logo} alt="לוגו" className="mx-auto h-32 w-32 rounded-2xl object-contain shadow-lg" />
-        </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
-          מבוא לכלכלה א'
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          ספר לימוד אינטראקטיבי — מיקרו-כלכלה
-        </p>
-        <p className="text-sm text-muted-foreground">
-          המרכז האקדמי פרס | B.A. מנהל עסקים | אבנר דמארי
-        </p>
+        <BookCover />
 
         {/* Progress bar */}
         {completed > 0 && (
