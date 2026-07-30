@@ -3,6 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, Re
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 /* ── PPF DATA ─────────────────────────────── */
 function buildPPF(
@@ -287,7 +290,7 @@ export function Chapter1PPF() {
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">1.2 עלות אלטרנטיבית</h3>
+          <h3 className="font-bold text-lg">1.2 <LinkedTerm anchorKey="opportunity-cost">עלות אלטרנטיבית</LinkedTerm></h3>
           <div className="rounded-xl bg-amber-50 border border-amber-200 p-4">
             <p className="font-bold text-amber-800 mb-1">📌 הגדרה:</p>
             <p className="text-amber-700 text-sm">
@@ -299,13 +302,14 @@ export function Chapter1PPF() {
             לייצר ריאלטי אחד = לוותר על 4 גרעינים (2÷0.5=4).
             → <strong>עלות אלטרנטיבית של ריאלטי = 4 גרעינים</strong>
           </p>
-          <div className="rounded-xl border border-border p-4 text-center">
+          <div className="rounded-xl border border-border p-4 text-center space-y-2">
             <MathText math="\text{עלות אלט' של X} = \frac{\text{תפוקת Y לעובד}}{\text{תפוקת X לעובד}}" display />
+            <FormulaLink formulaKey="ppf-opportunity-cost" />
           </div>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">1.3 עקומת התמורה — 3 סוגי נקודות</h3>
+          <h3 className="font-bold text-lg">1.3 <LinkedTerm anchorKey="ppf">עקומת התמורה</LinkedTerm> — 3 סוגי נקודות</h3>
           <p className="text-sm text-muted-foreground">ציר X = מוצר ראשון | ציר Y = מוצר שני</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {[
@@ -347,7 +351,7 @@ export function Chapter1PPF() {
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
-          <h3 className="font-bold text-lg">1.4 יתרון יחסי — מי מייצר מה?</h3>
+          <h3 className="font-bold text-lg">1.4 <LinkedTerm anchorKey="comparative-advantage">יתרון יחסי</LinkedTerm> — מי מייצר מה?</h3>
           <p className="text-sm text-muted-foreground">
             יתרון יחסי = עלות אלטרנטיבית <strong>נמוכה יותר</strong> ממתחרים.
             כשמחליטים מה לייצר לפי מחירי שוק — בוחרים לפי הכנסה לעובד:
@@ -365,6 +369,40 @@ export function Chapter1PPF() {
         <PPFSimulation />
         <ShiftsSim />
         <CompAdvSim />
+      </section>
+
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="1.5 יתרון יחסי והחלטת ייצור לפי מחירי שוק"
+          q={<>
+            שני מפעלים יכולים לייצר <strong>מחשבים</strong> או <strong>טלפונים</strong>. מפעל <strong>A</strong> מייצר ליום 10 מחשבים <em>או</em> 40 טלפונים.
+            מפעל <strong>B</strong> מייצר ליום 6 מחשבים <em>או</em> 12 טלפונים. מחיר מחשב בשוק — 1,200₪, מחיר טלפון — 400₪.
+            למי יתרון יחסי במחשבים? מה כדאי לכל מפעל לייצר בפועל לפי מחירי השוק?
+          </>}
+        >
+          <p className="text-sm"><strong>שלב 1 — עלות אלטרנטיבית של מחשב אצל כל מפעל</strong> (כמה טלפונים מוותרים על מחשב אחד):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="\text{OC}_{\text{computer}}^{A} = \frac{40}{10} = 4 \;\text{טלפונים} \qquad \text{OC}_{\text{computer}}^{B} = \frac{12}{6} = 2 \;\text{טלפונים}" display />
+          </div>
+          <FormulaLink formulaKey="ppf-opportunity-cost" />
+          <p className="text-sm">
+            ל-B עלות אלטרנטיבית נמוכה יותר במחשבים (2 מול 4) → <strong>ל-B יתרון יחסי במחשבים</strong>.
+            ממילא ל-A יתרון יחסי בטלפונים.
+          </p>
+          <p className="text-sm"><strong>שלב 2 — הכנסה לעובד ליום, לפי המחירים בפועל</strong> (<MathText math="\text{הכנסה} = \text{תפוקה}\times\text{מחיר}" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="A:\; \text{מחשבים}=10\!\times\!1200=12{,}000 \quad \text{טלפונים}=40\!\times\!400=16{,}000" display />
+          </div>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="B:\; \text{מחשבים}=6\!\times\!1200=7{,}200 \quad \text{טלפונים}=12\!\times\!400=4{,}800" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: מפעל A מרוויח יותר מטלפונים (16,000&gt;12,000) — ייצר טלפונים. מפעל B מרוויח יותר ממחשבים (7,200&gt;4,800) — ייצר מחשבים.
+            שני המפעלים בוחרים בדיוק את המוצר שבו יש להם יתרון יחסי, כי מחיר השוק (1,200/400=3) נמצא בין שתי העלויות האלטרנטיביות (2 ל-4).
+          </p>
+        </Example>
       </section>
 
       {/* MCQ */}

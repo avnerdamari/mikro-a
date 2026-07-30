@@ -25,7 +25,7 @@ function useDarkMode() {
 }
 
 export function TopBar() {
-  const { setSidebarOpen, setCurrentChapter } = useNavigation()
+  const { setSidebarOpen, setCurrentChapter, canGoBack, goBack } = useNavigation()
   const { dark, toggle } = useDarkMode()
 
   return (
@@ -35,17 +35,29 @@ export function TopBar() {
       style={{ backgroundColor: 'var(--brand)' }}
       dir="rtl"
     >
-      {/* ימין: תפריט */}
-      <button
-        onClick={() => setSidebarOpen(true)}
-        className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95 active:translate-y-0.5"
-        style={{ backgroundColor: INDIGO }}
-      >
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <span className="hidden sm:inline">תוכן עניינים</span>
-      </button>
+      {/* ימין: חזרה (רק כשיש מאיפה) + תפריט */}
+      <div className="flex items-center gap-2">
+        {canGoBack && (
+          <button
+            onClick={goBack}
+            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95"
+            style={{ backgroundColor: '#d97706' }}
+            title="חזרה למקום שממנו הגעת"
+          >
+            → חזרה
+          </button>
+        )}
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95 active:translate-y-0.5"
+          style={{ backgroundColor: INDIGO }}
+        >
+          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span className="hidden sm:inline">תוכן עניינים</span>
+        </button>
+      </div>
 
       {/* מרכז: לוגו + שם הספר + תת-כותרת */}
       <button

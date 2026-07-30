@@ -7,6 +7,25 @@ export type Exercise = {
   question: string
   answer: string
   hint?: string
+  /** התשובה הסופית הקצרה לבדיקה אוטומטית (למשל "350" או "180"). אופציונלי —
+      כשלא קיים, נופלים ל"הצג פתרון"+"סמן כבוצע" ידני בלבד. */
+  checkAnswer?: string
+}
+
+/** משווה קלט חופשי מול checkAnswer: מסיר רווחים/₪/פסיקי-אלפים, לא תלוי רישיות. */
+function normalizeAnswer(v: string): string {
+  return v.trim().toLowerCase().replace(/[\s₪,]/g, '')
+}
+
+/** שורת פתרון: אם רוב התווים (לא-רווח) הם עברית — משפט הסבר, RTL רגיל.
+    אחרת — נוסחה/חישוב, חייבת dir="ltr" כדי שהמספרים והאופרטורים לא יתהפכו. */
+function AnswerLine({ line }: { line: string }) {
+  const chars = line.replace(/\s/g, '')
+  const hebrewCount = (chars.match(/[א-ת]/g) ?? []).length
+  const isHebrewProse = chars.length > 0 && hebrewCount / chars.length > 0.4
+  return isHebrewProse
+    ? <div>{line}</div>
+    : <div dir="ltr" style={{ textAlign: 'right' }}>{line}</div>
 }
 
 interface Props {
@@ -28,6 +47,18 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
   const [showAnswer, setShowAnswer] = useState(false)
   const [showHint, setShowHint] = useState(false)
   const [done, setDone] = useState(false)
+  const [typed, setTyped] = useState('')
+  const [checked, setChecked] = useState(false)
+
+  const hasCheck = !!ex.checkAnswer
+  const isRight = checked && ex.checkAnswer !== undefined && normalizeAnswer(typed) === normalizeAnswer(ex.checkAnswer)
+
+  const check = () => {
+    setChecked(true)
+    if (ex.checkAnswer !== undefined && normalizeAnswer(typed) === normalizeAnswer(ex.checkAnswer)) {
+      setDone(true)
+    }
+  }
 
   return (
     <div className={cn(
@@ -41,6 +72,29 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
         </p>
         {done && <CheckCircle className="h-5 w-5 shrink-0 text-green-600 mt-0.5" />}
       </div>
+
+      {hasCheck && (
+        <div className="mt-3 flex flex-wrap items-center gap-2" dir="ltr">
+          <input
+            dir="ltr"
+            value={typed}
+            onChange={e => { setTyped(e.target.value); setChecked(false) }}
+            onKeyDown={e => { if (e.key === 'Enter' && typed.trim()) check() }}
+            placeholder="התשובה שלך"
+            className="w-32 rounded-lg border border-border bg-background px-2 py-1.5 text-center text-sm font-bold outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200"
+          />
+          <button
+            onClick={check}
+            disabled={!typed.trim()}
+            className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow-sm transition hover:brightness-110 active:scale-95 disabled:opacity-50"
+          >
+            בדוק
+          </button>
+          {checked && (isRight
+            ? <span className="text-xs font-bold text-green-600">✓ נכון!</span>
+            : <span className="text-xs font-bold text-red-500">✗ נסה שוב</span>)}
+        </div>
+      )}
 
       <div className="mt-3 flex flex-wrap gap-2">
         {ex.hint && !showAnswer && (
@@ -59,17 +113,19 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
           {showAnswer ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
           {showAnswer ? 'הסתר פתרון' : 'הצג פתרון'}
         </button>
-        <button
-          onClick={() => setDone(v => !v)}
-          className={cn(
-            'flex items-center gap-1 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors',
-            done
-              ? 'border-green-300 bg-green-100 text-green-700'
-              : 'border-border bg-muted/40 text-muted-foreground hover:bg-muted/70'
-          )}
-        >
-          {done ? '✓ סיימתי' : 'סמן כבוצע'}
-        </button>
+        {!hasCheck && (
+          <button
+            onClick={() => setDone(v => !v)}
+            className={cn(
+              'flex items-center gap-1 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors',
+              done
+                ? 'border-green-300 bg-green-100 text-green-700'
+                : 'border-border bg-muted/40 text-muted-foreground hover:bg-muted/70'
+            )}
+          >
+            {done ? '✓ סיימתי' : 'סמן כבוצע'}
+          </button>
+        )}
       </div>
 
       {showHint && ex.hint && (
@@ -81,7 +137,9 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
       {showAnswer && (
         <div className="mt-3 rounded-lg bg-indigo-50 border border-indigo-200 p-3">
           <p className="text-xs font-bold text-indigo-800 mb-1">פתרון מפורט:</p>
-          <div className="text-sm text-indigo-800 whitespace-pre-line">{ex.answer}</div>
+          <div className="text-sm text-indigo-800 space-y-0.5">
+            {ex.answer.split('\n').map((line, i) => <AnswerLine key={i} line={line} />)}
+          </div>
         </div>
       )}
     </div>

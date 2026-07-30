@@ -3,6 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, R
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 /* ── DATA (real exam example) ──────────────── */
 const BASE_DATA = [
@@ -238,7 +241,11 @@ export function Chapter2Production() {
             ].map(([sym, name, desc]) => (
               <div key={sym} className="rounded-xl bg-indigo-50 border border-indigo-200 p-3 text-center">
                 <p className="font-extrabold text-indigo-700 text-lg">{sym}</p>
-                <p className="font-semibold text-xs">{name}</p>
+                <p className="font-semibold text-xs">
+                  {sym === 'MP' ? <LinkedTerm anchorKey="mp">{name}</LinkedTerm>
+                    : sym === 'VMP' ? <LinkedTerm anchorKey="vmp">{name}</LinkedTerm>
+                    : name}
+                </p>
                 <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
               </div>
             ))}
@@ -261,13 +268,14 @@ export function Chapter2Production() {
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">2.3 כלל ההעסקה האופטימלי — VMP ≥ W</h3>
+          <h3 className="font-bold text-lg">2.3 <LinkedTerm anchorKey="optimal-hiring-rule">כלל ההעסקה האופטימלי</LinkedTerm> — VMP ≥ W</h3>
           <div className="rounded-xl bg-green-50 border border-green-200 p-4">
             <p className="font-bold text-green-800 mb-2">📌 כלל ההחלטה:</p>
             <p className="text-green-700 text-sm mb-2">העסק עוד עובד אם ורק אם:</p>
             <div className="text-center">
               <MathText math="VMP_L \geq W \quad\Leftrightarrow\quad P \times MP_L \geq W" display />
             </div>
+            <FormulaLink formulaKey="production-optimal-hiring" />
             <p className="text-green-700 text-xs mt-2">כלומר: הערך שהעובד מוסיף (VMP) גדול מהעלות שלו (W)</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -294,6 +302,63 @@ export function Chapter2Production() {
         <ProductionSim />
         <CurvesSim />
         <MinWageSim />
+      </section>
+
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="2.4 מאפייה מחליטה כמה אופים להעסיק"
+          q={<>
+            מאפייה מוכרת מגשי לחם ב-<strong>P=40₪</strong> למגש, ומשלמת שכר יומי <strong>W=1,400₪</strong> לכל אופה.
+            תפוקה כוללת (TP) במגשים ליום: L=1→50, L=2→95, L=3→135, L=4→170, L=5→195. כמה אופים כדאי להעסיק?
+          </>}
+          answer={4}
+          tol={0}
+          unit="עובדים"
+        >
+          <p className="text-sm"><strong>שלב 1 — MP ו-VMP לכל אופה נוסף</strong> (<MathText math="VMP=P\times MP" />):</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs text-center border-collapse" dir="ltr">
+              <thead>
+                <tr className="bg-white dark:bg-slate-800">
+                  {['L', 'MP', 'VMP=40×MP', 'W', 'VMP≥W?'].map(h => (
+                    <th key={h} className="border border-border px-2 py-1 font-bold">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { L: 1, MP: 50, VMP: 2000, ok: true },
+                  { L: 2, MP: 45, VMP: 1800, ok: true },
+                  { L: 3, MP: 40, VMP: 1600, ok: true },
+                  { L: 4, MP: 35, VMP: 1400, ok: true },
+                  { L: 5, MP: 25, VMP: 1000, ok: false },
+                ].map(r => (
+                  <tr key={r.L} className={r.ok ? 'bg-white dark:bg-slate-800' : 'bg-red-50 dark:bg-red-950/30'}>
+                    <td className="border border-border px-2 py-1">{r.L}</td>
+                    <td className="border border-border px-2 py-1">{r.MP}</td>
+                    <td className="border border-border px-2 py-1">{r.VMP}</td>
+                    <td className="border border-border px-2 py-1">1400</td>
+                    <td className="border border-border px-2 py-1">{r.ok ? '✅' : '❌'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <FormulaLink formulaKey="production-optimal-hiring" />
+          <p className="text-sm">
+            <strong>שלב 2 — היישום:</strong> אצל האופה ה-5, VMP=1,000&lt;W=1,400 — הפסד על השוליים, לא כדאי להעסיק אותו.
+            אצל האופה ה-4, VMP=1,400=W=1,400 — בדיוק בגבול, עדיין כדאי (לא מפסידים עליו).
+          </p>
+          <p className="text-sm"><strong>שלב 3 — בדיקת סבירות דרך הרווח</strong> (<MathText math="\pi = P\times TP - L\times W" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="L=3:\; \pi = 40\!\times\!135 - 3\!\times\!1400 = 5{,}400-4{,}200=1{,}200 \qquad L=4:\; \pi = 40\!\times\!170-4\!\times\!1400=6{,}800-5{,}600=1{,}200" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: כדאי להעסיק 4 אופים. שימו לב שהרווח ב-L=3 וב-L=4 זהה (1,200₪) — כי VMP=W באופה הרביעי, הוא לא מוסיף ולא גורע מהרווח. אופה חמישי כבר יוריד את הרווח ל-800₪.
+          </p>
+        </Example>
       </section>
 
       <section><McqSection questions={MCQ} topicId="production" /></section>

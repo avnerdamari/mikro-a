@@ -10,7 +10,8 @@ const EASY: Exercise[] = [
   {
     id: 'oe-e2',
     question: 'בשוק פתוח: P_w=50. Qd=300, Qs=100. מה כמות היבוא?',
-    answer: 'יבוא = Qd − Qs = 300 − 100 = 200 יחידות.'
+    answer: 'יבוא = Qd − Qs = 300 − 100 = 200 יחידות.',
+    checkAnswer: '200'
   },
   {
     id: 'oe-e3',

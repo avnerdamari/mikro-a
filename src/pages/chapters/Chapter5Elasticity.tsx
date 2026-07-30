@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 function ElastCalc() {
   const [p1, setP1] = useState(100)
@@ -60,6 +63,7 @@ export function Chapter5Elasticity() {
           <h3 className="font-bold text-lg">5.1 גמישות מחיר של ביקוש</h3>
           <div className="rounded-xl border border-border p-4 text-center">
             <MathText math="E = \left|\frac{\Delta Q / Q}{\Delta P / P}\right| = \left|\frac{\Delta Q}{\Delta P} \cdot \frac{P}{Q}\right|" display />
+            <FormulaLink formulaKey="elasticity-price" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
             {[
@@ -99,7 +103,11 @@ export function Chapter5Elasticity() {
             ].map(([e, desc]) => (
               <div key={e} className="rounded-xl bg-muted/40 border border-border p-3">
                 <p className="font-semibold text-xs">{e}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {desc === 'מוצר נחות — ↑ הכנסה → ↓ ביקוש'
+                    ? <><LinkedTerm anchorKey="inferior-good">מוצר נחות</LinkedTerm> — ↑ הכנסה → ↓ ביקוש</>
+                    : desc}
+                </p>
               </div>
             ))}
           </div>
@@ -109,6 +117,32 @@ export function Chapter5Elasticity() {
         <h2 className="text-xl font-bold">🧪 הדמיה</h2>
         <ElastCalc />
       </section>
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="5.4 בית קפה מעלה מחיר — מה קורה להכנסה?"
+          q={<>
+            בית קפה מוכר כוס קפה ב-8₪ ומוכר 500 כוסות ביום. הוא מעלה את המחיר ל-10₪, והכמות הנמכרת יורדת ל-350 כוסות ביום.
+            מהי גמישות המחיר, והאם ההעלאה הייתה כדאית מבחינת ההכנסה הכוללת?
+          </>}
+        >
+          <p className="text-sm"><strong>שלב 1 — חישוב הגמישות:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="E = \left|\frac{(350-500)/500}{(10-8)/8}\right| = \left|\frac{-0.3}{0.25}\right| = 1.2" display />
+          </div>
+          <FormulaLink formulaKey="elasticity-price" />
+          <p className="text-sm">E=1.2&gt;1 — <strong>ביקוש גמיש</strong>: הכמות ירדה (באחוזים) יותר משעלה המחיר.</p>
+          <p className="text-sm"><strong>שלב 2 — בדיקה ישירה של ההכנסה הכוללת</strong> (<MathText math="TR=P\times Q" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="TR_1=8\times500=4{,}000 \qquad TR_2=10\times350=3{,}500" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: הגמישות היא 1.2 (גמיש). ההעלאה לא הייתה כדאית — ההכנסה הכוללת ירדה מ-4,000₪ ל-3,500₪ ליום, בדיוק כמו שהתאוריה מנבאת: כשהביקוש גמיש, העלאת מחיר מקטינה את ההכנסה הכוללת.
+          </p>
+        </Example>
+      </section>
+
       <section><McqSection questions={MCQ} topicId="elasticity" /></section>
     </ChapterLayout>
   )

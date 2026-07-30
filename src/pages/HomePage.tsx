@@ -8,12 +8,6 @@ import { cn } from '@/lib/utils'
 const INDIGO = '#4F46E5'
 const WHATSAPP = '#25D366'
 
-const PRIORITY_COLOR: Record<string, string> = {
-  high: '#ef4444',
-  medium: '#f59e0b',
-  low: '#94a3b8',
-}
-
 export function HomePage() {
   const { setCurrentChapter } = useNavigation()
   const progress = loadProgress()
@@ -122,10 +116,7 @@ export function HomePage() {
                 <p className="font-bold text-sm text-foreground leading-snug">{c.title}</p>
                 <p className="text-xs text-muted-foreground mt-0.5 truncate">{c.subtitle}</p>
                 <div className="flex items-center gap-2 mt-1.5">
-                  <span
-                    className="rounded px-1.5 py-0.5 text-[10px] font-bold text-white"
-                    style={{ backgroundColor: PRIORITY_COLOR[c.priority] }}
-                  >
+                  <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground">
                     {c.examWeight}
                   </span>
                   {isCompleted && <span className="text-[10px] text-green-700 font-bold">✓ הושלם</span>}

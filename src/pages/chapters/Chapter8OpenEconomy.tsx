@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer, Area, AreaChart } from 'recharts'
 
 function OpenEconomySim() {
@@ -262,13 +265,14 @@ export function Chapter8OpenEconomy() {
           <h3 className="font-bold text-lg">8.1 אוטרקיה מול סחר חופשי</h3>
           <div className="text-sm space-y-2">
             <p><strong>אוטרקיה</strong> = כלכלה סגורה. שיווי משקל: P* ו-Q* נקבעים אך ורק מהביקוש וההיצע המקומי.</p>
-            <p><strong>כלכלה פתוחה</strong>: המדינה לוקחת את המחיר העולמי P_w כנתון (price taker). המדינה קטנה → לא משפיעה על P_w.</p>
+            <p><strong><LinkedTerm anchorKey="open-economy">כלכלה פתוחה</LinkedTerm></strong>: המדינה לוקחת את <LinkedTerm anchorKey="world-price">המחיר העולמי</LinkedTerm> P_w כנתון (price taker). המדינה קטנה → לא משפיעה על P_w.</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-blue-50 border border-blue-200 p-3">
-              <p className="font-bold text-blue-700 text-sm">יבוא: P_w &lt; P*</p>
+              <p className="font-bold text-blue-700 text-sm"><LinkedTerm anchorKey="imports">יבוא</LinkedTerm>: P_w &lt; P*</p>
               <p className="text-xs mt-1">המחיר העולמי נמוך מהמקומי → מוצר זול בחו"ל → מייבאים.</p>
               <p className="text-xs mt-1 font-semibold">יבוא = Qd(P_w) − Qs(P_w)</p>
+              <FormulaLink formulaKey="open-economy-imports" />
             </div>
             <div className="rounded-xl bg-red-50 border border-red-200 p-3">
               <p className="font-bold text-red-700 text-sm">יצוא: P_w &gt; P*</p>
@@ -335,6 +339,41 @@ export function Chapter8OpenEconomy() {
         <OpenEconomySim />
         <WelfareSim />
         <ComparativeAdvantageSim />
+      </section>
+
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="8.4 האם המשק מייבא או מייצא?"
+          q={<>
+            במשק סגור: ביקוש מקומי <MathText math="Q_d=400-2P" />, היצע מקומי <MathText math="Q_s=100+3P" />.
+            המשק נפתח לסחר, והמחיר העולמי הוא P_w=50₪. האם המשק מייבא או מייצא, וכמה?
+          </>}
+          answer={50}
+          tol={0}
+          unit="יחידות ייבוא"
+        >
+          <p className="text-sm"><strong>שלב 1 — מחיר שיווי המשקל המקומי (ללא סחר), לצורך השוואה:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="400-2P=100+3P \Rightarrow 300=5P \Rightarrow P_{\text{אוטרקיה}}=60" display />
+          </div>
+          <p className="text-sm">
+            מחיר העולם (50₪) <strong>נמוך</strong> מהמחיר המקומי ללא סחר (60₪) → המשק <strong>מייבא</strong> (הצרכנים יכולים לקנות זול יותר מבחוץ).
+          </p>
+          <p className="text-sm"><strong>שלב 2 — כמות מבוקשת ומסופקת במחיר העולמי P_w=50:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_d(50)=400-2(50)=300 \qquad Q_s(50)=100+3(50)=250" display />
+          </div>
+          <FormulaLink formulaKey="open-economy-imports" />
+          <p className="text-sm"><strong>שלב 3 — הפער בין הביקוש להיצע המקומי הוא הייבוא:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="M=Q_d(P_w)-Q_s(P_w)=300-250=50" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: המשק מייבא 50 יחידות. במחיר העולמי הביקוש המקומי (300) גדול מההיצע המקומי (250) — הפער מסופק על ידי ייבוא.
+          </p>
+        </Example>
       </section>
 
       <section><McqSection questions={MCQ} topicId="open-economy" /></section>

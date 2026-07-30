@@ -5,12 +5,6 @@ import { CHAPTERS } from '@/data/toc'
 import { CONTENT_BODIES } from '@/data/contentIndex'
 import { cn } from '@/lib/utils'
 
-const PRIORITY_BADGE: Record<string, { label: string; cls: string }> = {
-  high:   { label: 'חשוב', cls: 'bg-red-100 text-red-700' },
-  medium: { label: 'בינוני', cls: 'bg-yellow-100 text-yellow-700' },
-  low:    { label: 'קצר', cls: 'bg-gray-100 text-gray-500' },
-}
-
 export function Sidebar() {
   const { sidebarOpen, setSidebarOpen, currentChapter, setCurrentChapter } = useNavigation()
   const [q, setQ] = useState('')
@@ -117,7 +111,6 @@ export function Sidebar() {
 
           {CHAPTERS.map((c, i) => {
             const isActive = currentChapter === c.id
-            const badge = PRIORITY_BADGE[c.priority]
             const isPractice = c.kind === 'practice'
             // כותרת-קבוצה לפני הנספח הראשון — מפרידה את גוף הספר מהנספחים
             const firstAppendix = c.kind === 'appendix' && CHAPTERS[i - 1]?.kind !== 'appendix'
@@ -153,9 +146,6 @@ export function Sidebar() {
                     </p>
                     {!isPractice && (
                       <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-bold', badge.cls)}>
-                          {badge.label}
-                        </span>
                         <span className="text-[10px] text-muted-foreground truncate">{c.examWeight}</span>
                       </div>
                     )}

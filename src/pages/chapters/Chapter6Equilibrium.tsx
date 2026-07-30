@@ -3,6 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, Re
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 function solveEquilibrium(a: number, b: number, c: number, d: number) {
   // D: Q = a - bP  →  P = (a-Q)/b  →  Q = a - bP
@@ -219,10 +222,11 @@ export function Chapter6Equilibrium() {
       <section className="space-y-5">
         <h2 className="text-xl font-bold">📖 הסבר תיאורטי</h2>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">6.1 תנאי שיווי המשקל</h3>
+          <h3 className="font-bold text-lg">6.1 תנאי <LinkedTerm anchorKey="equilibrium">שיווי המשקל</LinkedTerm></h3>
           <div className="rounded-xl bg-green-50 border border-green-200 p-4 text-center">
             <MathText math="D = S \quad\Rightarrow\quad Q_D(P^*) = Q_S(P^*)" display />
           </div>
+          <FormulaLink formulaKey="equilibrium-condition" />
           <p className="text-sm text-muted-foreground">המחיר שבו הכמות המבוקשת = הכמות המסופקת. פותרים מערכת משוואות לינארית.</p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
@@ -248,12 +252,12 @@ export function Chapter6Equilibrium() {
           <h3 className="font-bold text-lg">6.3 עודפים ורווחה</h3>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-blue-50 border border-blue-200 p-3">
-              <p className="font-bold text-blue-700 text-sm">עודף צרכן (CS)</p>
+              <p className="font-bold text-blue-700 text-sm"><LinkedTerm anchorKey="consumer-surplus">עודף צרכן</LinkedTerm> (CS)</p>
               <div className="text-center mt-2"><MathText math="CS = \frac{1}{2}(P_{max}-P^*)Q^*" /></div>
               <p className="text-xs text-muted-foreground mt-1">מה שצרכנים רצו לשלם — מה שלמדו בפועל</p>
             </div>
             <div className="rounded-xl bg-red-50 border border-red-200 p-3">
-              <p className="font-bold text-red-700 text-sm">עודף יצרן (PS)</p>
+              <p className="font-bold text-red-700 text-sm"><LinkedTerm anchorKey="producer-surplus">עודף יצרן</LinkedTerm> (PS)</p>
               <div className="text-center mt-2"><MathText math="PS = \frac{1}{2}(P^*-P_{min})Q^*" /></div>
               <p className="text-xs text-muted-foreground mt-1">מה שיצרנים קיבלו — מה שהיו מוכנים לקבל</p>
             </div>
@@ -281,6 +285,39 @@ export function Chapter6Equilibrium() {
         <TwoGroupEquilibrium />
         <ShiftsSim />
       </section>
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="6.5 שיווי משקל, עודף צרכן ועודף יצרן"
+          q={<>
+            בשוק מסוים: ביקוש <MathText math="Q_d=600-3P" />, היצע <MathText math="Q_s=2P-100" />.
+            מצאו את מחיר וכמות שיווי המשקל, ואת עודף הצרכן, עודף היצרן, והרווחה הכוללת.
+          </>}
+          answer={140}
+          tol={0}
+          unit="₪ (P*)"
+        >
+          <p className="text-sm"><strong>שלב 1 — פתרון D=S:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="600-3P=2P-100 \;\Rightarrow\; 700=5P \;\Rightarrow\; P^{*}=140 \;\Rightarrow\; Q^{*}=600-3(140)=180" display />
+          </div>
+          <FormulaLink formulaKey="equilibrium-condition" />
+          <p className="text-sm"><strong>שלב 2 — מציאת המחירים הקיצוניים</strong> (כש-Q=0 בכל עקומה):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="P_{\max}\; (\text{בביקוש}):\; 600-3P=0 \Rightarrow P=200 \qquad P_{\min}\;(\text{בהיצע}):\; 2P-100=0 \Rightarrow P=50" display />
+          </div>
+          <p className="text-sm"><strong>שלב 3 — עודף צרכן ועודף יצרן</strong> (שטחי משולשים):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="CS=\tfrac{1}{2}(200-140)(180)=5{,}400 \qquad PS=\tfrac{1}{2}(140-50)(180)=8{,}100" display />
+          </div>
+          <FormulaLink formulaKey="equilibrium-cs" />
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: P*=140₪, Q*=180. עודף צרכן=5,400₪, עודף יצרן=8,100₪, רווחה כוללת W=CS+PS=13,500₪.
+          </p>
+        </Example>
+      </section>
+
       <section><McqSection questions={MCQ} topicId="equilibrium" /></section>
     </ChapterLayout>
   )

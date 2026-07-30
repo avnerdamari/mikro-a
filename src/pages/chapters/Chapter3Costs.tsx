@@ -3,6 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 /* ── Cost simulation ─────────────────────── */
 const BASE_COSTS = [
@@ -216,8 +219,14 @@ export function Chapter3Costs() {
             ].map(([sym, name, desc, color]) => (
               <div key={sym} className="rounded-xl bg-muted/30 border border-border p-3">
                 <p className="font-extrabold text-lg" style={{ color: color as string }}>{sym}</p>
-                <p className="font-semibold text-xs">{name}</p>
+                <p className="font-semibold text-xs">
+                  {sym === 'FC' ? <LinkedTerm anchorKey="fc">{name}</LinkedTerm>
+                    : sym === 'VC' ? <LinkedTerm anchorKey="vc">{name}</LinkedTerm>
+                    : sym === 'MC' ? <LinkedTerm anchorKey="mc">{name}</LinkedTerm>
+                    : name}
+                </p>
                 <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
+                {sym === 'MC' && <div className="mt-1.5"><FormulaLink formulaKey="costs-mc" /></div>}
               </div>
             ))}
           </div>
@@ -271,6 +280,60 @@ export function Chapter3Costs() {
         <CostSim />
         <CostCurvesSim />
         <SupplySim />
+      </section>
+
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="3.5 האם כדאי לייצר? — מכרז לייצור עוגות"
+          q={<>
+            מאפייה עם עלות קבועה FC=100₪. עלות משתנה כוללת (VC) לפי כמות (Q, בעוגות ליום):
+            Q=1→80, Q=2→150, Q=3→210, Q=4→280, Q=5→360, Q=6→460. מחיר שוק לעוגה — P=70₪.
+            כמה עוגות לייצר, ומה הרווח?
+          </>}
+        >
+          <p className="text-sm"><strong>שלב 1 — טבלת MC ו-AVC</strong> (<MathText math="MC=\Delta TC/\Delta Q,\; AVC=VC/Q" />):</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs text-center border-collapse" dir="ltr">
+              <thead>
+                <tr className="bg-white dark:bg-slate-800">
+                  {['Q', 'TC', 'MC', 'AVC'].map(h => <th key={h} className="border border-border px-2 py-1 font-bold">{h}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { Q: 1, TC: 180, MC: 80, AVC: '80.0' },
+                  { Q: 2, TC: 250, MC: 70, AVC: '75.0' },
+                  { Q: 3, TC: 310, MC: 60, AVC: '70.0' },
+                  { Q: 4, TC: 380, MC: 70, AVC: '70.0' },
+                  { Q: 5, TC: 460, MC: 80, AVC: '72.0' },
+                  { Q: 6, TC: 560, MC: 100, AVC: '76.7' },
+                ].map(r => (
+                  <tr key={r.Q} className="bg-white dark:bg-slate-800">
+                    <td className="border border-border px-2 py-1">{r.Q}</td>
+                    <td className="border border-border px-2 py-1">{r.TC}</td>
+                    <td className="border border-border px-2 py-1">{r.MC}</td>
+                    <td className="border border-border px-2 py-1">{r.AVC}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <FormulaLink formulaKey="costs-mc" />
+          <p className="text-sm">
+            <strong>שלב 2 — כלל MC=P:</strong> מחפשים Q שבו MC הכי קרוב ל-P=70. זה קורה ב-Q=3 (MC=60→70) ושוב ב-Q=4 (MC=70).
+            מינימום ה-AVC הוא בדיוק 70 (ב-Q=3 וב-Q=4 כאחד) — כלומר <strong>P=AVC המינימלי בדיוק</strong>, נקודת ה-Shut-down עצמה.
+          </p>
+          <p className="text-sm"><strong>שלב 3 — בדיקת הרווח בפועל</strong> (<MathText math="\pi = P\times Q - TC" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q=3:\; \pi=70\!\times\!3-310=210-310=-100 \qquad Q=4:\; \pi=70\!\times\!4-380=280-380=-100" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: כדאי לייצר (3 או 4 עוגות — שני הכמויות שקולות), עם הפסד של 100₪ — בדיוק שווה ל-FC.
+            זה לא מקרי: כש-P=AVC המינימלי, ההפסד מייצור שווה בדיוק ל-FC, כאילו סגרנו את המפעל — זו בדיוק ההגדרה של נקודת ה-Shut-down: מתחתיה עדיף לסגור, מעליה עדיף לייצר.
+          </p>
+        </Example>
       </section>
 
       <section><McqSection questions={MCQ} topicId="costs" /></section>

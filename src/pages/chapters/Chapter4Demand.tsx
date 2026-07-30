@@ -3,6 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 function buildDemand(a: number, b: number, steps = 20) {
   return Array.from({ length: steps + 1 }, (_, i) => {
@@ -191,13 +194,14 @@ export function Chapter4Demand() {
       <section className="space-y-5">
         <h2 className="text-xl font-bold">📖 הסבר תיאורטי</h2>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">4.1 חוק הביקוש</h3>
+          <h3 className="font-bold text-lg">4.1 <LinkedTerm anchorKey="law-of-demand">חוק הביקוש</LinkedTerm></h3>
           <div className="rounded-xl bg-blue-50 border border-blue-200 p-4">
             <p className="font-bold text-blue-800 mb-1">📌 חוק הביקוש:</p>
             <p className="text-blue-700 text-sm">ככל שמחיר מוצר <strong>עולה</strong> — הכמות המבוקשת <strong>יורדת</strong>. קשר <em>הפוך</em> בין מחיר לכמות.</p>
           </div>
           <div className="rounded-xl border border-border p-4 text-center">
             <MathText math="Q = a - b \cdot P \quad\quad \text{(פונקציה לינארית)}" display />
+            <FormulaLink formulaKey="demand-function" />
           </div>
           <p className="text-sm text-muted-foreground">כש-P עולה → Q יורד. כש-P=0 → Q=a (כמות מקסימלית). כש-Q=0 → P=a/b (מחיר מקסימלי).</p>
         </div>
@@ -235,7 +239,7 @@ export function Chapter4Demand() {
               <p className="text-xs text-muted-foreground mt-1">רק כשמחיר <strong>העצמי</strong> משתנה. העקומה לא זזה.</p>
             </div>
             <div className="rounded-xl bg-indigo-50 border border-indigo-200 p-3">
-              <p className="font-bold text-indigo-700 text-sm">הסטת עקומה</p>
+              <p className="font-bold text-indigo-700 text-sm"><LinkedTerm anchorKey="demand-shift">הסטת עקומה</LinkedTerm></p>
               <p className="text-xs text-muted-foreground mt-1">כשמשתנה הכנסה, תחליף, משלים, טעמים — העקומה עצמה זזה.</p>
             </div>
           </div>
@@ -247,6 +251,38 @@ export function Chapter4Demand() {
         <ShiftersSim />
         <TwoGroupSim />
       </section>
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="4.5 ביקוש מצרפי משתי קבוצות צרכנים"
+          q={<>
+            בעיר יש 50 משפחות, כל אחת עם ביקוש אישי <MathText math="Q=200-2P" />, ו-80 מסעדות, כל אחת עם ביקוש אישי <MathText math="Q=150-P" />.
+            מה הביקוש המצרפי בשוק (בפונקציה של P), ומה הכמות הכוללת וההוצאה הכוללת במחיר P=60₪?
+          </>}
+          answer={11200}
+          tol={0}
+          unit="יחידות"
+        >
+          <p className="text-sm"><strong>שלב 1 — כלל הזהב: מחברים ביקושים לפי Q בכל מחיר נתון, לא לפי P</strong>:</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_{\text{משפחות}}=50\times(200-2P)=10{,}000-100P \qquad Q_{\text{מסעדות}}=80\times(150-P)=12{,}000-80P" display />
+          </div>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_{\text{total}}=(10{,}000+12{,}000)-(100+80)P=22{,}000-180P" display />
+          </div>
+          <FormulaLink formulaKey="demand-function" />
+          <p className="text-sm"><strong>שלב 2 — הצבת P=60₪:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_{\text{משפחות}}=10{,}000-6{,}000=4{,}000 \qquad Q_{\text{מסעדות}}=12{,}000-4{,}800=7{,}200 \qquad Q_{\text{total}}=11{,}200" display />
+          </div>
+          <p className="text-sm"><strong>שלב 3 — הוצאה כוללת</strong> (<MathText math="TR=P\times Q" />): <MathText math="60\times11{,}200=672{,}000" />₪.</p>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: הביקוש המצרפי הוא Q=22,000-180P. בP=60₪ נדרשות 11,200 יחידות בסה"כ (4,000 ממשפחות, 7,200 ממסעדות), בהוצאה כוללת של 672,000₪.
+          </p>
+        </Example>
+      </section>
+
       <section><McqSection questions={MCQ} topicId="demand" /></section>
     </ChapterLayout>
   )

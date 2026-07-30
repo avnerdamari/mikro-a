@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer } from 'recharts'
 
 // Monopoly: P = a - bQ (inverse demand), TR = aQ - bQ², MR = a - 2bQ, MC = c (constant)
@@ -287,7 +290,7 @@ export function Chapter10Monopoly() {
     <ChapterLayout number={10} title="מונופול" subtitle="MR=MC, DWL, אפליית מחירים" color="#8b5cf6" examWeight="~20% מהמבחן — חשוב מאוד">
       <div className="rounded-2xl border border-purple-200 bg-purple-50 p-4">
         <p className="font-bold text-purple-800">⭐ פרק חשוב!</p>
-        <p className="text-sm text-purple-700 mt-1">המונופול הוא אחד מנושאי הבחינה הנפוצים ביותר. שלוט ב-MR=MC, DWL, ואפליית מחירים.</p>
+        <p className="text-sm text-purple-700 mt-1">ה<LinkedTerm anchorKey="monopoly">מונופול</LinkedTerm> הוא אחד מנושאי הבחינה הנפוצים ביותר. שלוט ב-MR=MC, DWL, ואפליית מחירים.</p>
       </div>
       <section className="space-y-5">
         <h2 className="text-xl font-bold">📖 הסבר תיאורטי</h2>
@@ -303,6 +306,7 @@ export function Chapter10Monopoly() {
               <div className="text-center">
                 <MathText math="MR = MC \Rightarrow Q^*" display />
                 <p className="text-xs">קובע כמות</p>
+                <FormulaLink formulaKey="monopoly-profit-max" />
               </div>
               <div className="text-center">
                 <MathText math="P^* = P(Q^*)" display />
@@ -366,6 +370,43 @@ export function Chapter10Monopoly() {
         <MonopolySim />
         <PriceDiscriminationSim />
         <WelfareSim />
+      </section>
+
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="10.5 מונופול קובע מחיר וכמות למקסום רווח"
+          q={<>
+            מונופול ניצב מול ביקוש הפוך <MathText math="P=150-3Q" />, ועלות שולית קבועה MC=30₪.
+            מה הכמות והמחיר שהמונופול יבחר, ומה הרווח שלו?
+          </>}
+          answer={20}
+          tol={0}
+          unit="יחידות (Q*)"
+        >
+          <p className="text-sm"><strong>שלב 1 — נגזרת ה-MR מהביקוש ההפוך</strong> (כשהביקוש ליניארי, MR פי 2 בשיפוע):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="P=150-3Q \;\Rightarrow\; MR=150-6Q" display />
+          </div>
+          <FormulaLink formulaKey="monopoly-mr-linear" />
+          <p className="text-sm"><strong>שלב 2 — תנאי מקסום רווח MR=MC:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="150-6Q=30 \;\Rightarrow\; 120=6Q \;\Rightarrow\; Q^{*}=20" display />
+          </div>
+          <FormulaLink formulaKey="monopoly-profit-max" />
+          <p className="text-sm"><strong>שלב 3 — המחיר, מהעקומה המקורית:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="P^{*}=150-3(20)=90" display />
+          </div>
+          <p className="text-sm"><strong>שלב 4 — הרווח</strong> (המרווח על כל יחידה, כפול הכמות):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="\pi=(P^{*}-MC)\times Q^{*}=(90-30)\times20=1{,}200" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: Q*=20 יחידות, P*=90₪, רווח=1,200₪. שימו לב ש-P*(90) גבוה בהרבה מ-MC(30) — זו בדיוק התוצאה של כוח שוק מונופוליסטי.
+          </p>
+        </Example>
       </section>
 
       <section><McqSection questions={MCQ} topicId="monopoly" /></section>

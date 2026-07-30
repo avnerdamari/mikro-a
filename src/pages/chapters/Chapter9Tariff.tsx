@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer, ReferenceArea } from 'recharts'
 
 // Fixed market: Qd=300-2P, Qs=P-30 (Qs=0 when P<30)
@@ -231,13 +234,14 @@ export function Chapter9Tariff() {
       <section className="space-y-5">
         <h2 className="text-xl font-bold">📖 הסבר תיאורטי</h2>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">9.1 מכס (Tariff) — כיצד עובד?</h3>
+          <h3 className="font-bold text-lg">9.1 <LinkedTerm anchorKey="tariff">מכס</LinkedTerm> (Tariff) — כיצד עובד?</h3>
           <div className="text-sm space-y-2">
             <p><strong>מכס ספציפי</strong>: תוספת קבועה לכל יחידה מיובאת. אם P_w=60 ו-t=20 → מחיר מקומי = 80.</p>
             <p><strong>תוצאה</strong>: יצרנים מקומיים מוכרים בP גבוה יותר → Qs מקומי עולה. צרכנים משלמים יותר → Qd יורד. יבוא יורד.</p>
           </div>
           <div className="rounded-xl border border-border p-3 text-center">
             <MathText math="P_{\text{מקומי}} = P_w + t" display />
+            <FormulaLink formulaKey="tariff-price" />
           </div>
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div className="rounded-xl bg-blue-50 border border-blue-200 p-3">
@@ -315,6 +319,42 @@ export function Chapter9Tariff() {
         <TariffSim />
         <QuotaSim />
         <SubsidySim />
+      </section>
+
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="9.4 מכס על ייבוא — השפעה על הכמות ועל הכנסות המדינה"
+          q={<>
+            ביקוש מקומי <MathText math="Q_d=500-4P" />, היצע מקומי <MathText math="Q_s=2P-40" />. מחיר עולמי P_w=70₪.
+            הממשלה מטילה מכס של 10₪ ליחידה. מה קורה לייבוא, ומה הכנסות המדינה מהמכס?
+          </>}
+          answer={60}
+          tol={0}
+          unit="יחידות ייבוא אחרי מכס"
+        >
+          <p className="text-sm"><strong>שלב 1 — ייבוא לפני המכס, במחיר העולמי:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_d(70)=500-280=220 \qquad Q_s(70)=140-40=100 \qquad M_0=220-100=120" display />
+          </div>
+          <p className="text-sm"><strong>שלב 2 — המחיר המקומי אחרי המכס</strong> (<MathText math="P=P_w+\text{tariff}" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="P=70+10=80" display />
+          </div>
+          <FormulaLink formulaKey="tariff-price" />
+          <p className="text-sm"><strong>שלב 3 — הכמויות במחיר החדש (80₪), והייבוא החדש:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_d(80)=500-320=180 \qquad Q_s(80)=160-40=120 \qquad M_{new}=180-120=60" display />
+          </div>
+          <p className="text-sm"><strong>שלב 4 — הכנסות המדינה מהמכס</strong> (<MathText math="T=\text{tariff}\times M_{new}" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="T=10\times60=600" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: המכס מקטין את הייבוא מ-120 ל-60 יחידות (חצי!) — כי גם הביקוש המקומי יורד וגם ההיצע המקומי עולה כשהמחיר עולה מ-70 ל-80₪. הכנסות המדינה: 600₪.
+          </p>
+        </Example>
       </section>
 
       <section><McqSection questions={MCQ} topicId="tariff" /></section>

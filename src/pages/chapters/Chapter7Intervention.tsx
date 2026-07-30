@@ -3,6 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, R
 import { MathText } from '@/components/MathText'
 import { McqSection, type McqQuestion } from '@/components/McqSection'
 import { ChapterLayout } from '@/components/ChapterLayout'
+import { LinkedTerm } from '@/components/LinkedTerm'
+import { FormulaLink } from '@/components/FormulaLink'
+import { Example } from '@/components/Example'
 
 // D: P=250-4Q → Q=(250-P)/4
 // S: P=100+Q → Q=P-100
@@ -237,10 +240,11 @@ export function Chapter7Intervention() {
               <div className="text-center"><MathText math="D(Q) = S_{new}(Q) \Rightarrow \text{מצא } P_c" display /></div>
               <div className="text-center"><MathText math="P_p = P_c - t \quad \text{הכנסות ממשלה} = t \times Q_{new}" display /></div>
             </div>
+            <div className="flex justify-center"><FormulaLink formulaKey="intervention-tax-producer" /></div>
           </div>
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">7.2 גלגול מס — מי משלם?</h3>
+          <h3 className="font-bold text-lg">7.2 <LinkedTerm anchorKey="tax-incidence">גלגול מס</LinkedTerm> — מי משלם?</h3>
           <p className="text-sm text-muted-foreground">המס משולם ע"י שני הצדדים — חלוקה לפי גמישות עקומות:</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-blue-50 border border-blue-200 p-3">
@@ -265,7 +269,7 @@ export function Chapter7Intervention() {
           </div>
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-          <h3 className="font-bold text-lg">7.4 מחיר מינימום ומחיר מקסימום</h3>
+          <h3 className="font-bold text-lg">7.4 <LinkedTerm anchorKey="price-floor">מחיר מינימום</LinkedTerm> ו<LinkedTerm anchorKey="price-ceiling">מחיר מקסימום</LinkedTerm></h3>
           <div className="grid grid-cols-2 gap-3">
             {[
               ['מחיר מינימום', '> P*', 'עודף היצע', 'bg-yellow-50 border-yellow-300', 'שכר מינימום, מחיר חקלאי'],
@@ -290,6 +294,42 @@ export function Chapter7Intervention() {
         <PriceSim />
         <CrossMarketSim />
       </section>
+      {/* SOLVED EXAMPLE */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold">📝 דוגמה פתורה</h2>
+        <Example
+          title="7.5 מס יחידתי — מי משלם בפועל?"
+          q={<>
+            בשוק מסוים: ביקוש <MathText math="Q_d=500-2P" />, היצע <MathText math="Q_s=3P-100" />.
+            הממשלה מטילה מס יחידתי t=15₪ על היצרן. מצאו את המחיר לצרכן, המחיר ליצרן, הכנסות המדינה, ואת חלוקת נטל המס.
+          </>}
+          answer={129}
+          tol={0}
+          unit="₪ (P לצרכן)"
+        >
+          <p className="text-sm"><strong>שלב 0 — שיווי משקל ללא מס</strong> (לצורך השוואה):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="500-2P=3P-100 \Rightarrow 600=5P \Rightarrow P^{*}=120" display />
+          </div>
+          <p className="text-sm"><strong>שלב 1 — היצע עם המס</strong> (היצרן מקבל בפועל <MathText math="P_p=P_c-t" />):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="500-2P_c=3(P_c-15)-100 \Rightarrow 500-2P_c=3P_c-145 \Rightarrow 645=5P_c \Rightarrow P_c=129" display />
+          </div>
+          <FormulaLink formulaKey="intervention-tax-producer" />
+          <p className="text-sm"><strong>שלב 2 — הכמות, מחיר היצרן, והכנסות המדינה:</strong></p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="Q_{new}=500-2(129)=242 \qquad P_p=129-15=114 \qquad T=15\times242=3{,}630" display />
+          </div>
+          <p className="text-sm"><strong>שלב 3 — חלוקת הנטל</strong> (ביחס למחיר המקורי P*=120):</p>
+          <div className="rounded-lg bg-white px-3 py-2 dark:bg-slate-800 dark:text-slate-100 text-center" dir="ltr">
+            <MathText math="\text{נטל צרכן}=(129-120)\times242=2{,}178 \qquad \text{נטל יצרן}=(120-114)\times242=1{,}452" display />
+          </div>
+          <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+            תשובה: P_צרכן=129₪, P_יצרן=114₪, Q=242, הכנסות המדינה=3,630₪. הצרכן נושא 2,178₪ מהנטל והיצרן 1,452₪ (סכומם=3,630₪ ✓) — הצרכן נושא יותר כי הביקוש כאן קשיח יחסית להיצע.
+          </p>
+        </Example>
+      </section>
+
       <section><McqSection questions={MCQ} topicId="intervention" /></section>
     </ChapterLayout>
   )
