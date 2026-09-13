@@ -26,7 +26,7 @@ export function BookCover() {
           </div>
 
           <div
-            className="relative order-1 flex-1 overflow-hidden px-6 pb-6 pt-8 text-white"
+            className="relative order-1 flex-1 min-h-[580px] overflow-hidden px-6 pb-6 pt-8 text-white"
             style={{
               background:
                 'radial-gradient(circle at 30% 10%, rgba(255,255,255,0.10), transparent 55%), linear-gradient(160deg, #24476e 0%, #1e3a5f 45%, #0d2036 100%)',
