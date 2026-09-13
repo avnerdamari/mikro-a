@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { BookCover } from '@/components/BookCover'
 import { useNavigation } from '@/components/NavigationContext'
 import { CHAPTERS } from '@/data/toc'
@@ -6,10 +7,84 @@ import { loadProgress } from '@/lib/progress'
 const INDIGO = '#4F46E5'
 const WHATSAPP = '#25D366'
 
+/* מודאל תנאי-שימוש לפני כניסה לספר — דפוס מ-DogCare-App/Advisors-App (סקיל
+   build-book §2ז), מותאם לתוכן כלכלי-לימודי במקום וטרינרי. */
+function TermsModal({ onAccept, onClose }: { onAccept: () => void; onClose: () => void }) {
+  const [agreed, setAgreed] = useState(false)
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 px-4 pt-6 pb-6"
+      dir="rtl"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl dark:bg-slate-800"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="rounded-t-2xl px-6 py-4 text-white" style={{ backgroundColor: '#4F46E5' }}>
+          <h2 className="text-xl font-bold">תנאי שימוש</h2>
+        </div>
+
+        <div className="space-y-4 px-6 py-5 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+          <p>
+            ברוכים הבאים למדריך הדיגיטלי <strong>מבוא לכלכלה א'</strong>. לפני השימוש, אנא קרא את התנאים הבאים:
+          </p>
+
+          <ol className="list-decimal space-y-3 pr-5">
+            <li>
+              <strong>אינו תחליף להוראה פרונטלית —</strong> המדריך מיועד למידע כללי ולסיוע
+              בלמידה בלבד. בכל שאלה על דרישות הקורס, הציון או חומר הבחינה הרשמי —
+              יש לפנות למרצה/ת או לגורם האקדמי המוסמך.
+            </li>
+            <li>
+              <strong>אין אחריות לטעויות —</strong> למרות המאמץ לדיוק מרבי, ייתכנו טעויות
+              או אי-דיוקים בפרטים, בהסברים או בתרגילים. מומלץ תמיד לאמת מול איש/אשת מקצוע.
+            </li>
+            <li>
+              <strong>שימוש אישי בלבד —</strong> המדריך מיועד לשימוש אישי. אין להעתיק,
+              להפיץ, למכור או לפרסם תכנים מתוכו ללא אישור מפורש בכתב.
+            </li>
+          </ol>
+
+          <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-400">
+            © {new Date().getFullYear()} אבנר דמארי — כל הזכויות שמורות.
+            חל איסור על שכפול, העתקה או הפצה של התכנים ללא רשות מפורשת.
+          </div>
+
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 px-4 py-3 hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={e => { setAgreed(e.target.checked); if (e.target.checked) onAccept() }}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-blue-600"
+            />
+            <span className="text-sm text-slate-700 dark:text-slate-200">
+              קראתי את תנאי השימוש והסכמתי להם — סמן כדי להיכנס לספר
+            </span>
+          </label>
+        </div>
+
+        <div className="flex justify-end gap-3 rounded-b-2xl border-t border-slate-100 px-6 py-4 dark:border-slate-700">
+          <button
+            onClick={onClose}
+            className="rounded-lg border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700"
+          >
+            ביטול
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function HomePage() {
   const { setCurrentChapter } = useNavigation()
   const progress = loadProgress()
   const completed = progress.completedTopics.length
+  // "intro" — כפתור "להסבר ראשוני" (נכנס ישר להקדמה). "ppf" — כפתור "התחל
+  // ללמוד" (נכנס לפרק הראשון). שני הכפתורים חולקים את אותו מודל תנאי-שימוש.
+  const [termsTarget, setTermsTarget] = useState<'intro' | 'ppf' | null>(null)
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-12 pt-6" dir="rtl">
@@ -37,7 +112,7 @@ export function HomePage() {
             וואטסאפ באמצע, ומשני פועם שקופץ ישר להקדמה. */}
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <button
-            onClick={() => setCurrentChapter('intro')}
+            onClick={() => setTermsTarget('intro')}
             className="inline-flex animate-pulse items-center gap-2 rounded-xl px-6 py-3 text-base font-bold text-white shadow-md transition hover:animate-none hover:opacity-90 active:scale-95 active:translate-y-0.5"
             style={{ backgroundColor: '#1F6F3F' }}
           >
@@ -45,7 +120,7 @@ export function HomePage() {
             <span>להסבר ראשוני</span>
           </button>
           <button
-            onClick={() => setCurrentChapter('ppf')}
+            onClick={() => setTermsTarget('ppf')}
             className="inline-flex animate-pulse items-center gap-2 rounded-xl px-8 py-3 text-base font-bold text-white shadow-lg transition hover:animate-none hover:opacity-90 active:scale-95 active:translate-y-0.5"
             style={{ backgroundColor: INDIGO }}
           >
@@ -85,6 +160,17 @@ export function HomePage() {
         </a>
         <div dir="ltr" className="mt-1 text-xs opacity-70">v{import.meta.env.VITE_APP_VERSION}</div>
       </footer>
+
+      {termsTarget && (
+        <TermsModal
+          onAccept={() => {
+            const target = termsTarget
+            setTermsTarget(null)
+            setCurrentChapter(target)
+          }}
+          onClose={() => setTermsTarget(null)}
+        />
+      )}
     </div>
   )
 }
