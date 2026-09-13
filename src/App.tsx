@@ -4,6 +4,7 @@ import { ChapterSectionNav } from '@/components/ChapterSectionNav'
 import { MindMapPanel } from '@/components/MindMapPanel'
 import { Sidebar } from '@/components/Sidebar'
 import { TutorButton } from '@/components/TutorButton'
+import { RegularCalculator } from '@/components/RegularCalculator'
 import { HomePage } from '@/pages/HomePage'
 import { ChapterIntro } from '@/pages/chapters/ChapterIntro'
 import { Chapter1PPF } from '@/pages/chapters/Chapter1PPF'
@@ -81,6 +82,7 @@ function AppContent() {
           ואין טעם ב"עוזר למידה" לפני שנבחר פרק (כמו LandingPage במשפחה A). */}
       {!isHome && (
         <div data-floating-stack className="no-print fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
+        <RegularCalculator />
         <TutorButton chapterId={currentChapter} />
         <a
           href="https://api.whatsapp.com/send?phone=972544242706"
