@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react'
 import { GuidedSolver, type GuidedStep } from './GuidedSolver'
+import { AskTutorButton } from './AskTutorButton'
 
 export type Exercise = {
   id: string
@@ -15,6 +16,17 @@ export type Exercise = {
       התרגיל מציג "🧭 פתור עם הנחיות"/"📖 הצג פתרון מלא" במקום רמז+הצג-פתרון
       הישנים. אופציונלי כדי לאפשר המרה הדרגתית, פרק-אחר-פרק. */
   guided?: GuidedStep[]
+  /** שדות "הצג פתרון מלא" לפי 6 השלבים (סקיל solve-question §3) — כשקיימים
+      (בד"כ יחד עם guided), "📖 הצג פתרון מלא" מציג אותם במקום ex.answer הגולמי.
+      אופציונליים לצורך שדרוג הדרגתי פרק-אחר-פרק — לא כל תרגיל שודרג עדיין. */
+  understand?: ReactNode
+  visual?: ReactNode
+  formula?: ReactNode
+  steps?: ReactNode
+  sanity?: ReactNode
+  /** נושא לכפתור "שאל את המורה" הממוקד-לתרגיל (מפתח ב-TUTOR_TOPIC,
+      TutorButton.tsx) — כשקיים, מוצג לצד כפתורי ה-GuidedSolver. */
+  topic?: string
 }
 
 /** משווה קלט חופשי מול checkAnswer: מסיר רווחים/₪/פסיקי-אלפים, לא תלוי רישיות. */
@@ -105,7 +117,22 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
         <GuidedSolver
           steps={ex.guided}
           summary={<>{ex.answer.split('\n')[0]}</>}
-          fullSolution={ex.answer.split('\n').map((line, i) => <AnswerLine key={i} line={line} />)}
+          fullSolution={
+            ex.understand ? (
+              <div className="space-y-3">
+                <div><p className="mb-1 font-bold">🔍 הבנת השאלה</p><p>{ex.understand}</p></div>
+                <div><p className="mb-1 font-bold">📊 תיאור גרפי</p><div>{ex.visual}</div></div>
+                <div><p className="mb-1 font-bold">📐 הנוסחה</p><div>{ex.formula}</div></div>
+                <div><p className="mb-1 font-bold">🔢 פתרון שלב-אחר-שלב</p><div>{ex.steps}</div></div>
+                <div>
+                  <p className="mb-1 font-bold">✅ תשובה</p>
+                  <div className="space-y-0.5">{ex.answer.split('\n').map((line, i) => <AnswerLine key={i} line={line} />)}</div>
+                </div>
+                <div><p className="mb-1 font-bold">🔄 בדיקת סבירות</p><p>{ex.sanity}</p></div>
+              </div>
+            ) : ex.answer.split('\n').map((line, i) => <AnswerLine key={i} line={line} />)
+          }
+          extraActions={ex.topic && <AskTutorButton topic={ex.topic} anchorId={ex.id} />}
         />
       ) : (
       <div className="mt-3 flex flex-wrap gap-2">

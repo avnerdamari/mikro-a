@@ -22,6 +22,9 @@ interface Props {
   answer?: number
   tol?: number
   unit?: string
+  /** כפתורים נוספים לצד "פתור עם הנחיות"/"הצג פתרון מלא" — למשל AskTutorButton
+      (סקיל solve-question §6, "מיקום עוזר הלמידה — אותה שורה"). */
+  extraActions?: ReactNode
 }
 
 const BUTTON_CLASS = 'rounded-lg px-3 py-1.5 text-xs font-bold text-white transition hover:brightness-110 active:scale-95'
@@ -81,7 +84,7 @@ function GuidedStepView({ step, onDone }: { step: GuidedStep; onDone: () => void
   )
 }
 
-export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, unit }: Props) {
+export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, unit, extraActions }: Props) {
   const [mode, setMode] = useState<'closed' | 'guided' | 'full'>('closed')
   const [stepIdx, setStepIdx] = useState(0)
   const [val, setVal] = useState('')
@@ -112,6 +115,7 @@ export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, 
         >
           {mode === 'full' ? 'הסתר פתרון' : '📖 הצג פתרון מלא'}
         </button>
+        {extraActions}
       </div>
 
       {answer !== undefined && (
