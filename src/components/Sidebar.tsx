@@ -20,6 +20,21 @@ function loadStoredOpenIds(): Set<string> | null {
   }
 }
 
+/** true רק כשלמכשיר יש עכבר אמיתי (לא טאץ') — סקיל build-book §2ד׳,
+    "נוחות שולחן-עבודה": חשיפת תוכן-העניינים בהעברת-עכבר לקצה ימין
+    לא אמורה לקרות בטאץ' (אין "hover" אמיתי שם, וזה עלול לתפוס קליקים). */
+function useHoverCapable() {
+  const [hoverCapable, setHoverCapable] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)')
+    setHoverCapable(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setHoverCapable(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return hoverCapable
+}
+
 function saveStoredOpenIds(ids: Set<string>) {
   try {
     localStorage.setItem(OPEN_IDS_KEY, JSON.stringify([...ids]))
@@ -43,6 +58,7 @@ function findPathToChapter(nodes: TocNode[], targetChapterId: string, path: stri
 
 export function Sidebar() {
   const { sidebarOpen, setSidebarOpen, currentChapter, setCurrentChapter } = useNavigation()
+  const hoverCapable = useHoverCapable()
   const [q, setQ] = useState('')
   const [resultsOpen, setResultsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -102,8 +118,6 @@ export function Sidebar() {
   useEffect(() => {
     if (sidebarOpen) setTimeout(() => inputRef.current?.focus(), 300)
   }, [sidebarOpen])
-
-  if (!sidebarOpen) return null
 
   const go = (id: string, { closeSidebar = true } = {}) => {
     setCurrentChapter(id)
@@ -185,6 +199,21 @@ export function Sidebar() {
     )
   }
 
+  /* חשיפה בהעברת-עכבר לקצה ימין / הסתרה כשהעכבר עוזב — רק במכשיר עם עכבר
+     אמיתי (סקיל build-book §2ד׳, מבוסס livestats-il). הרצועה הבלתי-נראית
+     קיימת רק כשהפאנל סגור (אחרת אין מה "לחשוף"); הפאנל עצמו נסגר ב-
+     onMouseLeave כשהעכבר יוצא ממנו חזרה שמאלה, לתוך התוכן. */
+  if (!sidebarOpen) {
+    if (!hoverCapable) return null
+    return (
+      <div
+        className="fixed inset-y-0 right-0 z-30 w-3"
+        onMouseEnter={() => setSidebarOpen(true)}
+        aria-hidden
+      />
+    )
+  }
+
   return (
     <>
       {/* Overlay */}
@@ -194,6 +223,7 @@ export function Sidebar() {
       />
       {/* Drawer */}
       <aside
+        onMouseLeave={() => { if (hoverCapable) setSidebarOpen(false) }}
         className="fixed top-0 right-0 bottom-0 z-50 w-[300px] bg-background border-l border-border shadow-xl flex flex-col"
         dir="rtl"
       >
