@@ -35,6 +35,32 @@ function useHoverCapable() {
   return hoverCapable
 }
 
+/** מיקום הקצה-הימני (בפיקסלים משמאל-המסך, כרגיל ב-DOM) של עמודת התוכן
+    הנוכחית (`#content-root`, מוגדר ב-ChapterLayout.tsx) — כדי שרצועת-החשיפה
+    תתחיל **מיד מחוץ לתוכן**, לא רק בשוליים הצרים ביותר של המסך עצמו (סקיל
+    build-book §2ד׳, מבוסס livestats-il: `useContentRightEdge`). עוקב אחרי
+    `currentChapter` כי `#content-root` מוחלף בכל מעבר-פרק. */
+function useContentRightEdge(currentChapter: string) {
+  const [right, setRight] = useState<number | null>(null)
+  useEffect(() => {
+    const el = document.getElementById('content-root')
+    if (!el) {
+      setRight(null)
+      return
+    }
+    const update = () => setRight(el.getBoundingClientRect().right)
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    window.addEventListener('resize', update)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', update)
+    }
+  }, [currentChapter])
+  return right
+}
+
 function saveStoredOpenIds(ids: Set<string>) {
   try {
     localStorage.setItem(OPEN_IDS_KEY, JSON.stringify([...ids]))
@@ -59,6 +85,7 @@ function findPathToChapter(nodes: TocNode[], targetChapterId: string, path: stri
 export function Sidebar() {
   const { sidebarOpen, setSidebarOpen, currentChapter, setCurrentChapter } = useNavigation()
   const hoverCapable = useHoverCapable()
+  const contentRightEdge = useContentRightEdge(currentChapter)
   const [q, setQ] = useState('')
   const [resultsOpen, setResultsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -204,10 +231,11 @@ export function Sidebar() {
      קיימת רק כשהפאנל סגור (אחרת אין מה "לחשוף"); הפאנל עצמו נסגר ב-
      onMouseLeave כשהעכבר יוצא ממנו חזרה שמאלה, לתוך התוכן. */
   if (!sidebarOpen) {
-    if (!hoverCapable) return null
+    if (!hoverCapable || contentRightEdge == null) return null
     return (
       <div
-        className="fixed inset-y-0 right-0 z-30 w-3"
+        className="fixed inset-y-0 right-0 z-30"
+        style={{ left: contentRightEdge }}
         onMouseEnter={() => setSidebarOpen(true)}
         aria-hidden
       />
