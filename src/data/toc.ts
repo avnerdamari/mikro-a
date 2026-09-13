@@ -237,3 +237,37 @@ export const CHAPTERS: ChapterMeta[] = [
     kind: 'appendix',
   },
 ]
+
+/* עץ תוכן-העניינים לסיידבר (סקיל build-book §2ד׳ — התנהגות מחייבת מבוססת
+   livestats-il: קינון-הורה/ילד מפורש, לא היסק-לפי-סמיכות בתוך JSX).
+   נבנה **פעם אחת מ-CHAPTERS עצמו**, לא מקור-נתונים נפרד לתחזק ידנית —
+   זה בכוונה שונה מ-livestats-il (ששם יש שני מקורות נפרדים, SECTIONS+TREE,
+   ומתועד כגוצ'ה) ומהווה שיפור: מקור-אמת יחיד, אבל עדיין עץ מפורש שה-
+   Sidebar צורך, לא סמיכות-במערך מנוחשת ברכיב עצמו. */
+export type TocNode = {
+  id: string
+  /** קבוצה בלי chapter משלה (כמו "פרקי הקורס"/"נספחים") — משתמשת ב-label. */
+  label?: string
+  chapter?: ChapterMeta
+  children?: TocNode[]
+}
+
+function buildTocTree(): TocNode[] {
+  const theoryAndIntro = CHAPTERS.filter(c => c.kind === 'theory')
+  const practiceByNumber = new Map(CHAPTERS.filter(c => c.kind === 'practice').map(c => [c.number, c]))
+  const appendices = CHAPTERS.filter(c => c.kind === 'appendix')
+
+  const courseNodes: TocNode[] = theoryAndIntro.map(theory => {
+    const practice = practiceByNumber.get(theory.number)
+    return practice
+      ? { id: theory.id, chapter: theory, children: [{ id: practice.id, chapter: practice }] }
+      : { id: theory.id, chapter: theory }
+  })
+
+  return [
+    { id: 'course-group', label: 'פרקי הקורס', children: courseNodes },
+    { id: 'appendix-group', label: 'נספחים', children: appendices.map(a => ({ id: a.id, chapter: a })) },
+  ]
+}
+
+export const TOC_TREE: TocNode[] = buildTocTree()

@@ -1,18 +1,95 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { X, Search, ChevronLeft, BookOpen } from 'lucide-react'
 import { useNavigation } from './NavigationContext'
-import { CHAPTERS } from '@/data/toc'
+import { CHAPTERS, TOC_TREE, type TocNode } from '@/data/toc'
 import { CONTENT_BODIES } from '@/data/contentIndex'
 import { cn } from '@/lib/utils'
+
+/* קיפול/פתיחה פר-node, נשמר בין ביקורים — סקיל build-book §2ד׳ (מבוסס
+   livestats-il). מפתח ייעודי לספר הזה (כל ספר-origin מפריד את ה-localStorage
+   שלו ממילא, אבל שם מפורש עוזר בדיבוג). */
+const OPEN_IDS_KEY = 'mikro-a-toc-open-ids'
+
+function loadStoredOpenIds(): Set<string> | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const raw = localStorage.getItem(OPEN_IDS_KEY)
+    return raw ? new Set(JSON.parse(raw)) : null
+  } catch {
+    return null
+  }
+}
+
+function saveStoredOpenIds(ids: Set<string>) {
+  try {
+    localStorage.setItem(OPEN_IDS_KEY, JSON.stringify([...ids]))
+  } catch {
+    // localStorage לא זמין (מצב פרטי/חסום) — לא קריטי, פשוט לא נשמר
+  }
+}
+
+/** שרשרת ה-id-ים מהשורש ועד ה-node שמכיל chapter.id === targetChapterId (כולל עצמו). */
+function findPathToChapter(nodes: TocNode[], targetChapterId: string, path: string[] = []): string[] | null {
+  for (const node of nodes) {
+    const next = [...path, node.id]
+    if (node.chapter?.id === targetChapterId) return next
+    if (node.children) {
+      const found = findPathToChapter(node.children, targetChapterId, next)
+      if (found) return found
+    }
+  }
+  return null
+}
 
 export function Sidebar() {
   const { sidebarOpen, setSidebarOpen, currentChapter, setCurrentChapter } = useNavigation()
   const [q, setQ] = useState('')
   const [resultsOpen, setResultsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+
+  const [openIds, setOpenIds] = useState<Set<string>>(() => {
+    const stored = loadStoredOpenIds()
+    if (stored) return stored
+    // ביקור ראשון (אין מצב שמור) — מרחיבים אוטומטית את מסלול-האבות לפרק הנוכחי
+    const path = findPathToChapter(TOC_TREE, currentChapter)
+    return new Set(path ?? [])
+  })
+
+  useEffect(() => {
+    saveStoredOpenIds(openIds)
+  }, [openIds])
+
+  // בכל פתיחת הפאנל — לוודא שמסלול-האבות לפריט הפעיל פתוח, ואז לגלול אליו
+  useEffect(() => {
+    if (!sidebarOpen) return
+    const path = findPathToChapter(TOC_TREE, currentChapter)
+    if (path) {
+      setOpenIds(prev => {
+        if (path.every(id => prev.has(id))) return prev
+        const next = new Set(prev)
+        path.forEach(id => next.add(id))
+        return next
+      })
+    }
+    const timer = setTimeout(() => {
+      navRef.current?.querySelector(`[data-node-id="${currentChapter}"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    }, 150)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarOpen])
+
+  const toggle = (id: string) => {
+    setOpenIds(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
 
   /* החיפוש סורק גם את **גוף** הפרקים (CONTENT_BODIES), לא רק כותרות —
-     אחרת ביטוי כמו "עלות אלטרנטיבית" לא נמצא באף מקום. */
+     אחרת ביטוי כמו "עלות אלטרנטיבית" לא נמצא באף מקום. נשאר מחוץ לעץ-
+     הקיפול עצמו (סקיל build-book §2ד׳ סעיף 5) — חוויה נפרדת. */
   const filtered = q.trim()
     ? CHAPTERS.filter(c =>
         c.title.includes(q) ||
@@ -28,10 +105,84 @@ export function Sidebar() {
 
   if (!sidebarOpen) return null
 
-  const go = (id: string) => {
+  const go = (id: string, { closeSidebar = true } = {}) => {
     setCurrentChapter(id)
-    setSidebarOpen(false)
+    if (closeSidebar) setSidebarOpen(false)
     setQ('')
+  }
+
+  function renderNode(node: TocNode, depth: number) {
+    const hasChildren = !!node.children?.length
+    const isOpen = openIds.has(node.id)
+    const isActive = node.chapter?.id === currentChapter
+    const isPractice = node.chapter?.kind === 'practice'
+    const label = node.chapter?.title ?? node.label ?? ''
+
+    const handleClick = () => {
+      if (hasChildren) {
+        toggle(node.id)
+        // node שהוא גם קבוצה וגם קישור (כמו פרק תיאוריה עם תרגול תחתיו) —
+        // מנווט אבל לא סוגר את הפאנל (סקיל build-book §2ד׳ סעיף 3)
+        if (node.chapter) go(node.chapter.id, { closeSidebar: false })
+      } else if (node.chapter) {
+        go(node.chapter.id)
+      }
+    }
+
+    return (
+      <div key={node.id}>
+        <button
+          data-node-id={node.chapter?.id ?? node.id}
+          onClick={handleClick}
+          style={{ paddingInlineStart: `${12 + depth * 16}px` }}
+          className={cn(
+            'flex w-full items-start gap-2 rounded-lg py-2.5 pl-3 text-right transition-colors',
+            isActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200' : 'hover:bg-muted/60 hover:text-foreground text-foreground'
+          )}
+        >
+          {/* שברון-קיפול לנתיב עם children בלבד; ל-leaf spacer בלתי-נראה לשמירת יישור */}
+          {hasChildren ? (
+            <ChevronLeft className={cn('mt-1 h-3.5 w-3.5 shrink-0 opacity-60 transition-transform', isOpen && '-rotate-90')} />
+          ) : (
+            <span className="mt-1 h-3.5 w-3.5 shrink-0" />
+          )}
+
+          {node.chapter ? (
+            <>
+              <span
+                className={cn(
+                  'mt-0.5 flex shrink-0 items-center justify-center text-white text-xs font-bold',
+                  isPractice ? 'h-5 w-5 rounded-md text-[10px]' : 'h-6 w-6 rounded-full'
+                )}
+                style={{ backgroundColor: node.chapter.color }}
+              >
+                {isPractice ? '✎' : node.chapter.number}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className={cn(
+                  depth === 0 ? 'text-sm font-bold' : depth === 1 ? 'text-sm font-semibold' : 'text-xs font-medium',
+                  'leading-snug',
+                  isActive && 'text-indigo-700 dark:text-indigo-200'
+                )}>
+                  {label}
+                </p>
+                {!isPractice && (
+                  <span className="mt-0.5 block truncate text-[10px] text-muted-foreground">{node.chapter.examWeight}</span>
+                )}
+              </div>
+            </>
+          ) : (
+            <span className={cn(depth === 0 ? 'text-xs font-bold uppercase tracking-wider' : 'text-sm font-semibold', 'text-muted-foreground')}>
+              {label}
+            </span>
+          )}
+        </button>
+
+        {hasChildren && isOpen && (
+          <div>{node.children!.map(child => renderNode(child, depth + 1))}</div>
+        )}
+      </div>
+    )
   }
 
   return (
@@ -91,10 +242,10 @@ export function Sidebar() {
           )}
         </div>
 
-        {/* TOC list */}
-        <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-1">
-          {/* Home */}
+        {/* TOC tree */}
+        <nav ref={navRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-1">
           <button
+            data-node-id="home"
             onClick={() => go('home')}
             className={cn(
               'flex w-full items-center gap-2 rounded-lg px-3 py-2 text-right text-sm font-semibold transition-colors',
@@ -105,55 +256,11 @@ export function Sidebar() {
             🏠 דף ראשי
           </button>
 
-          <div className="pt-1 pb-0.5">
-            <p className="px-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">פרקי הקורס</p>
-          </div>
-
-          {CHAPTERS.map((c, i) => {
-            const isActive = currentChapter === c.id
-            const isPractice = c.kind === 'practice'
-            // כותרת-קבוצה לפני הנספח הראשון — מפרידה את גוף הספר מהנספחים
-            const firstAppendix = c.kind === 'appendix' && CHAPTERS[i - 1]?.kind !== 'appendix'
-            return (
-              <div key={c.id}>
-                {firstAppendix && (
-                  <div className="mt-3 pt-3 border-t border-border">
-                    <p className="px-3 pb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">נספחים</p>
-                  </div>
-                )}
-                <button
-                  onClick={() => go(c.id)}
-                  className={cn(
-                    'flex w-full items-start gap-2 rounded-lg px-3 py-2.5 text-right transition-colors',
-                    // פרק תרגול מוזח פנימה — כדי שייקרא כשייך לפרק שמעליו
-                    isPractice && 'pr-7',
-                    isActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200' : 'hover:bg-muted/60 hover:text-foreground text-foreground'
-                  )}
-                >
-                  <span
-                    className={cn(
-                      'mt-0.5 flex shrink-0 items-center justify-center text-white text-xs font-bold',
-                      // תיאוריה/נספח = עיגול מלא · תרגול = תג מוקטן ומרובע
-                      isPractice ? 'h-5 w-5 rounded-md text-[10px]' : 'h-6 w-6 rounded-full'
-                    )}
-                    style={{ backgroundColor: c.color }}
-                  >
-                    {isPractice ? '✎' : c.number}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p className={cn('text-sm leading-snug', isPractice ? 'font-medium' : 'font-semibold', isActive && 'text-indigo-700 dark:text-indigo-200')}>
-                      {c.title}
-                    </p>
-                    {!isPractice && (
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className="text-[10px] text-muted-foreground truncate">{c.examWeight}</span>
-                      </div>
-                    )}
-                  </div>
-                </button>
-              </div>
-            )
-          })}
+          {TOC_TREE.map(node => (
+            <div key={node.id} className="pt-1">
+              {renderNode(node, 0)}
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}
