@@ -244,9 +244,10 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Overlay */}
+      {/* תפיסת-קליק לסגירה — בלי הכהיה/טשטוש של התוכן שמאחורי הפאנל.
+          עם חשיפת-hover (§2ד׳) הכהיית-מסך מלאה על כל ריחוף היא מוגזמת. */}
       <div
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+        className="fixed inset-0 z-40"
         onClick={() => setSidebarOpen(false)}
       />
       {/* Drawer */}
