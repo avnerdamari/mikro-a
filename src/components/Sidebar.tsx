@@ -207,11 +207,14 @@ export function Sidebar() {
               <span
                 className={cn(
                   'mt-0.5 flex shrink-0 items-center justify-center text-white text-xs font-bold',
-                  isPractice ? 'h-5 w-5 rounded-md text-[10px]' : 'h-6 w-6 rounded-full'
+                  // תת-סעיף (למשל "3.1") רחב יותר מספרה בודדת — px קבוע במקום ריבוע קשיח
+                  isPractice ? 'h-5 rounded-md px-1 text-[10px]' : 'h-6 w-6 rounded-full'
                 )}
                 style={{ backgroundColor: node.chapter.color }}
               >
-                {isPractice ? '✎' : node.chapter.number}
+                {/* פרק-תרגול ממוספר כתת-סעיף של פרק-האב (3 → "3.1"), לא סמל-עפרון —
+                    סקיל build-book §2ד׳, קריא במבט חטוף על הקשר תרגול↔תיאוריה. */}
+                {isPractice ? `${node.chapter.number}.1` : node.chapter.number}
               </span>
               <div className="min-w-0 flex-1">
                 <p className={cn(
