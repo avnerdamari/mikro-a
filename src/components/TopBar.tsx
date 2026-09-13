@@ -62,10 +62,9 @@ export function TopBar() {
           className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95 active:translate-y-0.5"
           style={{ backgroundColor: INDIGO }}
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <span className="hidden sm:inline">תוכן עניינים</span>
+          {/* בלי אייקון-המבורגר — הלחיצה כבר ברורה מהטקסט, ומיותר לצד ה-☰
+              הנפרד (סקיל build-book §2ו): שני אייקונים דומים נראו ככפולים. */}
+          <span>תוכן עניינים</span>
         </button>
         {sectionNavLabels.length > 0 && (
           <button
