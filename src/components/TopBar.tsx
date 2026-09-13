@@ -35,12 +35,16 @@ export function TopBar() {
   const currentMeta = CHAPTERS.find(c => c.id === currentChapter)
 
   return (
-    /* כותרת המותג — רקע נייבי אחיד (סקיל build-book, סעיף 2א) */
+    /* כותרת המותג — רקע נייבי אחיד לכל רוחב המסך (סקיל build-book, סעיף 2א),
+       אבל התוכן עצמו ממורכז ב-max-w-6xl (כמו Finance-App/DogCare-App/
+       livestats-il) — בלי זה הכפתורים נדחקים לקצוות ממש במסך רחב, ונראה
+       "פרוס" מדי. תוקן 13/9/26. */
     <header
-      className="no-print fixed top-0 left-0 right-0 z-30 flex h-14 items-center justify-between px-4 shadow-md"
+      className="no-print fixed top-0 left-0 right-0 z-30 shadow-md"
       style={{ backgroundColor: 'var(--brand)' }}
       dir="rtl"
     >
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
       {/* ימין: חזרה (רק כשיש מאיפה) + תפריט */}
       <div className="flex items-center gap-2">
         {canGoBack && (
@@ -114,6 +118,7 @@ export function TopBar() {
       >
         {dark ? 'בהיר' : 'כהה'}
       </button>
+      </div>
     </header>
   )
 }
