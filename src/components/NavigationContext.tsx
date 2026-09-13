@@ -17,6 +17,14 @@ interface NavigationState {
   clearPendingAnchor: () => void
   canGoBack: boolean
   goBack: () => void
+  /** מציג/מסתיר את שורת-הפילס הדביקה של תתי-הסעיפים בתוך הפרק הנוכחי (☰ בכותרת). */
+  sectionNavOpen: boolean
+  toggleSectionNavOpen: () => void
+  /** תוויות הסעיפים (H2) שנמצאו בפרק הנוכחי — ריק = אין מה להציג, ה-☰ מוסתר. */
+  sectionNavLabels: string[]
+  setSectionNavLabels: (labels: string[]) => void
+  mindMapOpen: boolean
+  setMindMapOpen: (open: boolean) => void
 }
 
 const NavigationContext = createContext<NavigationState | null>(null)
@@ -26,6 +34,9 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [returnTo, setReturnTo] = useState<ReturnPoint | null>(null)
   const [pendingAnchor, setPendingAnchor] = useState<string | null>(null)
+  const [sectionNavOpen, setSectionNavOpen] = useState(true)
+  const [sectionNavLabels, setSectionNavLabels] = useState<string[]>([])
+  const [mindMapOpen, setMindMapOpen] = useState(false)
 
   const navigateToAnchor = (targetChapter: string, anchorKey: string) => {
     setReturnTo({ chapter: currentChapter, scrollY: window.scrollY })
@@ -50,6 +61,9 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       currentChapter, setCurrentChapter, sidebarOpen, setSidebarOpen,
       navigateToAnchor, pendingAnchor, clearPendingAnchor,
       canGoBack: returnTo !== null, goBack,
+      sectionNavOpen, toggleSectionNavOpen: () => setSectionNavOpen(o => !o),
+      sectionNavLabels, setSectionNavLabels,
+      mindMapOpen, setMindMapOpen,
     }}>
       {children}
     </NavigationContext.Provider>

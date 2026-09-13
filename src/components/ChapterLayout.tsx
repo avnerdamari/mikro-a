@@ -53,7 +53,7 @@ export function ChapterLayout({ number, title, subtitle, color, examWeight, chil
       </div>
 
       {/* Content sections */}
-      <div className="space-y-10">
+      <div id="content-root" className="space-y-10">
         {children}
       </div>
 

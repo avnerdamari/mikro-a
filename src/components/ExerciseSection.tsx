@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react'
+import { GuidedSolver, type GuidedStep } from './GuidedSolver'
 
 export type Exercise = {
   id: string
@@ -10,6 +11,10 @@ export type Exercise = {
   /** התשובה הסופית הקצרה לבדיקה אוטומטית (למשל "350" או "180"). אופציונלי —
       כשלא קיים, נופלים ל"הצג פתרון"+"סמן כבוצע" ידני בלבד. */
   checkAnswer?: string
+  /** שלב/י-הנחיה סוקרטיים (סקיל build-book §1, "GuidedSolver") — כשקיימים,
+      התרגיל מציג "🧭 פתור עם הנחיות"/"📖 הצג פתרון מלא" במקום רמז+הצג-פתרון
+      הישנים. אופציונלי כדי לאפשר המרה הדרגתית, פרק-אחר-פרק. */
+  guided?: GuidedStep[]
 }
 
 /** משווה קלט חופשי מול checkAnswer: מסיר רווחים/₪/פסיקי-אלפים, לא תלוי רישיות. */
@@ -96,6 +101,13 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
         </div>
       )}
 
+      {ex.guided ? (
+        <GuidedSolver
+          steps={ex.guided}
+          summary={<>{ex.answer.split('\n')[0]}</>}
+          fullSolution={ex.answer.split('\n').map((line, i) => <AnswerLine key={i} line={line} />)}
+        />
+      ) : (
       <div className="mt-3 flex flex-wrap gap-2">
         {ex.hint && !showAnswer && (
           <button
@@ -127,14 +139,15 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
           </button>
         )}
       </div>
+      )}
 
-      {showHint && ex.hint && (
+      {!ex.guided && showHint && ex.hint && (
         <div className="mt-3 rounded-lg bg-blue-50 border border-blue-200 p-3">
           <p className="text-sm text-blue-700">💡 {ex.hint}</p>
         </div>
       )}
 
-      {showAnswer && (
+      {!ex.guided && showAnswer && (
         <div className="mt-3 rounded-lg bg-indigo-50 border border-indigo-200 p-3">
           <p className="text-xs font-bold text-indigo-800 mb-1">פתרון מפורט:</p>
           <div className="text-sm text-indigo-800 space-y-0.5">

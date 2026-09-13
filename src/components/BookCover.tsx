@@ -32,7 +32,9 @@ export function BookCover() {
                 'radial-gradient(circle at 30% 10%, rgba(255,255,255,0.10), transparent 55%), linear-gradient(160deg, #24476e 0%, #1e3a5f 45%, #0d2036 100%)',
             }}
           >
-            {/* גרף דקורטיבי ברקע הכריכה */}
+            {/* גרף עקומות היצע וביקוש דקורטי ברקע הכריכה — תואם-נושא לספר
+                מיקרו-כלכלה (סקיל build-book, §4 "כריכה"), במקום גרף-מניות
+                גנרי שמקורו בספר מימון. */}
             <svg
               className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-20"
               viewBox="0 0 300 400"
@@ -42,23 +44,21 @@ export function BookCover() {
               {[80, 160, 240, 320].map((y) => (
                 <line key={y} x1="0" y1={y} x2="300" y2={y} stroke="white" strokeWidth="0.5" />
               ))}
-              <polygon
-                points="0,340 40,300 80,320 120,260 160,280 200,200 240,220 260,150 300,170 300,400 0,400"
-                fill="white"
-                opacity="0.15"
-              />
-              <polyline
-                points="0,340 40,300 80,320 120,260 160,280 200,200 240,220 260,150 300,170"
-                fill="none"
-                stroke="white"
-                strokeWidth="3"
-              />
+              {/* צירים */}
+              <line x1="30" y1="40" x2="30" y2="360" stroke="white" strokeWidth="1.5" />
+              <line x1="30" y1="360" x2="280" y2="360" stroke="white" strokeWidth="1.5" />
+              {/* עקומת היצע — עולה משמאל לימין */}
+              <polyline points="40,340 130,220 220,110 270,60" fill="none" stroke="white" strokeWidth="3" />
+              {/* עקומת ביקוש — יורדת משמאל לימין */}
+              <polyline points="40,80 130,190 220,290 270,340" fill="none" stroke="white" strokeWidth="3" />
+              {/* נקודת שיווי-משקל */}
+              <circle cx="151" cy="205" r="6" fill="white" />
             </svg>
 
             <div className="mt-2 text-center">
               <p className="text-xs font-semibold tracking-[0.2em] text-slate-300">ספר לימוד דיגיטלי</p>
               <h1 className="mt-1 text-3xl font-extrabold tracking-tight md:text-4xl">מבוא לכלכלה א'</h1>
-              <p className="mt-2 text-sm text-slate-300">מיקרו-כלכלה · המרכז האקדמי פרס</p>
+              <p className="mt-2 text-sm text-slate-300">מיקרו-כלכלה · מתאים למכללות</p>
               <div className="mx-auto mt-4 h-px w-24 bg-white/20" />
               <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-slate-300">
                 הסבר תיאורטי, הדמיות אינטראקטיביות ותרגול מלא לכל נושאי הקורס
@@ -95,7 +95,10 @@ export function BookCover() {
           </div>
         </div>
 
-        {/* עובי הספר למטה */}
+        {/* עובי הספר למטה — "סנדוויץ'": קו כהה (שפת הכריכה מלמעלה) / קצה-דפים
+            בהיר (עם פסים דקים) / קו כהה (שפת הכריכה מלמטה), כמו ב-DogCare-App/
+            Advisors-App (מקור-האמת) — בלי שכבת-הגרדיאנט הכהה-בשקוף-כהה הזו
+            הקצה נראה כמו פס אפור שטוח בלי הגדרה של "ספר סגור". */}
         <div
           className="h-5 w-full rounded-br-lg"
           style={{

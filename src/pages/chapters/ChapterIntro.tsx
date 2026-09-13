@@ -56,7 +56,57 @@ export function ChapterIntro() {
       </section>
 
       <section className="rounded-2xl border border-border bg-card p-5 space-y-3">
-        <h2 className="text-lg font-bold" style={{ color: '#1F3864' }}>3. איך מומלץ ללמוד</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#1F3864' }}>3. תוכן הקורס לפי פרקים</h2>
+        <ol className="space-y-2.5 pr-5 [list-style:decimal] text-muted-foreground">
+          <li>
+            <strong className="text-foreground">בעיית המחסור ועקומת התמורה</strong>
+            <span className="block text-sm">PPF — Production Possibility Frontier, יתרון יחסי והחלטת ייצור</span>
+          </li>
+          <li>
+            <strong className="text-foreground">פונקציית הייצור והקצאת גורמי ייצור</strong>
+            <span className="block text-sm">MP, VMP, כלל ההעסקה האופטימלי</span>
+          </li>
+          <li>
+            <strong className="text-foreground">עלויות והיצע היצרן</strong>
+            <span className="block text-sm">TC, MC, AC, AVC — החלטת ייצור לפי מחירי שוק</span>
+          </li>
+          <li>
+            <strong className="text-foreground">הביקוש</strong>
+            <span className="block text-sm">פונקציית ביקוש, גורמים מסיטים, חוק הביקוש</span>
+          </li>
+          <li>
+            <strong className="text-foreground">גמישויות הביקוש</strong>
+            <span className="block text-sm">גמישות מחיר, הכנסה, צולבת</span>
+          </li>
+          <li>
+            <strong className="text-foreground">שיווי משקל במשק סגור</strong>
+            <span className="block text-sm">D = S, מחיר וכמות שיווי-משקל, עודפים ורווחה</span>
+          </li>
+          <li>
+            <strong className="text-foreground">התערבות ממשלתית במשק סגור</strong>
+            <span className="block text-sm">מס, סובסידיה, גלגול מס, מחיר מינימום/מקסימום</span>
+          </li>
+          <li>
+            <strong className="text-foreground">שיווי משקל במשק פתוח</strong>
+            <span className="block text-sm">ייבוא/ייצוא, מחיר עולמי, שער חליפין</span>
+          </li>
+          <li>
+            <strong className="text-foreground">התערבות ממשלתית במשק פתוח</strong>
+            <span className="block text-sm">מכס, פרמיית ייצוא, דאמפינג</span>
+          </li>
+          <li>
+            <strong className="text-foreground">שוק לא תחרותי: מונופול</strong>
+            <span className="block text-sm">MR, MR=MC, נטל עודף, מונופול טבעי</span>
+          </li>
+        </ol>
+        <p className="text-sm text-muted-foreground">
+          אחרי כל פרק תיאוריה בא פרק התרגול שלו (✎). בנוסף — נספח פתרונות
+          חוברת התרגילים, נספח מבחני דוגמה, דף נוסחאות, ומילון מושגי מפתח.
+        </p>
+      </section>
+
+      <section className="rounded-2xl border border-border bg-card p-5 space-y-3">
+        <h2 className="text-lg font-bold" style={{ color: '#1F3864' }}>4. איך מומלץ ללמוד</h2>
         <ol className="space-y-2 pr-5 [list-style:decimal] text-muted-foreground">
           <li>עברו על פרקי התיאוריה <strong className="text-foreground">לפי הסדר</strong> — כל פרק נשען על הקודם לו.</li>
           <li>שחקו עם <strong className="text-foreground">ההדמיות</strong>: הזזת סליידר מלמדת יותר מקריאה חוזרת.</li>
@@ -68,7 +118,7 @@ export function ChapterIntro() {
       </section>
 
       <section className="rounded-2xl border border-amber-300 bg-amber-50 p-5 space-y-2 dark:border-amber-500/40">
-        <h2 className="text-lg font-bold text-amber-800 dark:text-amber-300">4. על מה באמת נבחנים</h2>
+        <h2 className="text-lg font-bold text-amber-800 dark:text-amber-300">5. על מה באמת נבחנים</h2>
         <p className="text-sm text-amber-700 dark:text-amber-200">
           הבחינה: 20 שאלות רב-ברירה, 5 נקודות לשאלה. ציון עובר 60. שלוש שעות, עם דף עזר אישי ומחשבון.
         </p>
@@ -80,7 +130,7 @@ export function ChapterIntro() {
       </section>
 
       <section className="rounded-2xl border border-border bg-card p-5 space-y-2">
-        <h2 className="text-lg font-bold" style={{ color: '#1F3864' }}>5. יצירת קשר</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#1F3864' }}>6. יצירת קשר</h2>
         <p className="leading-relaxed text-muted-foreground">
           כפתור <strong className="text-foreground">וואטסאפ</strong> שבפינת המסך פתוח לכל דבר:
           טעות בחומר, משהו שלא ברור, או בקשה לתוספת. כל פנייה מגיעה ישירות אליי.

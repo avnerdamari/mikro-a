@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import logo from '@/assets/logo.png'
 import { useNavigation } from './NavigationContext'
+import { CHAPTERS } from '@/data/toc'
 
 const INDIGO = '#4F46E5'
 
@@ -25,8 +26,13 @@ function useDarkMode() {
 }
 
 export function TopBar() {
-  const { setSidebarOpen, setCurrentChapter, canGoBack, goBack } = useNavigation()
+  const {
+    currentChapter, setSidebarOpen, setCurrentChapter, canGoBack, goBack,
+    sectionNavOpen, toggleSectionNavOpen, sectionNavLabels,
+    mindMapOpen, setMindMapOpen,
+  } = useNavigation()
   const { dark, toggle } = useDarkMode()
+  const currentMeta = CHAPTERS.find(c => c.id === currentChapter)
 
   return (
     /* כותרת המותג — רקע נייבי אחיד (סקיל build-book, סעיף 2א) */
@@ -57,6 +63,36 @@ export function TopBar() {
           </svg>
           <span className="hidden sm:inline">תוכן עניינים</span>
         </button>
+        {sectionNavLabels.length > 0 && (
+          <button
+            onClick={toggleSectionNavOpen}
+            aria-label={sectionNavOpen ? 'הסתר ניווט פנימי בנושא' : 'הצג ניווט פנימי בנושא'}
+            aria-expanded={sectionNavOpen}
+            title="הצג/הסתר את הניווט הפנימי של הנושא (תגי הסעיפים בתוך הפרק)"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20 active:scale-95"
+          >
+            <span className="sr-only">הצג/הסתר ניווט פנימי</span>
+            <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+              <path d="M3 5h14M3 10h14M3 15h14" />
+            </svg>
+          </button>
+        )}
+        <button
+          onClick={() => setMindMapOpen(!mindMapOpen)}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95 active:translate-y-0.5"
+          style={{ backgroundColor: INDIGO }}
+          title="מפת התמצאות"
+          aria-expanded={mindMapOpen}
+        >
+          <span className="hidden sm:inline">מפת התמצאות</span>
+          <span className="sm:hidden" aria-hidden>🗺️</span>
+        </button>
+        {currentMeta && (
+          <span className="hidden min-w-0 max-w-[40vw] items-center gap-1 truncate rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white/90 ring-1 ring-white/30 sm:flex">
+            <span className="shrink-0 opacity-60">📍</span>
+            <span className="truncate">{currentMeta.title}</span>
+          </span>
+        )}
       </div>
 
       {/* מרכז: לוגו + שם הספר + תת-כותרת */}
