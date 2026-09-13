@@ -2,10 +2,9 @@ import { useState } from 'react'
 
 /* כפתור "שאל את המורה" פר-תרגיל (סקיל solve-question §6, "עוזר הלמידה — אותה
    שורה כמו כפתורי GuidedSolver") — לא כפתור-הפרק הצף (TutorButton.tsx), אלא
-   קישור ממוקד לתרגיל הספציפי. כל עוד אין מורה-AI פרוס ל-Mikro-A (TUTOR_BASE
-   ריק, כמו ב-TutorButton) — נופל לאותה הודעת "בהכנה", לא נשבר. */
+   קישור ממוקד לתרגיל הספציפי. מורה ייעודי: Mikro-Tutor (ראו TutorButton.tsx). */
 
-const TUTOR_BASE = ''
+const TUTOR_BASE = 'https://mikro-tutor.vercel.app'
 
 export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: string }) {
   const [showNote, setShowNote] = useState(false)

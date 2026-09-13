@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 /* עוזר למידה — צ'אט AI שמכיר את הפרק שהתלמיד נמצא בו כרגע.
-   המורה עצמו הוא **פריסה נפרדת** (כמו advisors-tutor.vercel.app).
-   כל עוד TUTOR_BASE ריק — הכפתור מסביר שהוא בהכנה, ולא נשבר. */
+   המורה עצמו הוא **פריסה נפרדת**: Mikro-Tutor (C:\ClaudeProjects\Mikro-Tutor),
+   מזלג ייעודי של Advisors-Tutor עם 12 פרומפטים למיקרו-כלכלה (לא Advisors-Tutor
+   עצמו — הוא נעול לתוכן מימון/השקעות ולא יבין נושאי מיקרו-כלכלה). */
 
-const TUTOR_BASE = ''   // ← כשייפרס מורה ייעודי: הכתובת שלו
+const TUTOR_BASE = 'https://mikro-tutor.vercel.app'
 
 /** מיפוי פרק → נושא-הוראה אצל המורה. */
 const TUTOR_TOPIC: Record<string, string> = {
