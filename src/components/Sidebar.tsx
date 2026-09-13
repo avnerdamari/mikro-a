@@ -234,7 +234,12 @@ export function Sidebar() {
     if (!hoverCapable || contentRightEdge == null) return null
     return (
       <div
-        className="fixed inset-y-0 right-0 z-30"
+        /* מתחת לכותרת (top-14, כמו ה-pt-14 של ה-main) — לא inset-y-0 מ-0!
+           אחרת הרצועה השקופה יושבת מעל הכותרת (z-30, אותו z כמו TopBar) ותופסת
+           קליקים על כפתור "תוכן עניינים" עצמו, כי הכותרת ב-max-w-6xl רחבה
+           יותר מ-#content-root שב-max-w-4xl — הכפתור נופל בדיוק בטווח-ה-x
+           של הרצועה. קרה בפועל (Mikro-A, 13/9/26). */
+        className="fixed top-14 bottom-0 right-0 z-30"
         style={{ left: contentRightEdge }}
         onMouseEnter={() => setSidebarOpen(true)}
         aria-hidden
