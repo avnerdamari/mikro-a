@@ -159,31 +159,45 @@ export function Sidebar() {
     const isPractice = node.chapter?.kind === 'practice'
     const label = node.chapter?.title ?? node.label ?? ''
 
-    const handleClick = () => {
-      if (hasChildren) {
-        toggle(node.id)
-        // node שהוא גם קבוצה וגם קישור (כמו פרק תיאוריה עם תרגול תחתיו) —
-        // מנווט אבל לא סוגר את הפאנל (סקיל build-book §2ד׳ סעיף 3)
-        if (node.chapter) go(node.chapter.id, { closeSidebar: false })
-      } else if (node.chapter) {
-        go(node.chapter.id)
-      }
+    /* לחיצה על השורה עצמה (כותרת/אייקון) — תמיד מנווטת+סוגרת אם יש chapter
+       (אחרת זו קבוצה טהורה בלי מה-לנווט-אליו, אז רק מכווצת/פותחת). השברון
+       הוא כפתור נפרד עם עצירת-בועה (stopPropagation) שרק מכווץ/פותח בלי
+       לנווט/לסגור — כדי שלחיצה על **כותרת** פרק (למשל "פרק 2") תמיד תסגור
+       את הפאנל כמו כל ניווט רגיל, גם כשלפרק יש ילד (תרגול) שקיפולו נשלט
+       בנפרד. קרה בפועל (Mikro-A, 13/9/26): כשהניווט וה-toggle היו על אותה
+       לחיצה, כל פרק-תיאוריה (יש לו תמיד ילד-תרגול) השאיר את הפאנל פתוח
+       אחרי לחיצה על הכותרת — לא הסתגר כמו שמצופה מלחיצת-ניווט רגילה. */
+    const handleRowClick = () => {
+      if (node.chapter) go(node.chapter.id)
+      else if (hasChildren) toggle(node.id)
+    }
+    const handleChevronClick = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      toggle(node.id)
     }
 
     return (
       <div key={node.id}>
         <button
           data-node-id={node.chapter?.id ?? node.id}
-          onClick={handleClick}
+          onClick={handleRowClick}
           style={{ paddingInlineStart: `${12 + depth * 16}px` }}
           className={cn(
             'flex w-full items-start gap-2 rounded-lg py-2.5 pl-3 text-right transition-colors',
             isActive ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200' : 'hover:bg-muted/60 hover:text-foreground text-foreground'
           )}
         >
-          {/* שברון-קיפול לנתיב עם children בלבד; ל-leaf spacer בלתי-נראה לשמירת יישור */}
+          {/* שברון-קיפול לנתיב עם children בלבד — כפתור עצמאי, לא חלק מלחיצת-הניווט;
+              ל-leaf spacer בלתי-נראה לשמירת יישור */}
           {hasChildren ? (
-            <ChevronLeft className={cn('mt-1 h-3.5 w-3.5 shrink-0 opacity-60 transition-transform', isOpen && '-rotate-90')} />
+            <span
+              role="button"
+              aria-label={isOpen ? 'כווץ' : 'הרחב'}
+              onClick={handleChevronClick}
+              className="-m-1 rounded p-1 hover:bg-black/5 dark:hover:bg-white/10"
+            >
+              <ChevronLeft className={cn('mt-1 h-3.5 w-3.5 shrink-0 opacity-60 transition-transform', isOpen && '-rotate-90')} />
+            </span>
           ) : (
             <span className="mt-1 h-3.5 w-3.5 shrink-0" />
           )}
