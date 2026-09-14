@@ -275,7 +275,7 @@ export function Sidebar() {
       {/* Drawer */}
       <aside
         onMouseLeave={() => { if (hoverCapable) setSidebarOpen(false) }}
-        className="fixed top-0 right-0 bottom-0 z-50 w-[300px] bg-background border-l border-border shadow-xl flex flex-col"
+        className="fixed top-0 right-0 bottom-0 z-50 w-[340px] max-w-[88vw] bg-background border-l border-border shadow-xl flex flex-col"
         dir="rtl"
       >
         {/* Header */}
