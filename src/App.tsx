@@ -1,5 +1,6 @@
 import { NavigationProvider, useNavigation } from '@/components/NavigationContext'
 import { TopBar } from '@/components/TopBar'
+import { ChapterLinkRow } from '@/components/ChapterLinkRow'
 import { ChapterSectionNav } from '@/components/ChapterSectionNav'
 import { MindMapPanel } from '@/components/MindMapPanel'
 import { Sidebar } from '@/components/Sidebar'
@@ -33,7 +34,7 @@ import { AppendixFormulas } from '@/pages/chapters/AppendixFormulas'
 import { AppendixGlossary } from '@/pages/chapters/AppendixGlossary'
 
 function AppContent() {
-  const { currentChapter, setCurrentChapter, mindMapOpen, setMindMapOpen } = useNavigation()
+  const { currentChapter, setCurrentChapter, mindMapOpen, setMindMapOpen, floatingButtonsHidden } = useNavigation()
   const isHome = currentChapter === 'home' || currentChapter === ''
 
   const renderChapter = () => {
@@ -70,6 +71,7 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       {!isHome && <TopBar />}
+      {!isHome && <ChapterLinkRow />}
       <ChapterSectionNav />
       <Sidebar />
       <main className={isHome ? '' : 'pt-14'}>
@@ -80,7 +82,7 @@ function AppContent() {
           המכווץ מעליו בלי להיתקע בגובה-קבוע.
           מוסתר בדף הבית: הכריכה (HomePage) כבר כוללת כפתור וואטסאפ משלה,
           ואין טעם ב"עוזר למידה" לפני שנבחר פרק (כמו LandingPage במשפחה A). */}
-      {!isHome && (
+      {!isHome && !floatingButtonsHidden && (
         <div data-floating-stack className="no-print fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
         <RegularCalculator />
         <TutorButton chapterId={currentChapter} />

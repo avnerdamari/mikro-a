@@ -25,6 +25,9 @@ interface NavigationState {
   setSectionNavLabels: (labels: string[]) => void
   mindMapOpen: boolean
   setMindMapOpen: (open: boolean) => void
+  /** מציג/מסתיר את כל טור הכפתורים הצפים (סקיל build-book §2ו) — נשמר בין ביקורים. */
+  floatingButtonsHidden: boolean
+  toggleFloatingButtons: () => void
 }
 
 const NavigationContext = createContext<NavigationState | null>(null)
@@ -37,6 +40,17 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [sectionNavOpen, setSectionNavOpen] = useState(true)
   const [sectionNavLabels, setSectionNavLabels] = useState<string[]>([])
   const [mindMapOpen, setMindMapOpen] = useState(false)
+  const [floatingButtonsHidden, setFloatingButtonsHidden] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem('mikro-a-floating-hidden') === '1'
+  })
+  const toggleFloatingButtons = () => {
+    setFloatingButtonsHidden(h => {
+      const next = !h
+      localStorage.setItem('mikro-a-floating-hidden', next ? '1' : '0')
+      return next
+    })
+  }
 
   const navigateToAnchor = (targetChapter: string, anchorKey: string) => {
     setReturnTo({ chapter: currentChapter, scrollY: window.scrollY })
@@ -64,6 +78,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       sectionNavOpen, toggleSectionNavOpen: () => setSectionNavOpen(o => !o),
       sectionNavLabels, setSectionNavLabels,
       mindMapOpen, setMindMapOpen,
+      floatingButtonsHidden, toggleFloatingButtons,
     }}>
       {children}
     </NavigationContext.Provider>

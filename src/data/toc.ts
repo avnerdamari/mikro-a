@@ -8,6 +8,10 @@ export type ChapterMeta = {
   /** סוג הפריט: פרק תיאוריה · פרק התרגול המקביל לו · נספח.
       פרק תיאוריה ופרק התרגול שלו חולקים את אותו `number` בכוונה — מבדילים ביניהם ב-id. */
   kind?: 'theory' | 'practice' | 'appendix'
+  /** תתי-הנושאים של פרק תיאוריה (סקיל build-book §1 "השלד") — זהים לכותרות
+      ה-<h3> הממוספרות (1.1, 1.2...) בפועל בתוך הפרק, כדי שרשימת "פרקי המדריך"
+      בהקדמה (ChapterIntro) תציג אותם, לא רק שם-הפרק הבודד. */
+  subtopics?: string[]
 }
 
 export const CHAPTERS: ChapterMeta[] = [
@@ -28,6 +32,12 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'גבוה — ~4 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '1.1 למה אנחנו צריכים כלכלה?',
+      '1.2 עלות אלטרנטיבית',
+      '1.3 עקומת התמורה — 3 סוגי נקודות',
+      '1.4 יתרון יחסי — מי מייצר מה?',
+    ],
   },
   {
     id: 'ppf-practice',
@@ -46,6 +56,11 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'גבוה — 2-3 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '2.1 פונקציית הייצור — מבוא',
+      '2.2 חוק התפוקה השולית הפוחתת',
+      '2.3 כלל ההעסקה האופטימלי — VMP ≥ W',
+    ],
   },
   {
     id: 'production-practice',
@@ -64,6 +79,12 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'גבוה — 2-3 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '3.1 מבנה העלויות',
+      '3.2 כלל מקסום רווח — MC = P',
+      '3.3 החלטת ייצור — 3 מקרים קלאסיים',
+      '3.4 פונקציית ההיצע של היצרן',
+    ],
   },
   {
     id: 'costs-practice',
@@ -82,6 +103,12 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'בינוני — 1-2 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '4.1 חוק הביקוש',
+      '4.2 ביקוש אישי מול ביקוש שוק',
+      '4.3 גורמים המסיטים את עקומת הביקוש',
+      '4.4 ההבדל הקריטי — תזוזה לאורך מול הסטה',
+    ],
   },
   {
     id: 'demand-practice',
@@ -100,6 +127,11 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'נמוך מאוד — לא נבחן בפועל',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '5.1 גמישות מחיר של ביקוש',
+      '5.2 גמישות ופדיון כולל (TR)',
+      '5.3 גמישות הכנסה וגמישות צולבת',
+    ],
   },
   {
     id: 'elasticity-practice',
@@ -118,6 +150,12 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'גבוה מאוד — 3-4 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '6.1 תנאי שיווי המשקל',
+      '6.2 שתי קבוצות צרכנים — הדפוס הכי נפוץ במבחן',
+      '6.3 עודפים ורווחה',
+      '6.4 שינויים סימולטניים — "לא ניתן לדעת"',
+    ],
   },
   {
     id: 'equilibrium-practice',
@@ -136,6 +174,12 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'גבוה — 2-3 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '7.1 מס יחידתי על היצרן',
+      '7.2 גלגול מס — מי משלם?',
+      '7.3 סובסידיה ליצרן',
+      '7.4 מחיר מינימום ומחיר מקסימום',
+    ],
   },
   {
     id: 'intervention-practice',
@@ -154,6 +198,11 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'גבוה — 2 שאלות',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '8.1 אוטרקיה מול סחר חופשי',
+      '8.2 ניתוח רווחה — מי מרוויח ומי מפסיד?',
+      '8.3 יתרון יחסי (Ricardo)',
+    ],
   },
   {
     id: 'open-economy-practice',
@@ -172,6 +221,11 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'בינוני — 1 שאלה',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '9.1 מכס (Tariff) — כיצד עובד?',
+      '9.2 ניתוח רווחה — מי מרוויח/מפסיד ממכס?',
+      '9.3 מכסת יבוא (Import Quota)',
+    ],
   },
   {
     id: 'tariff-practice',
@@ -190,6 +244,11 @@ export const CHAPTERS: ChapterMeta[] = [
     examWeight: 'נמוך — לא נבחן בפועל',
     color: '#1F3864',
     kind: 'theory',
+    subtopics: [
+      '10.1 מונופול — כיצד קובע כמות?',
+      '10.2 רווחה: מונופול מול תחרות מושלמת',
+      '10.3 אפליית מחירים (Price Discrimination)',
+    ],
   },
   {
     id: 'monopoly-practice',

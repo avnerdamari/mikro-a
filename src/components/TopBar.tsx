@@ -30,6 +30,7 @@ export function TopBar() {
     currentChapter, setSidebarOpen, setCurrentChapter, canGoBack, goBack,
     sectionNavOpen, toggleSectionNavOpen, sectionNavLabels,
     mindMapOpen, setMindMapOpen,
+    floatingButtonsHidden, toggleFloatingButtons,
   } = useNavigation()
   const { dark, toggle } = useDarkMode()
   const currentMeta = CHAPTERS.find(c => c.id === currentChapter)
@@ -110,13 +111,21 @@ export function TopBar() {
         <img src={logo} alt="לוגו" className="h-10 w-10 rounded-lg bg-white object-contain" />
       </button>
 
-      {/* שמאל: מצב כהה/בהיר */}
-      <button
-        onClick={toggle}
-        className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-white/40 transition hover:bg-white/15 active:scale-95"
-      >
-        {dark ? 'בהיר' : 'כהה'}
-      </button>
+      {/* שמאל: הצג/הסתר כפתורים + מצב כהה/בהיר */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={toggleFloatingButtons}
+          className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-white/40 transition hover:bg-white/15 active:scale-95"
+        >
+          {floatingButtonsHidden ? 'הצג כפתורים' : 'הסתר כפתורים'}
+        </button>
+        <button
+          onClick={toggle}
+          className="rounded-lg px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-white/40 transition hover:bg-white/15 active:scale-95"
+        >
+          {dark ? 'בהיר' : 'כהה'}
+        </button>
+      </div>
       </div>
     </header>
   )
