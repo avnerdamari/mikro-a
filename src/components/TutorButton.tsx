@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { TUTOR_WINDOW_NAME } from './AskTutorButton'
 
 /* עוזר למידה — צ'אט AI שמכיר את הפרק שהתלמיד נמצא בו כרגע.
    המורה עצמו הוא **פריסה נפרדת**: Mikro-Tutor (C:\ClaudeProjects\Mikro-Tutor),
@@ -33,7 +34,7 @@ export function TutorButton({ chapterId }: { chapterId: string }) {
     // נוחת על 'home' כי אין סנכרון-URL באפליקציה הזו. סקיל build-book §2ב.
     const ret = `${location.origin}${location.pathname}?chapter=${encodeURIComponent(chapterId)}`
     const url = `${TUTOR_BASE}/?topic=${encodeURIComponent(topic)}&return=${encodeURIComponent(ret)}`
-    window.open(url, '_blank', 'noreferrer')
+    window.open(url, TUTOR_WINDOW_NAME, 'noreferrer')
   }
 
   return (

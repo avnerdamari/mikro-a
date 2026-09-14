@@ -6,6 +6,11 @@ import { useNavigation } from './NavigationContext'
    קישור ממוקד לתרגיל הספציפי. מורה ייעודי: Mikro-Tutor (ראו TutorButton.tsx). */
 
 const TUTOR_BASE = 'https://mikro-tutor.vercel.app'
+// שם-חלון קבוע — משותף גם עם TutorButton.tsx (הכפתור הצף) — כל לחיצה על כל
+// אחד משני כפתורי-המורה משתמשת-מחדש באותו טאב קיים, במקום לפתוח טאב חדש
+// בכל שאלה. "_blank" (הישן) תמיד יוצר הקשר-דפדפן חדש — סקיל build-book §2ב,
+// מבוסס Advisors-App (מקור-האמת).
+export const TUTOR_WINDOW_NAME = 'mikro-tutor-ai'
 
 export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: string }) {
   const [showNote, setShowNote] = useState(false)
@@ -41,7 +46,7 @@ export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: 
     const ret = anchorId ? `${base}#${anchorId}` : base
     const q = extractQuestionText()
     const url = `${TUTOR_BASE}/?topic=${encodeURIComponent(topic)}&q=${encodeURIComponent(q)}&return=${encodeURIComponent(ret)}`
-    window.open(url, '_blank', 'noreferrer')
+    window.open(url, TUTOR_WINDOW_NAME, 'noreferrer')
   }
 
   return (
