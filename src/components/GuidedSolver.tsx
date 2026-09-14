@@ -27,7 +27,10 @@ interface Props {
   extraActions?: ReactNode
 }
 
-const BUTTON_CLASS = 'rounded-lg px-3 py-1.5 text-xs font-bold text-white transition hover:brightness-110 active:scale-95'
+/* min-w-0+text-center+leading-tight: בתוך grid-cols-3 קבוע (למטה) הטקסט
+   גולש לשתי שורות בעמודה שלו במקום שהעמודה כולה תרד שורה — סקיל build-book,
+   "שלושת כפתורי GuidedSolver חייבים שורה אחת, גם בנייד". */
+const BUTTON_CLASS = 'inline-flex min-w-0 items-center justify-center rounded-lg px-1.5 py-1.5 text-center text-xs font-bold leading-tight text-white transition hover:brightness-110 active:scale-95'
 
 function GuidedStepView({ step, onDone }: { step: GuidedStep; onDone: () => void }) {
   const [picked, setPicked] = useState<number | null>(null)
@@ -101,7 +104,7 @@ export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, 
 
   return (
     <div className="mt-2">
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-3 gap-1.5">
         <button
           onClick={() => setMode(m => (m === 'guided' ? 'closed' : 'guided'))}
           className={BUTTON_CLASS}

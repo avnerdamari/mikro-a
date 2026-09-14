@@ -21,7 +21,7 @@ export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: 
       <button
         onClick={open}
         title="שאל את המורה על התרגיל הזה"
-        className="rounded-lg px-3 py-1.5 text-xs font-bold text-white transition hover:brightness-110 active:scale-95"
+        className="inline-flex min-w-0 items-center justify-center rounded-lg px-1.5 py-1.5 text-center text-xs font-bold leading-tight text-white transition hover:brightness-110 active:scale-95"
         style={{ backgroundColor: '#1F6F3F' }}
       >
         🎓 שאל את המורה
