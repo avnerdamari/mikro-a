@@ -29,8 +29,13 @@ interface Props {
 
 /* min-w-0+text-center+leading-tight: בתוך grid-cols-3 קבוע (למטה) הטקסט
    גולש לשתי שורות בעמודה שלו במקום שהעמודה כולה תרד שורה — סקיל build-book,
-   "שלושת כפתורי GuidedSolver חייבים שורה אחת, גם בנייד". */
-const BUTTON_CLASS = 'inline-flex min-w-0 items-center justify-center rounded-lg px-1.5 py-1.5 text-center text-xs font-bold leading-tight text-white transition hover:brightness-110 active:scale-95'
+   "שלושת כפתורי GuidedSolver חייבים שורה אחת, גם בנייד". גודל-בסיס קומפקטי
+   (text-xs/px-2) הוא רשת-הביטחון למסך-טלפון הכי צר; מ-sm ומעלה (≥640px)
+   חוזרים לכפתור נוח ורגיל (text-sm/px-4/py-2.5, rounded-full) — לא להשאיר
+   כפתורים זעירים-לצמיתות כשיש בפועל מקום. **קרה בפועל (14/9/26):** התיקון
+   הראשון קיבע text-xs/px-1.5/rounded-lg בכל רוחב-מסך, כולל דסקטופ שבו זה
+   נראה דחוס בלי סיבה — צריך היה responsive, לא ערך-קבוע אחד. */
+const BUTTON_CLASS = 'inline-flex min-w-0 items-center justify-center gap-1 rounded-full px-2 py-2 text-center text-xs font-bold leading-tight text-white transition hover:brightness-110 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm'
 
 function GuidedStepView({ step, onDone }: { step: GuidedStep; onDone: () => void }) {
   const [picked, setPicked] = useState<number | null>(null)
@@ -104,7 +109,7 @@ export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, 
 
   return (
     <div className="mt-2">
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         <button
           onClick={() => setMode(m => (m === 'guided' ? 'closed' : 'guided'))}
           className={BUTTON_CLASS}

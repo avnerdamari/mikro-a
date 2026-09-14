@@ -54,7 +54,7 @@ export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: 
       <button
         onClick={open}
         title="שאל את המורה על התרגיל הזה"
-        className="inline-flex min-w-0 items-center justify-center rounded-lg px-1.5 py-1.5 text-center text-xs font-bold leading-tight text-white transition hover:brightness-110 active:scale-95"
+        className="inline-flex min-w-0 items-center justify-center gap-1 rounded-full px-2 py-2 text-center text-xs font-bold leading-tight text-white transition hover:brightness-110 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
         style={{ backgroundColor: '#1F6F3F' }}
       >
         🎓 שאל את המורה
