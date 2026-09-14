@@ -78,7 +78,10 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
   }
 
   return (
-    <div className={cn(
+    // id={ex.id}: עוגן ל-AskTutorButton (anchorId, למטה) כדי שיוכל למצוא ולשבט את
+    // מיכל-השאלה ולהעתיק את נוסחה למורה — בלי id כאן, document.getElementById
+    // מחזיר null ו"שאל את המורה" לא שולח שום נוסח-שאלה (סקיל build-book §2ב).
+    <div id={ex.id} className={cn(
       'rounded-xl border p-4 transition-colors',
       done ? 'bg-green-50 border-green-300' : 'bg-card border-border'
     )}>
@@ -91,7 +94,7 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
       </div>
 
       {hasCheck && (
-        <div className="mt-3 flex flex-wrap items-center gap-2" dir="ltr">
+        <div className="mt-3 flex flex-wrap items-center gap-2 tutor-skip" dir="ltr">
           <input
             dir="ltr"
             value={typed}
