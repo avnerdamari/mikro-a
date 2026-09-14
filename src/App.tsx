@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { NavigationProvider, useNavigation } from '@/components/NavigationContext'
 import { TopBar } from '@/components/TopBar'
 import { ChapterLinkRow } from '@/components/ChapterLinkRow'
@@ -36,6 +37,25 @@ import { AppendixGlossary } from '@/pages/chapters/AppendixGlossary'
 function AppContent() {
   const { currentChapter, setCurrentChapter, mindMapOpen, setMindMapOpen, floatingButtonsHidden } = useNavigation()
   const isHome = currentChapter === 'home' || currentChapter === ''
+
+  /* חזרה מהמורה לשאלה הספציפית (?chapter=..#<anchorId>) — currentChapter כבר
+     הוגדר נכון ב-NavigationContext (initialChapterFromUrl), נשאר רק לגלול
+     לעוגן. retry כי הפרק+התרגיל עשויים עוד לא להיות ב-DOM ברגע ש-effect
+     הראשוני הזה רץ (אותה טכניקה כמו Finance-App, scrollToFormulaAnchor). */
+  useEffect(() => {
+    const anchor = window.location.hash.replace(/^#/, '')
+    if (!anchor) return
+    let tries = 0
+    let timer: ReturnType<typeof setTimeout>
+    const attempt = () => {
+      const el = document.getElementById(anchor)
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); return }
+      if (tries++ < 20) timer = setTimeout(attempt, 100)
+    }
+    timer = setTimeout(attempt, 50)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const renderChapter = () => {
     switch (currentChapter) {

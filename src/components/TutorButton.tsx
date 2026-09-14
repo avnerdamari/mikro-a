@@ -29,7 +29,10 @@ export function TutorButton({ chapterId }: { chapterId: string }) {
 
   const open = () => {
     if (!TUTOR_BASE) { setShowNote(true); return }
-    const url = `${TUTOR_BASE}/?topic=${encodeURIComponent(topic)}&return=${encodeURIComponent(location.href)}`
+    // ?chapter=<id> — כמו ב-AskTutorButton.tsx: בלי זה "חזרה לספר" תמיד
+    // נוחת על 'home' כי אין סנכרון-URL באפליקציה הזו. סקיל build-book §2ב.
+    const ret = `${location.origin}${location.pathname}?chapter=${encodeURIComponent(chapterId)}`
+    const url = `${TUTOR_BASE}/?topic=${encodeURIComponent(topic)}&return=${encodeURIComponent(ret)}`
     window.open(url, '_blank', 'noreferrer')
   }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigation } from './NavigationContext'
 
 /* כפתור "שאל את המורה" פר-תרגיל (סקיל solve-question §6, "עוזר הלמידה — אותה
    שורה כמו כפתורי GuidedSolver") — לא כפתור-הפרק הצף (TutorButton.tsx), אלא
@@ -8,6 +9,7 @@ const TUTOR_BASE = 'https://mikro-tutor.vercel.app'
 
 export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: string }) {
   const [showNote, setShowNote] = useState(false)
+  const { currentChapter } = useNavigation()
 
   /* מעתיק את נוסח השאלה עצמה למורה (q=), לא רק נושא כללי — סקיל build-book §2ב,
      "AskTutorButton.tsx — המנגנון המלא". משבט את מיכל-השאלה (anchorId), מסיר ממנו
@@ -31,7 +33,12 @@ export function AskTutorButton({ topic, anchorId }: { topic: string; anchorId?: 
 
   const open = () => {
     if (!TUTOR_BASE) { setShowNote(true); return }
-    const ret = anchorId ? `${location.href.split('#')[0]}#${anchorId}` : location.href
+    // ?chapter=<id> — בלי זה "חזרה לספר" תמיד נוחת על 'home', כי לאפליקציה
+    // הזו אין סנכרון-URL בכלל (כל ה-state בזיכרון). NavigationContext קורא
+    // את זה ב-mount (initialChapterFromUrl) ומחזיר ישר לפרק+לשאלה (App.tsx
+    // גולל אל #anchorId). סקיל build-book §2ב.
+    const base = `${location.origin}${location.pathname}?chapter=${encodeURIComponent(currentChapter)}`
+    const ret = anchorId ? `${base}#${anchorId}` : base
     const q = extractQuestionText()
     const url = `${TUTOR_BASE}/?topic=${encodeURIComponent(topic)}&q=${encodeURIComponent(q)}&return=${encodeURIComponent(ret)}`
     window.open(url, '_blank', 'noreferrer')
