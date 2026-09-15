@@ -115,13 +115,13 @@ export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, 
           className={BUTTON_CLASS}
           style={{ backgroundColor: 'var(--action, #4F46E5)' }}
         >
-          {mode === 'guided' ? 'סגור הנחיות' : '🧭 פתור עם הנחיות'}
+          {mode === 'guided' ? 'סגור הנחיות' : 'פתור עם הנחיות'}
         </button>
         <button
           onClick={() => setMode(m => (m === 'full' ? 'closed' : 'full'))}
           className={BUTTON_CLASS + ' bg-indigo-700'}
         >
-          {mode === 'full' ? 'הסתר פתרון' : '📖 הצג פתרון מלא'}
+          {mode === 'full' ? 'הסתר פתרון' : 'הצג פתרון מלא'}
         </button>
         {extraActions}
       </div>
