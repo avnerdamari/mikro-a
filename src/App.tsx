@@ -6,6 +6,7 @@ import { ChapterSectionNav } from '@/components/ChapterSectionNav'
 import { MindMapPanel } from '@/components/MindMapPanel'
 import { Sidebar } from '@/components/Sidebar'
 import { TutorButton } from '@/components/TutorButton'
+import FloatingTutorPanel from '@/components/FloatingTutorPanel'
 import { RegularCalculator } from '@/components/RegularCalculator'
 import { HomePage } from '@/pages/HomePage'
 import { ChapterIntro } from '@/pages/chapters/ChapterIntro'
@@ -35,7 +36,7 @@ import { AppendixFormulas } from '@/pages/chapters/AppendixFormulas'
 import { AppendixGlossary } from '@/pages/chapters/AppendixGlossary'
 
 function AppContent() {
-  const { currentChapter, setCurrentChapter, mindMapOpen, setMindMapOpen, floatingButtonsHidden } = useNavigation()
+  const { currentChapter, setCurrentChapter, mindMapOpen, setMindMapOpen, floatingButtonsHidden, tutorOpen, tutorSrc, closeTutor } = useNavigation()
   const isHome = currentChapter === 'home' || currentChapter === ''
 
   /* חזרה מהמורה לשאלה הספציפית (?chapter=..#<anchorId>) — currentChapter כבר
@@ -127,6 +128,7 @@ function AppContent() {
           onClose={() => setMindMapOpen(false)}
         />
       )}
+      <FloatingTutorPanel open={tutorOpen} src={tutorSrc} onClose={closeTutor} />
     </div>
   )
 }

@@ -1,12 +1,11 @@
-import { useState } from 'react'
-import { TUTOR_WINDOW_NAME } from './AskTutorButton'
+import { useNavigation } from './NavigationContext'
 
-/* עוזר למידה — צ'אט AI שמכיר את הפרק שהתלמיד נמצא בו כרגע.
-   המורה עצמו הוא **פריסה נפרדת**: Mikro-Tutor (C:\ClaudeProjects\Mikro-Tutor),
-   מזלג ייעודי של Advisors-Tutor עם 12 פרומפטים למיקרו-כלכלה (לא Advisors-Tutor
-   עצמו — הוא נעול לתוכן מימון/השקעות ולא יבין נושאי מיקרו-כלכלה). */
-
-const TUTOR_BASE = 'https://mikro-tutor.vercel.app'
+/* עוזר למידה — צ'אט AI שמכיר את הפרק שהתלמיד נמצא בו כרגע. נפתח כפאנל צף
+   מוטמע (FloatingTutorPanel, ר' App.tsx/NavigationContext) — לא טאב נפרד —
+   כדי לעבוד במקביל על הספר והמורה. המורה עצמו הוא **פריסה נפרדת**:
+   Mikro-Tutor (C:\ClaudeProjects\Mikro-Tutor), מזלג ייעודי של Advisors-Tutor
+   עם 12 פרומפטים למיקרו-כלכלה (לא Advisors-Tutor עצמו — הוא נעול לתוכן
+   מימון/השקעות ולא יבין נושאי מיקרו-כלכלה). */
 
 /** מיפוי פרק → נושא-הוראה אצל המורה. */
 const TUTOR_TOPIC: Record<string, string> = {
@@ -25,51 +24,18 @@ const TUTOR_TOPIC: Record<string, string> = {
 }
 
 export function TutorButton({ chapterId }: { chapterId: string }) {
-  const [showNote, setShowNote] = useState(false)
+  const { openTutor } = useNavigation()
   const topic = TUTOR_TOPIC[chapterId] ?? 'review'
 
-  const open = () => {
-    if (!TUTOR_BASE) { setShowNote(true); return }
-    // ?chapter=<id> — כמו ב-AskTutorButton.tsx: בלי זה "חזרה לספר" תמיד
-    // נוחת על 'home' כי אין סנכרון-URL באפליקציה הזו. סקיל build-book §2ב.
-    const ret = `${location.origin}${location.pathname}?chapter=${encodeURIComponent(chapterId)}`
-    const url = `${TUTOR_BASE}/?topic=${encodeURIComponent(topic)}&return=${encodeURIComponent(ret)}`
-    window.open(url, TUTOR_WINDOW_NAME, 'noreferrer')
-  }
-
   return (
-    <>
-      <button
-        onClick={open}
-        title="עוזר למידה — צ'אט AI על הפרק הנוכחי"
-        className="flex w-36 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg transition hover:brightness-110 hover:shadow-xl active:scale-95 active:translate-y-0.5"
-        style={{ backgroundColor: 'var(--action)' }}
-      >
-        <span aria-hidden>🎓</span>
-        <span>עוזר למידה</span>
-      </button>
-
-      {showNote && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={() => setShowNote(false)}>
-          <div className="max-w-sm rounded-2xl bg-card p-5 text-center shadow-xl" onClick={e => e.stopPropagation()} dir="rtl">
-            <p className="text-lg font-bold">🎓 עוזר הלמידה — בהכנה</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              בקרוב תוכלו לשוחח כאן עם עוזר AI שמכיר בדיוק את הפרק שאתם נמצאים בו,
-              ולשאול אותו כל דבר שלא ברור.
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              בינתיים — כפתור <b>וואטסאפ</b> פתוח לכל שאלה, והתשובה מגיעה ישירות מהמחבר.
-            </p>
-            <button
-              onClick={() => setShowNote(false)}
-              className="mt-4 rounded-lg px-4 py-2 text-sm font-bold text-white"
-              style={{ backgroundColor: 'var(--brand)' }}
-            >
-              סגור
-            </button>
-          </div>
-        </div>
-      )}
-    </>
+    <button
+      onClick={() => openTutor(topic)}
+      title="עוזר למידה — צ'אט AI על הפרק הנוכחי"
+      className="flex w-36 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg transition hover:brightness-110 hover:shadow-xl active:scale-95 active:translate-y-0.5"
+      style={{ backgroundColor: 'var(--action)' }}
+    >
+      <span aria-hidden>🎓</span>
+      <span>עוזר למידה</span>
+    </button>
   )
 }
