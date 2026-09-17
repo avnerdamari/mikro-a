@@ -28,6 +28,9 @@ interface NavigationState {
   /** מציג/מסתיר את כל טור הכפתורים הצפים (סקיל build-book §2ו) — נשמר בין ביקורים. */
   floatingButtonsHidden: boolean
   toggleFloatingButtons: () => void
+  /** כפתור "🔍 חיפוש" בכותרת (סקיל build-book §2ו) — מודל נפרד מפאנל ה-TOC. */
+  searchOpen: boolean
+  setSearchOpen: (open: boolean) => void
 }
 
 const NavigationContext = createContext<NavigationState | null>(null)
@@ -48,6 +51,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [sectionNavOpen, setSectionNavOpen] = useState(true)
   const [sectionNavLabels, setSectionNavLabels] = useState<string[]>([])
   const [mindMapOpen, setMindMapOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [floatingButtonsHidden, setFloatingButtonsHidden] = useState(() => {
     if (typeof window === 'undefined') return false
     return localStorage.getItem('mikro-a-floating-hidden') === '1'
@@ -87,6 +91,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       sectionNavLabels, setSectionNavLabels,
       mindMapOpen, setMindMapOpen,
       floatingButtonsHidden, toggleFloatingButtons,
+      searchOpen, setSearchOpen,
     }}>
       {children}
     </NavigationContext.Provider>

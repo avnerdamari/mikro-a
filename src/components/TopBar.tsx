@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import logo from '@/assets/logo.png'
 import { useNavigation } from './NavigationContext'
 import { CHAPTERS } from '@/data/toc'
+import { SearchModal } from './SearchModal'
 
 const INDIGO = '#4F46E5'
 
@@ -31,6 +32,7 @@ export function TopBar() {
     sectionNavOpen, toggleSectionNavOpen, sectionNavLabels,
     mindMapOpen, setMindMapOpen,
     floatingButtonsHidden, toggleFloatingButtons,
+    searchOpen, setSearchOpen,
   } = useNavigation()
   const { dark, toggle } = useDarkMode()
   const currentMeta = CHAPTERS.find(c => c.id === currentChapter)
@@ -82,6 +84,17 @@ export function TopBar() {
           </button>
         )}
         <button
+          onClick={() => setSearchOpen(true)}
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20 active:scale-95"
+          title="חיפוש בכל הספר"
+          aria-label="חיפוש"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.3-4.3" />
+          </svg>
+        </button>
+        <button
           onClick={() => setMindMapOpen(!mindMapOpen)}
           className="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-95 active:translate-y-0.5"
           style={{ backgroundColor: INDIGO }}
@@ -127,6 +140,7 @@ export function TopBar() {
         </button>
       </div>
       </div>
+      {searchOpen && <SearchModal />}
     </header>
   )
 }
