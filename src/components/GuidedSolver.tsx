@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { clearSolveReturn, peekSolveReturn, SOLVER_ATTR, solverIndex } from '@/lib/solveReturn'
 
 /* GuidedSolver — הרכיב שהפורמט המאוחד (סקיל build-book §1) מצפה לו בכל תרגיל
    מדורג: "🧭 פתור עם הנחיות" (שאלה סוקרטית + רמז + חשיפה) לצד "📖 הצג פתרון
@@ -98,6 +99,23 @@ export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, 
   const [val, setVal] = useState('')
   const [status, setStatus] = useState<null | boolean>(null)
 
+  // חזרה ממפת הפתרון (lib/solveReturn.ts): הפותר שממנו קפצו לפרק התיאוריה נפתח שוב בפתרון המלא,
+  // כדי שהמפה (SolveGraph) תחזור לאותו שלב. הזיהוי לפי סדר הפותרים בעמוד (useId לא יציב בין mount-ים).
+  const rootRef = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const p = peekSolveReturn()
+    if (p && rootRef.current && solverIndex(rootRef.current) === p.solver) { restoringRef.current = true; setMode('full') }
+  }, [])
+  // אם המפה השמורה לא נמצאת בפותר הזה (פרק תרגול אחר עם אותו מספר-פותר) — סוגרים ומוותרים על החזרה.
+  // כשהיא כן נמצאת, SolveGraph (ילד — ה-effect שלו רץ קודם) כבר צרך וניקה את הבקשה.
+  const restoringRef = useRef(false)
+  useEffect(() => {
+    if (mode !== 'full' || !restoringRef.current) return
+    restoringRef.current = false
+    const p = peekSolveReturn()
+    if (p && !rootRef.current?.querySelector(`#solve-${p.demo}-0`)) { clearSolveReturn(); setMode('closed') }
+  }, [mode])
+
   const advance = () => setStepIdx(i => Math.min(i + 1, steps.length))
   const done = stepIdx >= steps.length
 
@@ -108,7 +126,7 @@ export function GuidedSolver({ steps, summary, fullSolution, answer, tol = 0.5, 
   }
 
   return (
-    <div className="mt-2">
+    <div ref={rootRef} {...{ [SOLVER_ATTR]: '' }} className="mt-2">
       <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         <button
           onClick={() => setMode(m => (m === 'guided' ? 'closed' : 'guided'))}

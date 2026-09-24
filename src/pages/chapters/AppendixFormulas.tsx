@@ -7,10 +7,11 @@ import { cn } from '@/lib/utils'
 /* נספח: דף נוסחאות — הנוסחאות נאספו מתוך 10 פרקי הספר, לפי סדר הפרקים.
    כל נוסחה מקבלת key ייחודי (עוגן) — FormulaLink בפרקי התיאוריה מפנה אליו לפי ה-key הזה. */
 
-type Row = { key: string; label: string; math: string; note?: string }
+export type FormulaRow = { key: string; label: string; math: string; note?: string }
+type Row = FormulaRow
 type Group = { chapter: number; title: string; color: string; rows: Row[] }
 
-const GROUPS: Group[] = [
+export const GROUPS: Group[] = [
   {
     chapter: 1, title: 'עקומת התמורה (PPF)', color: '#a855f7',
     rows: [

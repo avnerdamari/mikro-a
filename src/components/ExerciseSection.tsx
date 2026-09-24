@@ -3,6 +3,8 @@ import { cn } from '@/lib/utils'
 import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react'
 import { GuidedSolver, type GuidedStep } from './GuidedSolver'
 import { AskTutorButton } from './AskTutorButton'
+import { MapSec, type ExerciseMap } from './SolveGraph'
+import { LEVEL_ATTR, peekSolveReturn } from '@/lib/solveReturn'
 
 export type Exercise = {
   id: string
@@ -27,6 +29,8 @@ export type Exercise = {
   /** נושא לכפתור "שאל את המורה" הממוקד-לתרגיל (מפתח ב-TUTOR_TOPIC,
       TutorButton.tsx) — כשקיים, מוצג לצד כפתורי ה-GuidedSolver. */
   topic?: string
+  /** "מפת הפתרון" (SolveGraph) — מוצגת בפתרון המלא לפני "פתרון שלב-אחר-שלב". מערך = מפה לכל סעיף. */
+  map?: ExerciseMap
 }
 
 /** משווה קלט חופשי מול checkAnswer: מסיר רווחים/₪/פסיקי-אלפים, לא תלוי רישיות. */
@@ -126,6 +130,7 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
                 <div><p className="mb-1 font-bold">🔍 הבנת השאלה</p><p>{ex.understand}</p></div>
                 <div><p className="mb-1 font-bold">📊 תיאור גרפי</p><div>{ex.visual}</div></div>
                 <div><p className="mb-1 font-bold">📐 הנוסחה</p><div>{ex.formula}</div></div>
+                {ex.map && <MapSec map={ex.map} />}
                 <div><p className="mb-1 font-bold">🔢 פתרון שלב-אחר-שלב</p><div>{ex.steps}</div></div>
                 <div>
                   <p className="mb-1 font-bold">✅ תשובה</p>
@@ -190,13 +195,14 @@ function ExerciseCard({ ex, index }: { ex: Exercise; index: number }) {
 }
 
 export function ExerciseSection({ easy, medium, hard }: Props) {
-  const [activeLevel, setActiveLevel] = useState<Level>('easy')
+  // חזרה ממפת הפתרון: פותחים את הרמה שממנה קפצו לפרק התיאוריה (lib/solveReturn.ts)
+  const [activeLevel, setActiveLevel] = useState<Level>(() => (peekSolveReturn()?.level as Level | undefined) ?? 'easy')
 
   const map: Record<Level, Exercise[]> = { easy, medium, hard }
   const current = map[activeLevel]
 
   return (
-    <div className="space-y-5" dir="rtl">
+    <div className="space-y-5" dir="rtl" {...{ [LEVEL_ATTR]: activeLevel }}>
       <div className="flex items-center justify-between flex-wrap gap-2">
         <h3 className="text-lg font-bold text-foreground">תרגילים מעשיים</h3>
         <div className="flex rounded-xl border border-border bg-muted/30 p-1 gap-1">

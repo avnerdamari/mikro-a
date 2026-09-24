@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { useNavigation } from './NavigationContext'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
 import { CHAPTERS } from '@/data/toc'
@@ -19,7 +19,24 @@ interface Props {
 }
 
 export function ChapterLayout({ number, title, subtitle, color, examWeight, children, navId, badge }: Props) {
-  const { setCurrentChapter } = useNavigation()
+  const { setCurrentChapter, pendingAnchor } = useNavigation()
+  // קפיצה מצ'יפ "נלמד" במפת הפתרון (SolveGraph): עוגני פרקי התיאוריה הם id שמתחיל ב-"learn-".
+  // מדגישים את היעד עד שעוזבים את הפרק (ה-"חזרה" בכותרת). עוגני נספחים מטופלים בנספח עצמו.
+  useEffect(() => {
+    if (!pendingAnchor?.startsWith('learn-')) return
+    let tries = 0
+    let el: HTMLElement | null = null
+    const t = window.setInterval(() => {
+      el = document.getElementById(pendingAnchor)
+      if (el || ++tries > 20) {
+        window.clearInterval(t)
+        if (!el) return
+        el.setAttribute('data-jump-target', '')
+        el.scrollIntoView({ behavior: 'instant', block: 'center' })
+      }
+    }, 100)
+    return () => { window.clearInterval(t); el?.removeAttribute('data-jump-target') }
+  }, [pendingAnchor])
   const idx = navId
     ? CHAPTERS.findIndex(c => c.id === navId)
     : CHAPTERS.findIndex(c => c.number === number)

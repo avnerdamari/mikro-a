@@ -264,7 +264,7 @@ export function Chapter2Production() {
             פונקציית הייצור מתארת את הקשר בין <strong>כמות גורמי הייצור</strong> (עבודה, הון) ל<strong>תפוקה</strong>.
             בטווח קצר, ההון קבוע (מכונות) — רק כמות העובדים (L) משתנה.
           </p>
-          <div className="rounded-xl border border-border p-4 text-center space-y-3">
+          <div id="learn-production-formulas" className="rounded-xl border border-border p-4 text-center space-y-3">
             <p className="text-sm font-semibold">נוסחאות בסיסיות:</p>
             <MathText math="MP_L = \Delta TP / \Delta L \quad\quad AP_L = TP / L \quad\quad VMP_L = P \times MP_L" display />
           </div>
@@ -288,7 +288,7 @@ export function Chapter2Production() {
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">2.2 חוק התפוקה השולית הפוחתת</h3>
-          <div className="rounded-xl bg-amber-50 border border-amber-200 p-4">
+          <div id="learn-production-diminishing" className="rounded-xl bg-amber-50 border border-amber-200 p-4">
             <p className="font-bold text-amber-800 mb-1">📌 חוק יסוד:</p>
             <p className="text-amber-700 text-sm">
               ככל שמוסיפים עובדים נוספים לגורמי ייצור קבועים (כלים, מכונות) —
@@ -303,7 +303,7 @@ export function Chapter2Production() {
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">2.3 <LinkedTerm anchorKey="optimal-hiring-rule">כלל ההעסקה האופטימלי</LinkedTerm> — VMP ≥ W</h3>
-          <div className="rounded-xl bg-green-50 border border-green-200 p-4">
+          <div id="learn-production-hiring" className="rounded-xl bg-green-50 border border-green-200 p-4">
             <p className="font-bold text-green-800 mb-2">📌 כלל ההחלטה:</p>
             <p className="text-green-700 text-sm mb-2">העסק עוד עובד אם ורק אם:</p>
             <div className="text-center">
@@ -322,7 +322,7 @@ export function Chapter2Production() {
               <p className="text-xs text-red-700 mt-1">אל תעסיק → מוריד רווח</p>
             </div>
           </div>
-          <div className="rounded-xl bg-indigo-50 border border-indigo-200 p-3">
+          <div id="learn-production-profit" className="rounded-xl bg-indigo-50 border border-indigo-200 p-3">
             <p className="text-sm font-semibold text-indigo-700">חישוב רווח:</p>
             <div className="text-center mt-2">
               <MathText math="\pi = TR - TC = P \times TP - L \times W" display />
