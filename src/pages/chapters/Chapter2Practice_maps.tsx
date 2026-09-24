@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { M, type BoxRow, type SolveDemo, type Src } from '@/components/SolveGraph'
+import { M, MapTable, type BoxRow, type SolveDemo, type Src } from '@/components/SolveGraph'
 
 /* מפות הפתרון (SolveGraph) של תרגול פרק 2 — מוצגות בפתרון המלא של כל תרגיל (שדה map ב-Exercise).
    כל מפה = עץ: הנוסחה שמבקשים ← מה חסר ← הנוסחה שלו בפרק 2. המספרים — רק מהפתרון הקיים של התרגיל.
@@ -28,22 +28,8 @@ const EXTRA = [
   row('p2-dprofit', 'מהתרגיל: תוספת רווח', r`\Delta\pi = \pi_{new} - \pi_{old}`),
 ]
 
-/** טבלה קטנה לנתוני L/TP בקופסת "נתוני השאלה" */
-function DataTable({ head, rows }: { head: ReactNode[]; rows: ReactNode[][] }) {
-  return (
-    <table dir="ltr" className="w-full border-collapse text-center text-[11px]">
-      <tbody>
-        {[head, ...rows].map((cells, i) => (
-          <tr key={i} className={i === 0 ? 'bg-slate-200 font-bold' : ''}>
-            {cells.map((c, j) => <td key={j} className="border border-slate-300 px-1 py-0.5">{c}</td>)}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )
-}
 const tpTable = (ls: number[], tps: string[]) => (
-  <DataTable head={[<M>L</M>, ...ls]} rows={[[<M>TP</M>, ...tps]]} />
+  <MapTable head={[<M>L</M>, ...ls]} rows={[[<M>TP</M>, ...tps]]} />
 )
 const TP_M = tpTable([1, 2, 3, 4], ['500', '900', '1,200', '1,400'])
 const TP_H = tpTable([1, 2, 3, 4, 5], ['600', '1,100', '1,500', '1,800', '2,000'])

@@ -76,7 +76,11 @@ body {
 #root { min-height: 100vh; }
 
 [dir="ltr"] input[type="range"] { direction: ltr; }
-.katex { font-size: 1.05em; }
+/* נוסחה תמיד משמאל לימין, גם בתוך הקשר RTL — בלי זה נוסחאות display (למשל π = TR − TC בפרק 2)
+   מוצגות הפוכות. isolate: הנוסחה לא "נשאבת" לכיוון הטקסט העברי שסביבה. */
+.katex { font-size: 1.05em; direction: ltr; unicode-bidi: isolate; }
+/* 	ext{...} עברי בתוך נוסחה (למשל "מצא Q* שבו MC..." בפרק 3) — הקטע עצמו מימין לשמאל, אחרת סדר המילים מתהפך */
+.katex .mord.text { direction: rtl; unicode-bidi: isolate; }
 
 /* ── מצב כהה — סגול-אינדיגו, לא אפור (סקיל build-book, סעיף 2א) ── */
 .dark {

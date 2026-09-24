@@ -443,6 +443,21 @@ export function SolveGraph({ demo }: { demo: SolveDemo }) {
   )
 }
 
+/** טבלה קטנה (למשל L/TP או Q/TC) לערך-נתון block בקופסת "נתוני השאלה" */
+export function MapTable({ head, rows }: { head: ReactNode[]; rows: ReactNode[][] }) {
+  return (
+    <table dir="ltr" className="w-full border-collapse text-center text-[11px]">
+      <tbody>
+        {[head, ...rows].map((cells, i) => (
+          <tr key={i} className={i === 0 ? 'bg-slate-200 font-bold' : ''}>
+            {cells.map((c, j) => <td key={j} className="border border-slate-300 px-1 py-0.5">{c}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
 /** כרטיס "מפת הפתרון" בתוך הפתרון המלא — מפה אחת, או מפה לכל סעיף (שאלה עם כמה סעיפים) */
 export type ExerciseMap = SolveDemo | { label: string; demo: SolveDemo }[]
 export function MapSec({ map }: { map: ExerciseMap }) {

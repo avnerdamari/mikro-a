@@ -247,7 +247,7 @@ export function Chapter3Costs() {
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">3.1 מבנה העלויות</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div id="learn-costs-structure" className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
               ['FC', 'עלות קבועה', 'לא תלויה בכמות (שכירות, ציוד)', '#64748b'],
               ['VC', 'עלות משתנה', 'גדלה עם הכמות (חו"ג, עבודה)', '#f97316'],
@@ -276,14 +276,14 @@ export function Chapter3Costs() {
           <p className="text-sm text-muted-foreground">
             בתחרות משוכללת, המחיר = פדיון שולי (MR=P). מקסום רווח: ייצר עד ש:
           </p>
-          <div className="rounded-xl border border-border p-4 text-center">
+          <div id="learn-costs-mcp" className="rounded-xl border border-border p-4 text-center">
             <MathText math="MC = P \quad\Rightarrow\quad \text{מצא Q* שבו MC הכי קרוב מתחת ל-P}" display />
           </div>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">3.3 החלטת ייצור — 3 מקרים קלאסיים</h3>
-          <div className="space-y-3">
+          <div id="learn-costs-decision" className="space-y-3">
             {[
               ['✅ P ≥ AC (מינימום)', 'bg-green-50 border-green-300', 'ייצר — רווח כלכלי חיובי (טווח ארוך וקצר)'],
               ['⚠️ AVC ≤ P < AC', 'bg-yellow-50 border-yellow-300', 'ייצר בטווח קצר בלבד — הפסד אבל פחות מ-FC. בטווח ארוך — ייצא מענף.'],
@@ -295,7 +295,7 @@ export function Chapter3Costs() {
               </div>
             ))}
           </div>
-          <div className="rounded-xl bg-indigo-50 border border-indigo-200 p-3">
+          <div id="learn-costs-shutdown" className="rounded-xl bg-indigo-50 border border-indigo-200 p-3">
             <p className="text-xs font-semibold text-indigo-700">💡 Shut-down point = מינימום AVC</p>
             <p className="text-xs text-indigo-600 mt-1">מתחת לו — תמיד עדיף לסגור ולהפסיד FC בלבד.</p>
           </div>
@@ -307,7 +307,7 @@ export function Chapter3Costs() {
             עקומת ההיצע = <strong>MC מעל מינימום AVC</strong>.
             כשמחיר עולה, היצרן מוכן לייצר יותר.
           </p>
-          <div className="rounded-xl border border-border p-4 text-center">
+          <div id="learn-costs-supply" className="rounded-xl border border-border p-4 text-center">
             <MathText math="S_{\text{שוק}} = n \times S_{\text{יצרן}}" display />
           </div>
           <p className="text-xs text-muted-foreground text-center">כשיש n יצרנים זהים — כפל כמות יחיד ב-n</p>
