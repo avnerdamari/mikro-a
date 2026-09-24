@@ -271,7 +271,7 @@ export function Chapter6Equilibrium() {
         <h2 className="text-xl font-bold">📖 הסבר תיאורטי</h2>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">6.1 תנאי <LinkedTerm anchorKey="equilibrium">שיווי המשקל</LinkedTerm></h3>
-          <div className="rounded-xl bg-green-50 border border-green-200 p-4 text-center">
+          <div id="learn-equilibrium-condition" className="rounded-xl bg-green-50 border border-green-200 p-4 text-center">
             <MathText math="D = S \quad\Rightarrow\quad Q_D(P^*) = Q_S(P^*)" display />
           </div>
           <FormulaLink formulaKey="equilibrium-condition" />
@@ -279,7 +279,7 @@ export function Chapter6Equilibrium() {
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">6.2 שתי קבוצות צרכנים — הדפוס הכי נפוץ במבחן!</h3>
-          <div className="rounded-xl bg-amber-50 border border-amber-200 p-4 space-y-3">
+          <div id="learn-equilibrium-groups" className="rounded-xl bg-amber-50 border border-amber-200 p-4 space-y-3">
             <p className="font-bold text-amber-800">📋 שלבי הפתרון:</p>
             <ol className="text-sm text-amber-700 space-y-1 list-decimal list-inside">
               <li>כתוב D₁ ו-D₂ כ-Q=f(P)</li>
@@ -298,7 +298,7 @@ export function Chapter6Equilibrium() {
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">6.3 עודפים ורווחה</h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div id="learn-equilibrium-surplus" className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-blue-50 border border-blue-200 p-3">
               <p className="font-bold text-blue-700 text-sm"><LinkedTerm anchorKey="consumer-surplus">עודף צרכן</LinkedTerm> (CS)</p>
               <div className="text-center mt-2"><MathText math="CS = \frac{1}{2}(P_{max}-P^*)Q^*" /></div>

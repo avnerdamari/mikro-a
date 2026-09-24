@@ -203,7 +203,7 @@ export function Chapter4Demand() {
             <p className="font-bold text-blue-800 mb-1">📌 חוק הביקוש:</p>
             <p className="text-blue-700 text-sm">ככל שמחיר מוצר <strong>עולה</strong> — הכמות המבוקשת <strong>יורדת</strong>. קשר <em>הפוך</em> בין מחיר לכמות.</p>
           </div>
-          <div className="rounded-xl border border-border p-4 text-center">
+          <div id="learn-demand-function" className="rounded-xl border border-border p-4 text-center">
             <MathText math="Q = a - b \cdot P \quad\quad \text{(פונקציה לינארית)}" display />
             <FormulaLink formulaKey="demand-function" />
           </div>
@@ -211,7 +211,7 @@ export function Chapter4Demand() {
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">4.2 ביקוש אישי מול ביקוש שוק</h3>
-          <div className="rounded-xl bg-amber-50 border border-amber-200 p-4">
+          <div id="learn-demand-market" className="rounded-xl bg-amber-50 border border-amber-200 p-4">
             <p className="font-bold text-amber-800 mb-2">⚠️ כלל זהב: חיבור ביקושים לפי Q (לא לפי P!)</p>
             <div className="text-center">
               <MathText math="Q_{total} = Q_1 + Q_2 = (a_1-b_1 P) + (a_2-b_2 P) = (a_1+a_2) - (b_1+b_2)P" display />
@@ -221,7 +221,7 @@ export function Chapter4Demand() {
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">4.3 גורמים המסיטים את עקומת הביקוש</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div id="learn-demand-shifters" className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {[
               ['↑ הכנסה (מוצר נורמלי)', '→ ביקוש עולה (ימינה)', 'bg-green-50 border-green-200'],
               ['↑ הכנסה (מוצר נחות)', '→ ביקוש יורד (שמאלה)', 'bg-red-50 border-red-200'],
@@ -237,7 +237,7 @@ export function Chapter4Demand() {
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
           <h3 className="font-bold text-lg">4.4 ההבדל הקריטי — תזוזה לאורך vs. הסטה</h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div id="learn-demand-move-shift" className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-blue-50 border border-blue-200 p-3">
               <p className="font-bold text-blue-700 text-sm">תזוזה לאורך עקומה</p>
               <p className="text-xs text-muted-foreground mt-1">רק כשמחיר <strong>העצמי</strong> משתנה. העקומה לא זזה.</p>

@@ -241,7 +241,7 @@ export function Chapter7Intervention() {
         <h2 className="text-xl font-bold">📖 הסבר תיאורטי</h2>
         <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
           <h3 className="font-bold text-lg">7.1 מס יחידתי על היצרן</h3>
-          <div className="rounded-xl bg-orange-50 border border-orange-200 p-4 space-y-2">
+          <div id="learn-intervention-tax" className="rounded-xl bg-orange-50 border border-orange-200 p-4 space-y-2">
             <p className="font-bold text-orange-800">📌 מנגנון המס:</p>
             <p className="text-sm text-orange-700">מס t גורם להיצע לזוז <strong>שמאלה</strong> ב-t. S_new: P_p = P_c − t</p>
             <div className="space-y-1">
